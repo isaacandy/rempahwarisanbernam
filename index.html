@@ -170,6 +170,16 @@
             to { transform: rotate(360deg); }
         }
         .animate-spin-slow { animation: spin-slow 20s linear infinite; }
+
+        /* Legacy Background Styling */
+        .legacy-bg-overlay {
+            background: linear-gradient(to right, rgba(253, 252, 249, 0.98) 0%, rgba(253, 252, 249, 0.8) 50%, rgba(253, 252, 249, 0.2) 100%);
+        }
+        @media (max-width: 1024px) {
+            .legacy-bg-overlay {
+                background: linear-gradient(to bottom, rgba(253, 252, 249, 1) 20%, rgba(253, 252, 249, 0.7) 100%);
+            }
+        }
     </style>
 </head>
 <body class="overflow-x-hidden">
@@ -182,7 +192,7 @@
                 <div class="h-8 lg:h-10 w-[1px] bg-white/20 sm:bg-stone-200"></div>
                 <div>
                     <h1 class="font-serif text-lg lg:text-2xl font-bold tracking-tight text-white leading-none transition-colors duration-500 nav-header-text-main">Rempah Warisan Bernam</h1>
-                    <p class="text-[8px] lg:text-[9px] font-bold uppercase tracking-[0.3em] text-stone-300 mt-1 transition-colors duration-500 nav-header-text-sub">SSM: 202501052286</p>
+                    <p class="text-[8px] lg:text-[9px] font-bold uppercase tracking-[0.3em] text-stone-300 mt-1 transition-colors duration-500 nav-header-text-sub text-justify">SSM: 202501052286</p>
                 </div>
             </div>
             
@@ -204,8 +214,8 @@
         <button class="absolute top-10 right-10 text-stone-900" id="mobile-close"><i data-lucide="x" class="w-8 h-8"></i></button>
         <button onclick="switchView('brand'); closeMenu();" class="mobile-link text-stone-900">Brand Identity</button>
         <button onclick="switchView('industrial'); closeMenu();" class="mobile-link text-stone-900">Industrial Division</button>
-        <a href="#catalog" onclick="closeMenu();" class="mobile-link text-stone-900">Collection</a>
-        <a href="#contact" onclick="closeMenu();" class="mobile-link text-stone-900">Contact Us</a>
+        <a href="#catalog" onclick="closeMenu();" class="mobile-link text-stone-900 text-justify">Collection</a>
+        <a href="#contact" onclick="closeMenu();" class="mobile-link text-stone-900 text-justify">Contact Us</a>
     </div>
 
     <!-- BRAND VIEW SECTION -->
@@ -213,7 +223,7 @@
         <!-- Hero Section -->
         <section id="home" class="relative min-h-[85vh] flex items-center bg-stone-900 overflow-hidden">
             <div class="absolute inset-0">
-                <img src="https://images.unsplash.com/photo-1596040033229-a9821ebd058d?auto=format&fit=crop&q=80&w=1920" class="w-full h-full object-cover opacity-25">
+                <img src="https://images.unsplash.com/photo-1596040033229-a9821ebd058d?auto=format&fit=crop&q=80&w=1920" class="w-full h-full object-cover opacity-25" alt="Spices background">
                 <div class="absolute inset-0 bg-gradient-to-r from-stone-950 via-stone-900/40 to-transparent"></div>
             </div>
             <div class="relative max-w-7xl mx-auto px-6 lg:px-12 w-full pt-10">
@@ -224,7 +234,7 @@
                     <h2 class="font-serif text-5xl lg:text-7xl text-white hero-title mb-10 italic">
                         Traditional Purity. <br>Authentic Craft.
                     </h2>
-                    <p class="text-lg lg:text-xl text-stone-400 mb-12 leading-relaxed max-w-xl font-light italic">
+                    <p class="text-lg lg:text-xl text-stone-400 mb-12 leading-relaxed max-w-xl font-light italic text-justify">
                         Experience the gold standard of Malaysian spice blends. 100% natural, preservative-free, and crafted with absolute heritage integrity.
                     </p>
                     <div class="flex flex-col sm:flex-row gap-6">
@@ -239,33 +249,42 @@
             </div>
         </section>
 
-        <!-- Legacy Section -->
-        <section class="py-32 bg-white relative overflow-hidden">
+        <!-- Legacy Section with Background Photo -->
+        <section class="py-32 relative overflow-hidden bg-stone-50">
+            <!-- Legacy Background Photo -->
+            <div class="absolute inset-0 z-0">
+                <img src="images/images/IMG_20251001_170810.jpg" class="w-full h-full object-cover opacity-30" alt="Legacy factory background">
+                <div class="absolute inset-0 legacy-bg-overlay"></div>
+            </div>
+
             <div class="max-w-7xl mx-auto px-6 lg:px-12 relative z-10">
                 <div class="grid lg:grid-cols-2 gap-24 items-center">
                     <div class="reveal">
                         <h3 class="text-brand-crimson font-bold uppercase tracking-[0.4em] text-[10px] mb-6">Our Chronology</h3>
-                        <h4 class="font-serif text-6xl text-stone-900 leading-tight mb-8 italic">Half a Century of <br>Flavor Wisdom.</h4>
+                        <h4 class="font-serif text-6xl text-stone-900 leading-tight mb-8 italic text-justify">Half a Century of <br>Flavor Wisdom.</h4>
                         <p class="text-stone-600 leading-relaxed mb-8 text-justify">
                             The Rempah Warisan story began in 1972, in a small wooden workshop nestled in the heart of Bernam. What started as a local tradition of hand-roasting whole spices soon became the benchmark for purity in the region. For over 50 years, we have preserved the same secret proportions that earned us the trust of Malaysia's most legendary culinary houses.
                         </p>
                         
                         <div class="grid sm:grid-cols-2 gap-6 mt-12">
-                            <div class="p-6 bg-stone-50 rounded-2xl border border-stone-100">
+                            <div class="p-6 bg-white/80 backdrop-blur-md rounded-2xl border border-stone-100 shadow-sm">
                                 <i data-lucide="sun" class="text-brand-gold mb-4 w-6 h-6"></i>
                                 <h5 class="font-serif text-xl italic mb-2 text-justify">The Dawn Roast</h5>
                                 <p class="text-[11px] text-stone-500 leading-relaxed italic text-justify">"Since the 70s, our master roasters believe spices should only meet the heat at dawn, when the air is crisp, ensuring the oils never turn bitter."</p>
                             </div>
-                            <div class="p-6 bg-stone-50 rounded-2xl border border-stone-100">
+                            <div class="p-6 bg-white/80 backdrop-blur-md rounded-2xl border border-stone-100 shadow-sm">
                                 <i data-lucide="key" class="text-brand-gold mb-4 w-6 h-6"></i>
                                 <h5 class="font-serif text-xl italic mb-2 text-justify">The Golden Ratio</h5>
                                 <p class="text-[11px] text-stone-500 leading-relaxed italic text-justify">"The proportion of our Briyani blend was finalized on a rainy night in 1975 and has remained unchanged for five decades."</p>
                             </div>
                         </div>
                     </div>
+                    
+                    <!-- RESTORED: 1972 Visual column -->
                     <div class="reveal relative">
-                        <div class="aspect-[4/5] rounded-[3rem] overflow-hidden shadow-3xl grayscale hover:grayscale-0 transition-all duration-1000">
-                            <img src="https://images.unsplash.com/photo-1596040033229-a9821ebd058d?auto=format&fit=crop&q=80&w=1200" class="w-full h-full object-cover" alt="Heritage Factory">
+                        <div class="aspect-[4/5] rounded-[3rem] overflow-hidden shadow-3xl grayscale hover:grayscale-0 transition-all duration-1000 bg-stone-200">
+                            <!-- Restoration of the 1972 heritage image -->
+                            <img src="images/heritage_1972.jpg" class="w-full h-full object-cover" onerror="this.src='https://images.unsplash.com/photo-1596040033229-a9821ebd058d?auto=format&fit=crop&q=80&w=1200'" alt="1972 Heritage factory">
                         </div>
                         <div class="absolute -left-12 -bottom-12 bg-stone-950 p-10 rounded-[2rem] text-white shadow-2xl hidden xl:block">
                             <span class="block font-serif text-6xl text-brand-gold mb-2">1972</span>
@@ -276,15 +295,15 @@
             </div>
         </section>
 
-        <!-- Product Catalog -->
-        <section id="catalog" class="py-32 bg-stone-50">
+        <!-- Catalog -->
+        <section id="catalog" class="py-32 bg-white">
             <div class="max-w-7xl mx-auto px-6 lg:px-12">
                 <div class="flex flex-col md:flex-row justify-between items-end mb-20 gap-8 reveal">
                     <div>
                         <h3 class="text-brand-crimson font-bold uppercase tracking-[0.4em] text-[10px] mb-4">The Collection</h3>
                         <h4 class="font-serif text-5xl text-stone-900 italic uppercase tracking-tighter">Pure Spice Range</h4>
                     </div>
-                    <span class="px-5 py-2 bg-white border border-stone-200 rounded-full text-[10px] font-bold uppercase tracking-widest text-brand-gold">Halal MS1500 Compliant</span>
+                    <span class="px-5 py-2 bg-stone-50 border border-stone-200 rounded-full text-[10px] font-bold uppercase tracking-widest text-brand-gold">Halal MS1500 Compliant</span>
                 </div>
 
                 <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-10">
@@ -293,39 +312,39 @@
                             <img src="images/briyani_powder.jpg" alt="Briyani Powder" class="w-full h-full object-cover" onerror="this.src='https://via.placeholder.com/600?text=Briyani'">
                         </div>
                         <p class="text-brand-gold font-bold text-[10px] uppercase tracking-widest mb-2">பிரியாணி மசாலா</p>
-                        <h5 class="font-serif text-2xl italic text-stone-900 mb-2 uppercase">Briyani Powder</h5>
-                        <p class="text-xs text-stone-500 leading-relaxed">Clove, Daun Salam, Jintan Manis, Jintan Putih, Kayu Manis, Ketumbar, Bunga Lawang.</p>
+                        <h5 class="font-serif text-2xl italic text-stone-900 mb-2 uppercase text-justify">Briyani Powder</h5>
+                        <p class="text-xs text-stone-500 leading-relaxed text-justify">Clove, Daun Salam, Jintan Manis, Jintan Putih, Kayu Manis, Ketumbar, Bunga Lawang.</p>
                     </div>
                     <div class="product-card p-8 rounded-3xl reveal">
                         <div class="aspect-square rounded-2xl overflow-hidden mb-6 bg-stone-100">
                             <img src="images/chicken_curry_powder.jpg" alt="Chicken Curry Powder" class="w-full h-full object-cover" onerror="this.src='https://via.placeholder.com/600?text=Chicken+Curry'">
                         </div>
                         <p class="text-brand-gold font-bold text-[10px] uppercase tracking-widest mb-2">சிக்கன் கறி மசாலா</p>
-                        <h5 class="font-serif text-2xl italic text-stone-900 mb-2 uppercase">Chicken Curry</h5>
-                        <p class="text-xs text-stone-500 leading-relaxed">Biji Sawi, Cili Kering, Dhal, Halba, Pelaga India, Kunyit, Lada Hitam.</p>
+                        <h5 class="font-serif text-2xl italic text-stone-900 mb-2 uppercase text-justify">Chicken Curry</h5>
+                        <p class="text-xs text-stone-500 leading-relaxed text-justify">Biji Sawi, Cili Kering, Dhal, Halba, Pelaga India, Kunyit, Lada Hitam.</p>
                     </div>
                     <div class="product-card p-8 rounded-3xl reveal">
                         <div class="aspect-square rounded-2xl overflow-hidden mb-6 bg-stone-100">
                             <img src="images/chilli_powder.jpg" alt="Chilli Powder" class="w-full h-full object-cover" onerror="this.src='https://via.placeholder.com/600?text=Chilli'">
                         </div>
                         <p class="text-brand-gold font-bold text-[10px] uppercase tracking-widest mb-2">மிளகாய் தூள்</p>
-                        <h5 class="font-serif text-2xl italic text-stone-900 mb-2 uppercase">Pure Chilli</h5>
-                        <p class="text-xs text-stone-500 leading-relaxed">100% Dry Red Chilli. Ultra-fine ground for consistent heat profile.</p>
+                        <h5 class="font-serif text-2xl italic text-stone-900 mb-2 uppercase text-justify">Pure Chilli</h5>
+                        <p class="text-xs text-stone-500 leading-relaxed text-justify">100% Dry Red Chilli. Ultra-fine ground for consistent heat profile.</p>
                     </div>
                     <div class="product-card p-8 rounded-3xl reveal">
                         <div class="aspect-square rounded-2xl overflow-hidden mb-6 bg-stone-100">
                             <img src="images/FA_HD SPICES_Turmeric Powder_240mm x 35mm.jpg" alt="Turmeric Powder" class="w-full h-full object-cover" onerror="this.src='https://via.placeholder.com/600?text=Turmeric'">
                         </div>
                         <p class="text-brand-gold font-bold text-[10px] uppercase tracking-widest mb-2">மஞ்சள் தூள்</p>
-                        <h5 class="font-serif text-2xl italic text-stone-900 mb-2 uppercase">Turmeric Pure</h5>
-                        <p class="text-xs text-stone-500 leading-relaxed">100% Turmeric Finger. Higher ash control and moisture consistency.</p>
+                        <h5 class="font-serif text-2xl italic text-stone-900 mb-2 uppercase text-justify">Turmeric Pure</h5>
+                        <p class="text-xs text-stone-500 leading-relaxed text-justify">100% Turmeric Finger. Higher ash control and moisture consistency.</p>
                     </div>
                 </div>
             </div>
         </section>
 
         <!-- Partners -->
-        <section class="py-24 bg-white border-y border-stone-200">
+        <section class="py-24 bg-stone-100 border-y border-stone-200">
             <div class="max-w-7xl mx-auto px-6 lg:px-12 text-center reveal">
                 <h3 class="text-brand-crimson font-bold uppercase tracking-[0.4em] text-[10px] mb-12 italic">Trusted Partner Network</h3>
                 <div class="flex flex-wrap justify-center gap-12 lg:gap-20 items-center">
@@ -343,10 +362,10 @@
     <main id="view-industrial" class="view-section">
         <section class="py-40 bg-stone-950 text-white overflow-hidden relative">
             <div class="max-w-7xl mx-auto px-6 lg:px-12 relative z-10">
-                <h2 class="text-brand-gold font-bold uppercase tracking-[0.6em] text-xs mb-8">Industrial Division</h2>
-                <h3 class="font-serif text-6xl lg:text-8xl italic mb-10 leading-none">Engineering <br>Pure Consistency.</h3>
-                <p class="text-stone-400 max-w-2xl text-lg leading-relaxed font-light">
-                    Our Rawang facility utilizes advanced machinery capable of high-volume output while preserving traditional profiles.
+                <h2 class="text-brand-gold font-bold uppercase tracking-[0.6em] text-xs mb-8 tracking-widest uppercase">Industrial Division</h2>
+                <h3 class="font-serif text-6xl lg:text-8xl italic mb-10 leading-none text-justify uppercase">Engineering <br>Pure Consistency.</h3>
+                <p class="text-stone-400 max-w-2xl text-lg leading-relaxed font-light text-justify italic">
+                    Our Rawang facility utilizes advanced machinery capable of high-volume output while preserving the traditional flavor profile finalized in 1972.
                 </p>
             </div>
             <div class="absolute -right-20 bottom-0 opacity-10 pointer-events-none">
@@ -360,30 +379,30 @@
                 <h3 class="text-brand-crimson font-bold uppercase tracking-[0.4em] text-[10px] mb-4">Operations & SOP</h3>
                 <h4 class="font-serif text-5xl italic text-stone-900 uppercase mb-20 tracking-tighter">Production Workflow</h4>
                 <div class="grid grid-cols-1 md:grid-cols-5 gap-6">
-                    <div class="p-8 bg-stone-50 rounded-2xl border border-stone-200">
-                        <span class="text-stone-300 font-serif text-4xl italic block mb-4">01</span>
+                    <div class="p-8 bg-stone-50 rounded-2xl border border-stone-200 text-justify">
+                        <span class="text-stone-300 font-serif text-4xl italic mb-4 block">01</span>
                         <h5 class="font-bold text-xs uppercase tracking-widest mb-3">Coarse Crush</h5>
-                        <p class="text-stone-500 text-xs leading-relaxed">Spices broken into uniform granules using CSJ breakers.</p>
+                        <p class="text-stone-500 text-xs leading-relaxed">Whole spices are broken into uniform granules using industrial breakers.</p>
                     </div>
-                    <div class="p-8 bg-stone-50 rounded-2xl border border-stone-200">
-                        <span class="text-stone-300 font-serif text-4xl italic block mb-4">02</span>
+                    <div class="p-8 bg-stone-50 rounded-2xl border border-stone-200 text-justify">
+                        <span class="text-stone-300 font-serif text-4xl italic mb-4 block">02</span>
                         <h5 class="font-bold text-xs uppercase tracking-widest mb-3">ACM Milling</h5>
-                        <p class="text-stone-500 text-xs leading-relaxed">Air-classified milling (80-450 mesh) for fine powder.</p>
+                        <p class="text-stone-500 text-xs leading-relaxed">Air-classified milling (80-450 mesh) for ultra-fine consistency.</p>
                     </div>
-                    <div class="p-8 bg-stone-50 rounded-2xl border border-stone-200">
-                        <span class="text-stone-300 font-serif text-4xl italic block mb-4">03</span>
+                    <div class="p-8 bg-stone-50 rounded-2xl border border-stone-200 text-justify">
+                        <span class="text-stone-300 font-serif text-4xl italic mb-4 block">03</span>
                         <h5 class="font-bold text-xs uppercase tracking-widest mb-3">Sieving</h5>
-                        <p class="text-stone-500 text-xs leading-relaxed">Mechanical vibration screening for absolute uniformity.</p>
+                        <p class="text-stone-500 text-xs leading-relaxed">Mechanical vibration screening through precision seivers.</p>
                     </div>
-                    <div class="p-8 bg-stone-50 rounded-2xl border border-stone-200">
-                        <span class="text-stone-300 font-serif text-4xl italic block mb-4">04</span>
+                    <div class="p-8 bg-stone-50 rounded-2xl border border-stone-200 text-justify">
+                        <span class="text-stone-300 font-serif text-4xl italic mb-4 block">04</span>
                         <h5 class="font-bold text-xs uppercase tracking-widest mb-3">Mixing</h5>
-                        <p class="text-stone-500 text-xs leading-relaxed">Homogeneous blending in 304 stainless steel mixers.</p>
+                        <p class="text-stone-500 text-xs leading-relaxed">Homogeneous blending in high-grade 304 stainless steel mixers.</p>
                     </div>
-                    <div class="p-8 bg-stone-50 rounded-2xl border border-stone-200">
-                        <span class="text-stone-300 font-serif text-4xl italic block mb-4">05</span>
+                    <div class="p-8 bg-stone-50 rounded-2xl border border-stone-200 text-justify">
+                        <span class="text-stone-300 font-serif text-4xl italic mb-4 block">05</span>
                         <h5 class="font-bold text-xs uppercase tracking-widest mb-3">Packaging</h5>
-                        <p class="text-stone-500 text-xs leading-relaxed">Hygienic retail & bulk packing under strict QC.</p>
+                        <p class="text-stone-500 text-xs leading-relaxed">Hygienic retail & bulk packing under strict quality control.</p>
                     </div>
                 </div>
             </div>
@@ -394,49 +413,49 @@
             <div class="max-w-7xl mx-auto px-6 lg:px-12">
                 <div class="grid lg:grid-cols-2 gap-16">
                     <div>
-                        <h4 class="font-serif text-4xl italic mb-8">Infrastructure Technicals</h4>
+                        <h4 class="font-serif text-4xl italic mb-8 uppercase tracking-widest">Infrastructure Technicals</h4>
                         <div class="space-y-6">
                             <div class="p-8 rounded-3xl bg-white/5 border border-white/10">
-                                <h5 class="text-lg font-bold uppercase tracking-widest mb-4">WKS-60 Ultra-Fine Grinder</h5>
+                                <h5 class="text-lg font-bold uppercase tracking-widest mb-4 tracking-widest">WKS-60 Ultra-Fine Grinder</h5>
                                 <ul class="text-stone-400 text-xs space-y-3 leading-relaxed">
-                                    <li class="flex justify-between border-b border-white/5 pb-2"><span>Capacity:</span> <span class="text-white">50 - 1200 kg/h</span></li>
-                                    <li class="flex justify-between border-b border-white/5 pb-2"><span>Output Fineness:</span> <span class="text-white">80 - 450 Mesh</span></li>
-                                    <li class="flex justify-between"><span>Power:</span> <span class="text-white">84.15 KW</span></li>
+                                    <li class="flex justify-between border-b border-white/5 pb-2"><span>Capacity:</span> <span class="text-white font-bold">50 - 1200 kg/h</span></li>
+                                    <li class="flex justify-between border-b border-white/5 pb-2"><span>Output Fineness:</span> <span class="text-white font-bold">80 - 450 Mesh</span></li>
+                                    <li class="flex justify-between"><span>Power:</span> <span class="text-white font-bold">84.15 KW</span></li>
                                 </ul>
                             </div>
                             <div class="p-8 rounded-3xl bg-white/5 border border-white/10">
-                                <h5 class="text-lg font-bold uppercase tracking-widest mb-4">CSJ-200 Primary Breaker</h5>
+                                <h5 class="text-lg font-bold uppercase tracking-widest mb-4 tracking-widest">CSJ-200 Primary Breaker</h5>
                                 <ul class="text-stone-400 text-xs space-y-3 leading-relaxed">
-                                    <li class="flex justify-between border-b border-white/5 pb-2"><span>Input Size:</span> <span class="text-white">≤ 100 mm</span></li>
-                                    <li class="flex justify-between"><span>Discharge Range:</span> <span class="text-white">0.5 - 20 mm</span></li>
+                                    <li class="flex justify-between border-b border-white/5 pb-2"><span>Input Size:</span> <span class="text-white font-bold">≤ 100 mm</span></li>
+                                    <li class="flex justify-between"><span>Discharge Range:</span> <span class="text-white font-bold">0.5 - 20 mm</span></li>
                                 </ul>
                             </div>
                         </div>
                     </div>
                     <div class="bg-stone-950 p-12 rounded-[3rem] border border-white/5">
-                        <h4 class="font-serif text-4xl italic mb-10 text-brand-gold">Growth Roadmap</h4>
+                        <h4 class="font-serif text-4xl italic mb-10 text-brand-gold uppercase tracking-widest">Growth Roadmap</h4>
                         <div class="space-y-10">
                             <div class="flex gap-8 relative">
                                 <div class="w-px h-full bg-brand-gold/30 absolute left-3 top-6"></div>
                                 <div class="w-6 h-6 rounded-full bg-brand-gold shrink-0 border-4 border-stone-900 z-10"></div>
                                 <div>
-                                    <h6 class="font-bold text-xs uppercase tracking-widest mb-1">Year 1-2: Digital Presence</h6>
-                                    <p class="text-stone-500 text-xs leading-relaxed">RM100k/mo targeting HORECA & Marketplaces.</p>
+                                    <h6 class="font-bold text-xs uppercase tracking-widest mb-1 tracking-widest">Year 1-2: Digital Presence</h6>
+                                    <p class="text-stone-500 text-xs leading-relaxed text-justify italic">RM100k/mo targeting HORECA & Online Sales.</p>
                                 </div>
                             </div>
                             <div class="flex gap-8 relative">
                                 <div class="w-px h-full bg-brand-gold/30 absolute left-3 top-6"></div>
                                 <div class="w-6 h-6 rounded-full bg-stone-700 shrink-0 border-4 border-stone-900 z-10"></div>
                                 <div>
-                                    <h6 class="font-bold text-xs uppercase tracking-widest mb-1 text-stone-400">Year 3: Brand Stability</h6>
-                                    <p class="text-stone-600 text-xs leading-relaxed">RM200k/mo through stabilized retail distribution.</p>
+                                    <h6 class="font-bold text-xs uppercase tracking-widest mb-1 text-stone-400 tracking-widest">Year 3: Brand Stability</h6>
+                                    <p class="text-stone-600 text-xs leading-relaxed text-justify italic">RM200k/mo through stabilized retail distribution.</p>
                                 </div>
                             </div>
                             <div class="flex gap-8">
                                 <div class="w-6 h-6 rounded-full bg-stone-700 shrink-0 border-4 border-stone-900 z-10"></div>
                                 <div>
-                                    <h6 class="font-bold text-xs uppercase tracking-widest mb-1 text-stone-400">Year 5: ASEAN Leadership</h6>
-                                    <p class="text-stone-600 text-xs leading-relaxed">RM700k/mo through regional export expansion.</p>
+                                    <h6 class="font-bold text-xs uppercase tracking-widest mb-1 text-stone-400 tracking-widest">Year 5: ASEAN Leadership</h6>
+                                    <p class="text-stone-600 text-xs leading-relaxed text-justify italic">RM700k/mo through regional export expansion.</p>
                                 </div>
                             </div>
                         </div>
@@ -452,29 +471,29 @@
             <div class="grid lg:grid-cols-2 gap-24 items-center">
                 <div class="reveal">
                     <h3 class="text-brand-crimson font-bold uppercase tracking-[0.4em] text-[10px] mb-6">Social & Connect</h3>
-                    <h4 class="font-serif text-6xl text-stone-950 italic mb-12 uppercase tracking-tighter">Inquiry</h4>
+                    <h4 class="font-serif text-6xl text-stone-950 italic mb-12 uppercase tracking-tighter text-justify">Inquiry</h4>
                     
-                    <div class="flex gap-6 mb-12">
-                        <a href="https://www.facebook.com/rempahwarisanbernam" target="_blank" class="w-12 h-12 bg-stone-100 rounded-full flex items-center justify-center text-stone-900 hover:bg-brand-crimson hover:text-white transition"><i data-lucide="facebook"></i></a>
-                        <a href="https://www.instagram.com/rempahwarisanbernam" target="_blank" class="w-12 h-12 bg-stone-100 rounded-full flex items-center justify-center text-stone-900 hover:bg-brand-crimson hover:text-white transition"><i data-lucide="instagram"></i></a>
-                        <a href="https://www.x.com/rempahwarisanbernam" target="_blank" class="w-12 h-12 bg-stone-100 rounded-full flex items-center justify-center text-stone-900 hover:bg-brand-crimson hover:text-white transition"><i data-lucide="twitter"></i></a>
-                        <a href="https://www.pinterest.com/rempahwarisanbernam" target="_blank" class="w-12 h-12 bg-stone-100 rounded-full flex items-center justify-center text-stone-900 hover:bg-brand-crimson hover:text-white transition"><i data-lucide="image"></i></a>
-                        <a href="https://www.linkedin.com/company/rempahwarisanbernam" target="_blank" class="w-12 h-12 bg-stone-100 rounded-full flex items-center justify-center text-stone-900 hover:bg-brand-crimson hover:text-white transition"><i data-lucide="linkedin"></i></a>
-                        <a href="https://www.tiktok.com/@rempahwarisanbernam" target="_blank" class="w-12 h-12 bg-stone-100 rounded-full flex items-center justify-center text-stone-900 hover:bg-brand-crimson hover:text-white transition"><i data-lucide="video"></i></a>
+                    <div class="flex flex-wrap gap-4 mb-12">
+                        <a href="https://www.facebook.com/rempahwarisanbernam" target="_blank" class="w-10 h-10 bg-stone-100 rounded-full flex items-center justify-center text-stone-900 hover:bg-brand-crimson hover:text-white transition"><i data-lucide="facebook" class="w-4 h-4"></i></a>
+                        <a href="https://www.instagram.com/rempahwarisanbernam" target="_blank" class="w-10 h-10 bg-stone-100 rounded-full flex items-center justify-center text-stone-900 hover:bg-brand-crimson hover:text-white transition"><i data-lucide="instagram" class="w-4 h-4"></i></a>
+                        <a href="https://www.x.com/rempahwarisanbernam" target="_blank" class="w-10 h-10 bg-stone-100 rounded-full flex items-center justify-center text-stone-900 hover:bg-brand-crimson hover:text-white transition"><i data-lucide="twitter" class="w-4 h-4"></i></a>
+                        <a href="https://www.pinterest.com/rempahwarisanbernam" target="_blank" class="w-10 h-10 bg-stone-100 rounded-full flex items-center justify-center text-stone-900 hover:bg-brand-crimson hover:text-white transition"><i data-lucide="image" class="w-4 h-4"></i></a>
+                        <a href="https://www.linkedin.com/company/rempahwarisanbernam" target="_blank" class="w-10 h-10 bg-stone-100 rounded-full flex items-center justify-center text-stone-900 hover:bg-brand-crimson hover:text-white transition"><i data-lucide="linkedin" class="w-4 h-4"></i></a>
+                        <a href="https://www.tiktok.com/@rempahwarisanbernam" target="_blank" class="w-10 h-10 bg-stone-100 rounded-full flex items-center justify-center text-stone-900 hover:bg-brand-crimson hover:text-white transition"><i data-lucide="video" class="w-4 h-4"></i></a>
                     </div>
 
                     <div class="space-y-10">
                         <div class="flex items-center gap-8">
-                            <div class="w-14 h-14 rounded-full bg-stone-100 flex items-center justify-center text-stone-950 border border-stone-200"><i data-lucide="map-pin"></i></div>
+                            <div class="w-16 h-16 rounded-full bg-stone-100 flex items-center justify-center text-stone-950 border border-stone-200"><i data-lucide="map-pin"></i></div>
                             <div>
-                                <p class="text-[10px] font-bold uppercase tracking-widest text-stone-400 mb-1">Corporate HQ</p>
+                                <p class="text-[10px] font-bold uppercase tracking-widest text-stone-400 mb-1 tracking-widest uppercase">Corporate HQ</p>
                                 <p class="text-stone-900 font-bold text-base leading-relaxed uppercase">73 Jalan Kantan 21, Rawang, Selangor</p>
                             </div>
                         </div>
                         <div class="flex items-center gap-8">
-                            <div class="w-14 h-14 rounded-full bg-stone-100 flex items-center justify-center text-stone-950 border border-stone-200"><i data-lucide="mail"></i></div>
+                            <div class="w-16 h-16 rounded-full bg-stone-100 flex items-center justify-center text-stone-950 border border-stone-200"><i data-lucide="mail"></i></div>
                             <div>
-                                <p class="text-[10px] font-bold uppercase tracking-widest text-stone-400 mb-1">Electronic Mail</p>
+                                <p class="text-[10px] font-bold uppercase tracking-widest text-stone-400 mb-1 tracking-widest uppercase">Email</p>
                                 <p class="text-stone-900 font-bold text-base">info@rempahwarisanbernam.net</p>
                             </div>
                         </div>
@@ -482,14 +501,14 @@
                 </div>
                 <div class="bg-stone-50 p-12 lg:p-16 rounded-[3rem] shadow-2xl border border-stone-100 reveal">
                     <form class="space-y-6">
-                        <input type="text" placeholder="Contact Person" class="w-full bg-white border border-stone-200 p-4 rounded-xl focus:outline-brand-crimson font-medium text-sm transition">
-                        <input type="email" placeholder="Institutional Email" class="w-full bg-white border border-stone-200 p-4 rounded-xl focus:outline-brand-crimson font-medium text-sm transition">
-                        <select class="w-full bg-white border border-stone-200 p-4 rounded-xl focus:outline-brand-crimson font-medium text-sm transition appearance-none">
+                        <input type="text" placeholder="Contact Person" class="w-full bg-white border border-stone-200 p-4 rounded-xl focus:outline-brand-crimson font-medium text-sm transition shadow-sm">
+                        <input type="email" placeholder="Institutional Email" class="w-full bg-white border border-stone-200 p-4 rounded-xl focus:outline-brand-crimson font-medium text-sm transition shadow-sm">
+                        <select class="w-full bg-white border border-stone-200 p-4 rounded-xl focus:outline-brand-crimson font-medium text-sm transition appearance-none shadow-sm">
                             <option>Bulk Supply Agreement</option>
                             <option>Distribution Partner</option>
                             <option>Export Inquiry</option>
                         </select>
-                        <button class="w-full py-5 bg-stone-950 text-white font-bold uppercase tracking-widest text-[11px] rounded-full hover:bg-brand-crimson transition shadow-xl">
+                        <button class="w-full py-5 bg-stone-950 text-white font-bold uppercase tracking-widest text-[11px] rounded-full hover:bg-brand-crimson transition shadow-xl uppercase tracking-widest">
                             Submit Inquiry
                         </button>
                     </form>
@@ -498,20 +517,19 @@
         </div>
     </section>
 
-    <!-- COMPACT FOOTER -->
+    <!-- COMPACT ORGANIZED FOOTER -->
     <footer class="bg-stone-950 text-white py-12">
         <div class="max-w-7xl mx-auto px-6 lg:px-12">
             <div class="grid lg:grid-cols-12 gap-10 border-b border-white/5 pb-12">
                 <div class="lg:col-span-6 flex flex-col md:flex-row items-center md:items-start gap-8">
                     <img src="images/Rempah warisan logo final.png" alt="Logo" class="h-32 lg:h-40 w-auto transition-all shrink-0" onerror="this.src='https://via.placeholder.com/150x150?text=RW'">
                     <div class="text-center md:text-left pt-4">
-                        <h4 class="font-serif text-2xl lg:text-3xl italic mb-3 tracking-tighter">Rempah Warisan Bernam</h4>
-                        <p class="text-stone-500 font-light leading-relaxed text-xs lg:text-sm max-w-sm">Industrial excellence in heritage spices. Delivering purity to the global food industry since 1972.</p>
+                        <h4 class="font-serif text-2xl lg:text-3xl italic mb-3 tracking-tighter uppercase">Rempah Warisan Bernam</h4>
+                        <p class="text-stone-500 font-light leading-relaxed text-xs lg:text-sm max-w-sm italic">Industrial excellence in heritage spices. Delivering purity to the global food industry since 1972.</p>
                         <div class="flex gap-4 mt-6 justify-center md:justify-start opacity-40">
-                            <a href="https://www.facebook.com/rempahwarisanbernam"><i data-lucide="facebook" class="w-4 h-4"></i></a>
-                            <a href="https://www.instagram.com/rempahwarisanbernam"><i data-lucide="instagram" class="w-4 h-4"></i></a>
-                            <a href="https://www.x.com/rempahwarisanbernam"><i data-lucide="twitter" class="w-4 h-4"></i></a>
-                            <a href="https://www.tiktok.com/@rempahwarisanbernam"><i data-lucide="video" class="w-4 h-4"></i></a>
+                            <a href="https://www.facebook.com/rempahwarisanbernam"><i data-lucide="facebook" class="w-4 h-4 hover:text-white transition"></i></a>
+                            <a href="https://www.instagram.com/rempahwarisanbernam"><i data-lucide="instagram" class="w-4 h-4 hover:text-white transition"></i></a>
+                            <a href="https://www.x.com/rempahwarisanbernam"><i data-lucide="twitter" class="w-4 h-4 hover:text-white transition"></i></a>
                         </div>
                     </div>
                 </div>
@@ -519,16 +537,16 @@
                 <div class="lg:col-span-3 flex flex-col gap-5 text-center lg:text-left">
                     <h5 class="text-stone-700 text-[10px] font-black uppercase tracking-[0.4em]">Perspectives</h5>
                     <div class="flex flex-col gap-3 text-[11px] font-bold uppercase tracking-widest text-stone-500">
-                        <button onclick="switchView('brand')" class="hover:text-white transition">Brand Identity</button>
-                        <button onclick="switchView('industrial')" class="hover:text-white transition">Industrial Div.</button>
+                        <button onclick="switchView('brand')" class="hover:text-white transition uppercase text-justify">Brand Identity</button>
+                        <button onclick="switchView('industrial')" class="hover:text-white transition uppercase text-justify">Industrial Div.</button>
                     </div>
                 </div>
 
                 <div class="lg:col-span-3 flex flex-col gap-5 text-center lg:text-left">
                     <h5 class="text-stone-700 text-[10px] font-black uppercase tracking-[0.4em]">Navigation</h5>
                     <div class="flex flex-col gap-3 text-[11px] font-bold uppercase tracking-widest text-stone-500">
-                        <a href="#catalog" class="hover:text-white transition">The Collection</a>
-                        <a href="#contact" class="hover:text-white transition">Project Inquiry</a>
+                        <a href="#catalog" class="hover:text-white transition uppercase text-justify">The Collection</a>
+                        <a href="#contact" class="hover:text-white transition uppercase text-justify">Project Inquiry</a>
                     </div>
                 </div>
             </div>
@@ -573,8 +591,13 @@
 
         const toggle = document.getElementById('mobile-toggle'), menu = document.getElementById('mobile-menu'), close = document.getElementById('mobile-close');
         
-        toggle.addEventListener('click', () => menu.classList.remove('hidden'));
-        close.addEventListener('click', () => menu.classList.add('hidden'));
+        toggle.addEventListener('click', () => {
+            menu.classList.remove('hidden');
+        });
+        
+        close.addEventListener('click', () => {
+            closeMenu();
+        });
 
         function closeMenu() {
             menu.classList.add('hidden');
