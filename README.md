@@ -1,3 +1,22 @@
+<h1 align="center">🌿 Rempah Warisan Bernam 🌿</h1>
+
+<p align="center">
+  <em>Preserving heritage through flavor, culture, and innovation</em>
+</p>
+
+<p align="center">
+  <a href="https://app.netlify.com/projects/adorable-phoenix-18a647/deploys">
+    <img src="https://api.netlify.com/api/v1/badges/b608353e-8e72-4be6-af49-e394f5988cf7/deploy-status" alt="Netlify Status" />
+  </a>
+  <img src="https://img.shields.io/github/license/isaacandy/rempahwarisanbernam" alt="License" />
+  <img src="https://img.shields.io/github/stars/isaacandy/rempahwarisanbernam?style=social" alt="Stars" />
+  <img src="https://img.shields.io/github/forks/isaacandy/rempahwarisanbernam?style=social" alt="Forks" />
+  <img src="https://img.shields.io/github/issues/isaacandy/rempahwarisanbernam" alt="Issues" />
+  <img src="https://img.shields.io/github/last-commit/isaacandy/rempahwarisanbernam" alt="Last Commit" />
+  <img src="https://img.shields.io/badge/Node.js-18.x-green?logo=node.js" alt="Node.js" />
+  <img src="https://img.shields.io/badge/Next.js-14-black?logo=next.js" alt="Next.js" />
+  <img src="https://img.shields.io/badge/Made%20with%20%E2%9D%A4-Malaysia-red" alt="Made with Love in Malaysia" />
+</p>
 <p align="left">
   <img src="images/Rempah warisan logo final.png" alt="Rempah Warisan Logo" width="200">
 </p>
