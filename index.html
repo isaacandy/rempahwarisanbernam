@@ -231,6 +231,11 @@
             transform: scale(1.05);
         }
 
+        #lightbox.hidden {
+            display: none;
+        }
+
+
         .legacy-bg-overlay {
             background: linear-gradient(to right, rgba(253, 252, 249, 0.98) 0%, rgba(253, 252, 249, 0.85) 40%, rgba(253, 252, 249, 0.2) 100%);
         }
@@ -365,7 +370,7 @@
 
                 <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
                     <div class="product-card p-6 rounded-3xl reveal">
-                        <div class="aspect-square rounded-2xl overflow-hidden mb-5 bg-stone-100">
+                        <div class="aspect-square rounded-2xl overflow-hidden mb-5 bg-stone-100 cursor-pointer lightbox-trigger">
                             <img src="images/Packaging/Meat-Curry-Powder.png" alt="Meat Curry Powder Packaging" class="w-full h-full object-cover" onerror="this.src='https://via.placeholder.com/600?text=Meat+Curry'">
                         </div>
                         <p class="text-brand-gold font-bold text-[9px] uppercase tracking-widest mb-2">இறைச்சி கறி மசாலா</p>
@@ -373,7 +378,7 @@
                         <p class="text-[11px] text-stone-500 leading-relaxed">A rich, aromatic blend perfect for all types of meat curries, crafted from our 50-year-old heritage recipe.</p>
                     </div>
                     <div class="product-card p-6 rounded-3xl reveal">
-                        <div class="aspect-square rounded-2xl overflow-hidden mb-5 bg-stone-100">
+                        <div class="aspect-square rounded-2xl overflow-hidden mb-5 bg-stone-100 cursor-pointer lightbox-trigger">
                             <img src="images/Packaging/Chilli-Powder.png" alt="Chilli Powder Packaging" class="w-full h-full object-cover" onerror="this.src='https://via.placeholder.com/600?text=Chilli'">
                         </div>
                         <p class="text-brand-gold font-bold text-[9px] uppercase tracking-widest mb-2">மிளகாய் தூள்</p>
@@ -381,7 +386,7 @@
                         <p class="text-[11px] text-stone-500 leading-relaxed">100% Dry Red Chilli. Ultra-fine ground for consistent profile.</p>
                     </div>
                     <div class="product-card p-6 rounded-3xl reveal">
-                        <div class="aspect-square rounded-2xl overflow-hidden mb-5 bg-stone-100">
+                        <div class="aspect-square rounded-2xl overflow-hidden mb-5 bg-stone-100 cursor-pointer lightbox-trigger">
                             <img src="images\Packaging\Coriander-Powder.png" alt="Coriander Powder Packaging" class="w-full h-full object-cover" onerror="this.src='https://via.placeholder.com/600?text=Coriander'">
                         </div>
                         <p class="text-brand-gold font-bold text-[9px] uppercase tracking-widest mb-2">கொத்தமல்லி தூள்</p>
@@ -389,7 +394,7 @@
                         <p class="text-[11px] text-stone-500 leading-relaxed">100% Pure Coriander seeds. Ultra-fine ground for consistent profile.</p>
                     </div>
                     <div class="product-card p-6 rounded-3xl reveal">
-                        <div class="aspect-square rounded-2xl overflow-hidden mb-5 bg-stone-100">
+                        <div class="aspect-square rounded-2xl overflow-hidden mb-5 bg-stone-100 cursor-pointer lightbox-trigger">
                             <img src="images/Packaging/Fish-Curry-Powder.png" alt="Fish Curry Powder Packaging" class="w-full h-full object-cover" onerror="this.src='https://via.placeholder.com/600?text=Fish+Curry'">
                         </div>
                         <p class="text-brand-gold font-bold text-[9px] uppercase tracking-widest mb-2">மீன் கறி மசாலா</p>
@@ -397,7 +402,7 @@
                         <p class="text-[11px] text-stone-500 leading-relaxed">Coriander, Chilli, Turmeric, Cumin, Fenugreek, Pepper.</p>
                     </div>
                     <div class="product-card p-6 rounded-3xl reveal">
-                        <div class="aspect-square rounded-2xl overflow-hidden mb-5 bg-stone-100">
+                        <div class="aspect-square rounded-2xl overflow-hidden mb-5 bg-stone-100 cursor-pointer lightbox-trigger">
                             <img src="images\Packaging\Cumin_Powder.png" alt="Cumin Powder Packaging" class="w-full h-full object-cover" onerror="this.src='https://via.placeholder.com/600?text=Cumin'">
                         </div>
                         <p class="text-brand-gold font-bold text-[9px] uppercase tracking-widest mb-2">சீரக தூள்</p>
@@ -405,7 +410,7 @@
                         <p class="text-[11px] text-stone-500 leading-relaxed">Finely ground cumin seeds for a warm, earthy flavor essential in authentic cuisine.</p>
                     </div>
                     <div class="product-card p-6 rounded-3xl reveal">
-                        <div class="aspect-square rounded-2xl overflow-hidden mb-5 bg-stone-100">
+                        <div class="aspect-square rounded-2xl overflow-hidden mb-5 bg-stone-100 cursor-pointer lightbox-trigger">
                             <img src="images\Packaging\Fennel Powder.png" alt="Fennel Powder Packaging" class="w-full h-full object-cover" onerror="this.src='https://via.placeholder.com/600?text=Fennel'">
                         </div>
                         <p class="text-brand-gold font-bold text-[9px] uppercase tracking-widest mb-2">சோம்பு தூள்</p>
@@ -413,7 +418,7 @@
                         <p class="text-[11px] text-stone-500 leading-relaxed">Sweet and aromatic fennel powder, perfect for adding a unique, fragrant touch to your dishes.</p>
                     </div>
                     <div class="product-card p-6 rounded-3xl reveal">
-                        <div class="aspect-square rounded-2xl overflow-hidden mb-5 bg-stone-100">
+                        <div class="aspect-square rounded-2xl overflow-hidden mb-5 bg-stone-100 cursor-pointer lightbox-trigger">
                             <img src="images\Packaging\Vegetarien-Curry Powder.png" alt="Vegetarian Curry Powder Packaging" class="w-full h-full object-cover" onerror="this.src='https://via.placeholder.com/600?text=Veg+Curry'">
                         </div>
                         <p class="text-brand-gold font-bold text-[9px] uppercase tracking-widest mb-2">சைவ கறி மசாலா</p>
@@ -646,6 +651,16 @@
         </div>
     </footer>
 
+    <!-- Lightbox Modal -->
+    <div id="lightbox" class="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-[100] hidden p-4">
+        <div class="relative max-w-4xl max-h-[90vh]">
+            <img id="lightbox-image" src="" alt="Enlarged product view" class="max-w-full max-h-full object-contain rounded-lg">
+            <button id="lightbox-close" class="absolute -top-4 -right-4 lg:top-0 lg:-right-12 text-white hover:text-brand-gold transition">
+                <i data-lucide="x" class="w-8 h-8"></i>
+            </button>
+        </div>
+    </div>
+
     <script>
         lucide.createIcons();
 
@@ -686,6 +701,36 @@
         function closeMenu() {
             menu.classList.add('hidden');
         }
+
+        // Lightbox functionality
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImage = document.getElementById('lightbox-image');
+        const lightboxClose = document.getElementById('lightbox-close');
+        const lightboxTriggers = document.querySelectorAll('.lightbox-trigger');
+
+        function openLightbox(src) {
+            lightboxImage.src = src;
+            lightbox.classList.remove('hidden');
+            lucide.createIcons(); // Re-render close icon
+        }
+
+        function closeLightbox() {
+            lightbox.classList.add('hidden');
+            lightboxImage.src = ''; // Clear src
+        }
+
+        lightboxTriggers.forEach(trigger => {
+            trigger.addEventListener('click', () => {
+                const img = trigger.querySelector('img');
+                if (img && img.src) {
+                    openLightbox(img.src);
+                }
+            });
+        });
+
+        lightboxClose.addEventListener('click', closeLightbox);
+        lightbox.addEventListener('click', (e) => { if (e.target === lightbox) closeLightbox(); });
+        document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeLightbox(); });
     </script>
 </body>
 </html>
