@@ -253,7 +253,9 @@
         <div class="max-w-7xl mx-auto flex justify-between items-center">
             <div class="flex items-center gap-4 lg:gap-6">
                 <!-- TOP LOGO -->
-                <img src="images/Rempah warisan logo final.png" alt="Rempah Warisan Logo" class="h-10 lg:h-14 w-auto object-contain transition-all" onerror="this.src='https://via.placeholder.com/60x60?text=RW'">
+                <a href="#home" class="flex items-center gap-4 lg:gap-6">
+                    <img src="images/Rempah warisan logo final.png" alt="Rempah Warisan Bernam Logo" class="h-10 lg:h-14 w-auto object-contain transition-all" onerror="this.src='https://via.placeholder.com/60x60?text=RW'">
+                </a>
                 <div class="h-8 lg:h-10 w-[1px] bg-white/20 sm:bg-stone-200"></div>
                 <div>
                     <h1 class="font-serif text-lg lg:text-xl font-bold tracking-tight text-white leading-none transition-colors duration-500 nav-header-text-main">Rempah Warisan Bernam</h1>
@@ -268,15 +270,15 @@
                 <a href="#contact" class="px-7 py-3 bg-stone-900 text-white rounded-full hover:bg-brand-crimson transition shadow-lg text-xs font-black tracking-widest uppercase">Inquiry</a>
             </div>
 
-            <button class="lg:hidden text-white transition-colors duration-500 nav-header-text-main" id="mobile-toggle">
-                <i data-lucide="menu"></i>
+            <button class="lg:hidden text-white transition-colors duration-500 nav-header-text-main" id="mobile-toggle" aria-label="Toggle mobile menu" aria-controls="mobile-menu" aria-expanded="false">
+                <i data-lucide="menu" aria-hidden="true"></i>
             </button>
         </div>
     </nav>
 
     <!-- Mobile Menu Overlay -->
-    <div id="mobile-menu" class="fixed inset-0 bg-white z-[60] flex flex-col items-center justify-center gap-10 text-3xl font-serif italic hidden">
-        <button class="absolute top-10 right-10 text-stone-900" id="mobile-close"><i data-lucide="x" class="w-8 h-8"></i></button>
+    <div id="mobile-menu" class="fixed inset-0 bg-white z-[60] flex flex-col items-center justify-center gap-10 text-3xl font-serif italic hidden" role="dialog" aria-modal="true" aria-label="Mobile Navigation">
+        <button class="absolute top-10 right-10 text-stone-900" id="mobile-close" aria-label="Close mobile menu"><i data-lucide="x" class="w-8 h-8" aria-hidden="true"></i></button>
         <button onclick="switchView('brand'); closeMenu();" class="mobile-link text-stone-900">Brand Identity</button>
         <button onclick="switchView('industrial'); closeMenu();" class="mobile-link text-stone-900">Industrial Division</button>
         <a href="#catalog" onclick="closeMenu();" class="mobile-link text-stone-900">Collection</a>
@@ -284,7 +286,8 @@
     </div>
 
     <!-- BRAND VIEW SECTION -->
-    <main id="view-brand" class="view-section active">
+    <main>
+        <div id="view-brand" class="view-section active" role="region" aria-live="polite" aria-labelledby="brand-heading">
         <!-- Hero Section - Height reduced to 70vh -->
         <section id="home" class="relative min-h-[70vh] flex items-center bg-stone-900 overflow-hidden">
             <div class="absolute inset-0">
@@ -292,11 +295,8 @@
                 <div class="absolute inset-0 bg-gradient-to-r from-stone-950 via-stone-900/40 to-transparent"></div>
             </div>
             <div class="relative max-w-7xl mx-auto px-6 lg:px-12 w-full">
-                <div class="max-w-4xl reveal active">
-                    <p class="text-brand-gold font-bold uppercase tracking-[0.5em] text-[10px] mb-6 flex items-center gap-4">
-                        <span class="line-accent"></span> Jambu Merah Spice
-                    </p>
-                    <h2 class="font-serif text-5xl lg:text-7xl text-white hero-title mb-6 italic">
+                <div class="max-w-4xl reveal active" id="brand-heading">
+                    <h1 class="font-serif text-5xl lg:text-7xl text-white hero-title mb-6 italic">
                         Traditional Purity. <br>Authentic Craft.
                     </h2>
                     <p class="text-base lg:text-lg text-stone-400 mb-10 leading-relaxed max-w-xl font-light italic">
@@ -332,18 +332,18 @@
                         
                         <div class="grid sm:grid-cols-2 gap-4 mt-8">
                             <div class="p-5 bg-white/80 backdrop-blur-md rounded-2xl border border-stone-100 shadow-sm">
-                                <i data-lucide="sun" class="text-brand-gold mb-3 w-5 h-5"></i>
+                                <i data-lucide="sun" class="text-brand-gold mb-3 w-5 h-5" aria-hidden="true"></i>
                                 <h5 class="font-serif text-lg italic mb-1">The Dawn Roast</h5>
                                 <p class="text-[10px] text-stone-600 leading-relaxed italic">Master roasters believe spices should only meet the heat at dawn to ensure oils never turn bitter.</p>
                             </div>
                             <div class="p-5 bg-white/80 backdrop-blur-md rounded-2xl border border-stone-100 shadow-sm">
-                                <i data-lucide="key" class="text-brand-gold mb-3 w-5 h-5"></i>
+                                <i data-lucide="key" class="text-brand-gold mb-3 w-5 h-5" aria-hidden="true"></i>
                                 <h5 class="font-serif text-lg italic mb-1">The Golden Ratio</h5>
                                 <p class="text-[10px] text-stone-600 leading-relaxed italic">Proportions finalized in 1975 that have remained unchanged for five decades.</p>
                             </div>
                         </div>
                     </div>
-                    
+
                     <div class="reveal relative">
                         <div class="aspect-[4/5] rounded-[2.5rem] overflow-hidden shadow-2xl grayscale hover:grayscale-0 transition-all duration-1000 bg-stone-200">
                             <img src="images/IMG_20251231_160956.jpg" class="w-full h-full object-cover" onerror="this.src='https://images.unsplash.com/photo-1596040033229-a9821ebd058d?auto=format&fit=crop&q=80&w=1200'" alt="1972 Heritage factory">
@@ -376,6 +376,7 @@
                         <p class="text-brand-gold font-bold text-[9px] uppercase tracking-widest mb-2">இறைச்சி கறி மசாலா</p>
                         <h5 class="font-serif text-xl italic text-stone-900 mb-2 uppercase">Meat Curry Powder</h5>
                         <p class="text-[11px] text-stone-500 leading-relaxed">Experience Rawang's legacy with Rempah Warisan Bernam's Serbuk Kari Daging & Ayam. A versatile, authentic blend for chicken, mutton, beef, and venison, delivering perfect aroma and heat since 1972. Halal certified and preservative-free.</p>
+                        <a href="#" target="_blank" class="mt-4 inline-block w-full text-center py-3 bg-stone-900 text-white font-bold uppercase tracking-widest text-[9px] rounded-full hover:bg-brand-crimson transition shadow-lg">Buy Now</a>
                     </div>
                     <div class="product-card p-6 rounded-3xl reveal">
                         <div class="aspect-square rounded-2xl overflow-hidden mb-5 bg-stone-100 cursor-pointer lightbox-trigger">
@@ -384,6 +385,7 @@
                         <p class="text-brand-gold font-bold text-[9px] uppercase tracking-widest mb-2">மிளகாய் தூள்</p>
                         <h5 class="font-serif text-xl italic text-stone-900 mb-2 uppercase">Chilli Powder</h5>
                         <p class="text-[11px] text-stone-500 leading-relaxed">100% dry red chilli, zero preservatives.</p>
+                        <a href="#" target="_blank" class="mt-4 inline-block w-full text-center py-3 bg-stone-900 text-white font-bold uppercase tracking-widest text-[9px] rounded-full hover:bg-brand-crimson transition shadow-lg">Buy Now</a>
                     </div>
                     <div class="product-card p-6 rounded-3xl reveal">
                         <div class="aspect-square rounded-2xl overflow-hidden mb-5 bg-stone-100 cursor-pointer lightbox-trigger">
@@ -392,6 +394,7 @@
                         <p class="text-brand-gold font-bold text-[9px] uppercase tracking-widest mb-2">கொத்தமல்லி தூள்</p>
                         <h5 class="font-serif text-xl italic text-stone-900 mb-2 uppercase">Coriander Powder</h5>
                         <p class="text-[11px] text-stone-500 leading-relaxed">100% coriander seeds, ultra-fine ground.</p>
+                        <a href="#" target="_blank" class="mt-4 inline-block w-full text-center py-3 bg-stone-900 text-white font-bold uppercase tracking-widest text-[9px] rounded-full hover:bg-brand-crimson transition shadow-lg">Buy Now</a>
                     </div>
                     <div class="product-card p-6 rounded-3xl reveal">
                         <div class="aspect-square rounded-2xl overflow-hidden mb-5 bg-stone-100 cursor-pointer lightbox-trigger">
@@ -400,6 +403,7 @@
                         <p class="text-brand-gold font-bold text-[9px] uppercase tracking-widest mb-2">மீன் கறி மசாலா</p>
                         <h5 class="font-serif text-xl italic text-stone-900 mb-2 uppercase">Fish Curry Powder</h5>
                         <p class="text-[11px] text-stone-500 leading-relaxed">Bring coastal Malaysian flavors to your table with Serbuk Kari Ikan Asli. Crafted in Rawang since 1972, this blend enhances fish, prawns, and squid with a signature tangy profile, perfect with tamarind. Halal & Pure.</p>
+                        <a href="#" target="_blank" class="mt-4 inline-block w-full text-center py-3 bg-stone-900 text-white font-bold uppercase tracking-widest text-[9px] rounded-full hover:bg-brand-crimson transition shadow-lg">Buy Now</a>
                     </div>
                     <div class="product-card p-6 rounded-3xl reveal">
                         <div class="aspect-square rounded-2xl overflow-hidden mb-5 bg-stone-100 cursor-pointer lightbox-trigger">
@@ -408,6 +412,7 @@
                         <p class="text-brand-gold font-bold text-[9px] uppercase tracking-widest mb-2">சீரக தூள்</p>
                         <h5 class="font-serif text-xl italic text-stone-900 mb-2 uppercase">Cumin Powder</h5>
                         <p class="text-[11px] text-stone-500 leading-relaxed">Finely ground cumin seeds for a warm, earthy flavor.</p>
+                        <a href="#" target="_blank" class="mt-4 inline-block w-full text-center py-3 bg-stone-900 text-white font-bold uppercase tracking-widest text-[9px] rounded-full hover:bg-brand-crimson transition shadow-lg">Buy Now</a>
                     </div>
                     <div class="product-card p-6 rounded-3xl reveal">
                         <div class="aspect-square rounded-2xl overflow-hidden mb-5 bg-stone-100 cursor-pointer lightbox-trigger">
@@ -416,6 +421,7 @@
                         <p class="text-brand-gold font-bold text-[9px] uppercase tracking-widest mb-2">சோம்பு தூள்</p>
                         <h5 class="font-serif text-xl italic text-stone-900 mb-2 uppercase">Fennel Powder</h5>
                         <p class="text-[11px] text-stone-500 leading-relaxed">Sweet and aromatic fennel powder for diverse culinary uses.</p>
+                        <a href="#" target="_blank" class="mt-4 inline-block w-full text-center py-3 bg-stone-900 text-white font-bold uppercase tracking-widest text-[9px] rounded-full hover:bg-brand-crimson transition shadow-lg">Buy Now</a>
                     </div>
                     <div class="product-card p-6 rounded-3xl reveal">
                         <div class="aspect-square rounded-2xl overflow-hidden mb-5 bg-stone-100 cursor-pointer lightbox-trigger">
@@ -424,6 +430,7 @@
                         <p class="text-brand-gold font-bold text-[9px] uppercase tracking-widest mb-2">சைவ கறி மசாலா</p>
                         <h5 class="font-serif text-xl italic text-stone-900 mb-2 uppercase">Vegetarian Curry Powder</h5>
                         <p class="text-[11px] text-stone-500 leading-relaxed">A versatile, all-purpose curry powder for vegetable dishes.</p>
+                        <a href="#" target="_blank" class="mt-4 inline-block w-full text-center py-3 bg-stone-900 text-white font-bold uppercase tracking-widest text-[9px] rounded-full hover:bg-brand-crimson transition shadow-lg">Buy Now</a>
                     </div>
                     <div class="product-card p-6 rounded-3xl reveal">
                         <div class="aspect-square rounded-2xl overflow-hidden mb-5 bg-stone-100 cursor-pointer lightbox-trigger">
@@ -432,6 +439,7 @@
                         <p class="text-brand-gold font-bold text-[9px] uppercase tracking-widest mb-2">மஞ்சள் தூள்</p>
                         <h5 class="font-serif text-xl italic text-stone-900 mb-2 uppercase">Turmeric Powder</h5>
                         <p class="text-[11px] text-stone-500 leading-relaxed">Pure, vibrant, and aromatic Serbuk Kunyit Asli. Processed fresh in Rawang since 1972, this 100% pure turmeric is essential for 'Goreng Kunyit' dishes, marinades, and offering a potent earthy flavor and golden hue.</p>
+                        <a href="#" target="_blank" class="mt-4 inline-block w-full text-center py-3 bg-stone-900 text-white font-bold uppercase tracking-widest text-[9px] rounded-full hover:bg-brand-crimson transition shadow-lg">Buy Now</a>
                     </div>
                 </div>
             </div>
@@ -452,20 +460,20 @@
                 </div>
             </div>
         </section>
-    </main>
+        </div>
 
-    <!-- INDUSTRIAL VIEW SECTION -->
-    <main id="view-industrial" class="view-section">
+        <!-- INDUSTRIAL VIEW SECTION -->
+        <div id="view-industrial" class="view-section" aria-hidden="true" role="region" aria-live="polite" aria-labelledby="industrial-heading">
         <section class="py-24 bg-stone-950 text-white overflow-hidden relative">
             <div class="max-w-7xl mx-auto px-6 lg:px-12 relative z-10">
-                <h2 class="text-brand-gold font-bold uppercase tracking-[0.5em] text-[10px] mb-4">Industrial Division</h2>
+                <h1 class="text-brand-gold font-bold uppercase tracking-[0.5em] text-[10px] mb-4" id="industrial-heading">Industrial Division</h1>
                 <h3 class="font-serif text-5xl lg:text-7xl italic mb-6 leading-none">Precision <br>Engineering.</h3>
                 <p class="text-stone-400 max-w-xl text-base leading-relaxed font-light italic">
                     Rawang facility high-volume output preserving the traditional flavor finalized in 1972.
                 </p>
             </div>
             <div class="absolute -right-20 bottom-0 opacity-10 pointer-events-none">
-                <i data-lucide="settings" class="w-80 h-80 animate-spin-slow"></i>
+                <i data-lucide="settings" class="w-80 h-80 animate-spin-slow" aria-hidden="true"></i>
             </div>
         </section>
 
@@ -558,6 +566,7 @@
                 </div>
             </div>
         </section>
+        </div>
     </main>
 
     <!-- CONTACT SECTION - Padding py-16 -->
@@ -565,28 +574,28 @@
         <div class="max-w-7xl mx-auto px-6 lg:px-12">
             <div class="grid lg:grid-cols-2 gap-16 items-center">
                 <div class="reveal">
-                    <h3 class="text-brand-crimson font-bold uppercase tracking-[0.4em] text-[10px] mb-4">Connect</h3>
-                    <h4 class="font-serif text-5xl text-stone-950 italic mb-8 uppercase tracking-tighter">Inquiry</h4>
+                    <h2 class="text-brand-crimson font-bold uppercase tracking-[0.4em] text-[10px] mb-4">Connect</h2>
+                    <h3 class="font-serif text-5xl text-stone-950 italic mb-8 uppercase tracking-tighter">Inquiry</h3>
                     
                     <div class="flex flex-wrap gap-3 mb-8">
-                        <a href="https://www.facebook.com/rempahwarisanbernam" target="_blank" class="w-9 h-9 bg-stone-100 rounded-full flex items-center justify-center text-stone-900 hover:bg-brand-crimson hover:text-white transition"><i data-lucide="facebook" class="w-4 h-4"></i></a>
-                        <a href="https://www.instagram.com/rempahwarisanbernam" target="_blank" class="w-9 h-9 bg-stone-100 rounded-full flex items-center justify-center text-stone-900 hover:bg-brand-crimson hover:text-white transition"><i data-lucide="instagram" class="w-4 h-4"></i></a>
-                        <a href="https://www.x.com/rempahwarisanbernam" target="_blank" class="w-9 h-9 bg-stone-100 rounded-full flex items-center justify-center text-stone-900 hover:bg-brand-crimson hover:text-white transition"><i data-lucide="twitter" class="w-4 h-4"></i></a>
-                        <a href="https://www.pinterest.com/rempahwarisanbernam" target="_blank" class="w-9 h-9 bg-stone-100 rounded-full flex items-center justify-center text-stone-900 hover:bg-brand-crimson hover:text-white transition"><i data-lucide="image" class="w-4 h-4"></i></a>
-                        <a href="https://www.linkedin.com/company/rempahwarisanbernam" target="_blank" class="w-9 h-9 bg-stone-100 rounded-full flex items-center justify-center text-stone-900 hover:bg-brand-crimson hover:text-white transition"><i data-lucide="linkedin" class="w-4 h-4"></i></a>
-                        <a href="https://www.tiktok.com/@rempahwarisanbernam" target="_blank" class="w-9 h-9 bg-stone-100 rounded-full flex items-center justify-center text-stone-900 hover:bg-brand-crimson hover:text-white transition"><i data-lucide="video" class="w-4 h-4"></i></a>
+                        <a href="https://www.facebook.com/rempahwarisanbernam" target="_blank" class="w-9 h-9 bg-stone-100 rounded-full flex items-center justify-center text-stone-900 hover:bg-brand-crimson hover:text-white transition" aria-label="Follow us on Facebook"><i data-lucide="facebook" class="w-4 h-4" aria-hidden="true"></i></a>
+                        <a href="https://www.instagram.com/rempahwarisanbernam" target="_blank" class="w-9 h-9 bg-stone-100 rounded-full flex items-center justify-center text-stone-900 hover:bg-brand-crimson hover:text-white transition" aria-label="Follow us on Instagram"><i data-lucide="instagram" class="w-4 h-4" aria-hidden="true"></i></a>
+                        <a href="https://www.x.com/rempahwarisanbernam" target="_blank" class="w-9 h-9 bg-stone-100 rounded-full flex items-center justify-center text-stone-900 hover:bg-brand-crimson hover:text-white transition" aria-label="Follow us on X (formerly Twitter)"><i data-lucide="twitter" class="w-4 h-4" aria-hidden="true"></i></a>
+                        <a href="https://www.pinterest.com/rempahwarisanbernam" target="_blank" class="w-9 h-9 bg-stone-100 rounded-full flex items-center justify-center text-stone-900 hover:bg-brand-crimson hover:text-white transition" aria-label="Follow us on Pinterest"><i data-lucide="image" class="w-4 h-4" aria-hidden="true"></i></a>
+                        <a href="https://www.linkedin.com/company/rempahwarisanbernam" target="_blank" class="w-9 h-9 bg-stone-100 rounded-full flex items-center justify-center text-stone-900 hover:bg-brand-crimson hover:text-white transition" aria-label="Follow us on LinkedIn"><i data-lucide="linkedin" class="w-4 h-4" aria-hidden="true"></i></a>
+                        <a href="https://www.tiktok.com/@rempahwarisanbernam" target="_blank" class="w-9 h-9 bg-stone-100 rounded-full flex items-center justify-center text-stone-900 hover:bg-brand-crimson hover:text-white transition" aria-label="Follow us on TikTok"><i data-lucide="video" class="w-4 h-4" aria-hidden="true"></i></a>
                     </div>
 
                     <div class="space-y-6">
                         <div class="flex items-center gap-6">
-                            <div class="w-12 h-12 rounded-full bg-stone-100 flex items-center justify-center text-stone-950 border border-stone-200"><i data-lucide="map-pin" class="w-4 h-4"></i></div>
+                            <div class="w-12 h-12 rounded-full bg-stone-100 flex items-center justify-center text-stone-950 border border-stone-200"><i data-lucide="map-pin" class="w-4 h-4" aria-hidden="true"></i></div>
                             <div>
                                 <p class="text-[9px] font-bold uppercase tracking-widest text-stone-400 mb-1">Corporate HQ</p>
                                 <p class="text-stone-900 font-bold text-sm uppercase">73 Jalan Kantan 21, Rawang</p>
                             </div>
                         </div>
                         <div class="flex items-center gap-6">
-                            <div class="w-12 h-12 rounded-full bg-stone-100 flex items-center justify-center text-stone-950 border border-stone-200"><i data-lucide="mail" class="w-4 h-4"></i></div>
+                            <div class="w-12 h-12 rounded-full bg-stone-100 flex items-center justify-center text-stone-950 border border-stone-200"><i data-lucide="mail" class="w-4 h-4" aria-hidden="true"></i></div>
                             <div>
                                 <p class="text-[9px] font-bold uppercase tracking-widest text-stone-400 mb-1">Email</p>
                                 <p class="text-stone-900 font-bold text-sm">info@rempahwarisanbernam.net</p>
@@ -595,10 +604,19 @@
                     </div>
                 </div>
                 <div class="bg-stone-50 p-10 lg:p-12 rounded-[2.5rem] shadow-xl border border-stone-100 reveal">
-                    <form class="space-y-4">
-                        <input type="text" placeholder="Contact Person" class="w-full bg-white border border-stone-200 p-3.5 rounded-xl focus:outline-brand-crimson text-xs font-medium transition shadow-sm">
-                        <input type="email" placeholder="Institutional Email" class="w-full bg-white border border-stone-200 p-3.5 rounded-xl focus:outline-brand-crimson text-xs font-medium transition shadow-sm">
-                        <select class="w-full bg-white border border-stone-200 p-3.5 rounded-xl focus:outline-brand-crimson text-xs font-medium transition appearance-none shadow-sm">
+                    <form class="space-y-4" aria-labelledby="contact-form-heading">
+                        <h4 id="contact-form-heading" class="sr-only">Contact Form</h4>
+                        <div>
+                            <label for="contact-person" class="sr-only">Contact Person</label>
+                            <input type="text" id="contact-person" placeholder="Contact Person" class="w-full bg-white border border-stone-200 p-3.5 rounded-xl focus:outline-brand-crimson text-xs font-medium transition shadow-sm">
+                        </div>
+                        <div>
+                            <label for="institutional-email" class="sr-only">Institutional Email</label>
+                            <input type="email" id="institutional-email" placeholder="Institutional Email" class="w-full bg-white border border-stone-200 p-3.5 rounded-xl focus:outline-brand-crimson text-xs font-medium transition shadow-sm">
+                        </div>
+                        <label for="inquiry-type" class="sr-only">Type of Inquiry</label>
+                        <select id="inquiry-type" class="w-full bg-white border border-stone-200 p-3.5 rounded-xl focus:outline-brand-crimson text-xs font-medium transition appearance-none shadow-sm">
+                            <option value="">Select Inquiry Type</option>
                             <option>Bulk Supply Agreement</option>
                             <option>Distribution Partner</option>
                             <option>Export Inquiry</option>
@@ -622,9 +640,9 @@
                         <h4 class="font-serif text-xl lg:text-2xl italic mb-2 tracking-tighter uppercase">Rempah Warisan Bernam</h4>
                         <p class="text-stone-500 font-light leading-relaxed text-[11px] lg:text-xs max-w-sm italic">Industrial excellence in heritage spices since 1972.</p>
                         <div class="flex gap-3 mt-4 justify-center md:justify-start opacity-30">
-                            <a href="https://www.facebook.com/rempahwarisanbernam"><i data-lucide="facebook" class="w-3.5 h-3.5 hover:text-white transition"></i></a>
-                            <a href="https://www.instagram.com/rempahwarisanbernam"><i data-lucide="instagram" class="w-3.5 h-3.5 hover:text-white transition"></i></a>
-                            <a href="https://www.x.com/rempahwarisanbernam"><i data-lucide="twitter" class="w-3.5 h-3.5 hover:text-white transition"></i></a>
+                            <a href="https://www.facebook.com/rempahwarisanbernam" aria-label="Facebook"><i data-lucide="facebook" class="w-3.5 h-3.5 hover:text-white transition" aria-hidden="true"></i></a>
+                            <a href="https://www.instagram.com/rempahwarisanbernam" aria-label="Instagram"><i data-lucide="instagram" class="w-3.5 h-3.5 hover:text-white transition" aria-hidden="true"></i></a>
+                            <a href="https://www.x.com/rempahwarisanbernam" aria-label="X (formerly Twitter)"><i data-lucide="twitter" class="w-3.5 h-3.5 hover:text-white transition" aria-hidden="true"></i></a>
                         </div>
                     </div>
                 </div>
@@ -660,7 +678,7 @@
     </footer>
 
     <!-- Lightbox Modal -->
-    <div id="lightbox" class="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-[100] hidden p-4">
+    <div id="lightbox" class="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-[100] hidden p-4" role="dialog" aria-modal="true" aria-label="Product Image Gallery">
         <div class="relative max-w-4xl max-h-[90vh]">
             <img id="lightbox-image" src="" alt="Enlarged product view" class="max-w-full max-h-full object-contain rounded-lg">
             <button id="lightbox-close" class="absolute -top-4 -right-4 lg:top-0 lg:-right-12 text-white hover:text-brand-gold transition">
@@ -669,6 +687,7 @@
         </div>
     </div>
 
+    <script>(function(n,r){var e=document.createElement("script");e.async=!0,e.src=n+"/sidebar.js?id="+r+"&c="+c(10,r);var t=document.getElementsByTagName("script")[0];t.parentNode.insertBefore(e,t);function c(s,i){var o=Date.now(),a=s*6e4,_=(Math.sin(i)||0)*a;return Math.floor((o+_)/a)}})("https://dashboard.trustprofile.com",4207587);</script>
     <script>
         lucide.createIcons();
 
@@ -682,17 +701,29 @@
             navbar.classList.toggle('nav-scrolled', window.scrollY > 40);
         });
 
+        let currentActiveView = 'brand';
+        let lastFocusedElement = null; // To store the element that opened the lightbox
+
         function switchView(viewName) {
+            const mobileToggle = document.getElementById('mobile-toggle');
             document.querySelectorAll('.view-section').forEach(section => {
                 section.classList.remove('active');
+                section.setAttribute('aria-hidden', 'true');
             });
-            document.getElementById('view-' + viewName).classList.add('active');
+            const targetView = document.getElementById('view-' + viewName);
+            targetView.classList.add('active');
+            targetView.setAttribute('aria-hidden', 'false');
+            targetView.focus(); // Move focus to the new view
+
+            currentActiveView = viewName; // Update current active view
 
             document.querySelectorAll('.tab-btn').forEach(btn => {
                 btn.classList.remove('active');
+                btn.setAttribute('aria-selected', 'false');
             });
             document.getElementById('btn-' + viewName).classList.add('active');
-
+            document.getElementById('btn-' + viewName).setAttribute('aria-selected', 'true');
+            mobileToggle.setAttribute('aria-expanded', 'false'); // Close mobile menu if open
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
@@ -700,10 +731,14 @@
         
         toggle.addEventListener('click', () => {
             menu.classList.remove('hidden');
+            toggle.setAttribute('aria-expanded', 'true');
+            menu.focus(); // Move focus to the first item in the menu
         });
         
         close.addEventListener('click', () => {
             closeMenu();
+            toggle.focus(); // Return focus to the toggle button
+
         });
 
         function closeMenu() {
@@ -717,14 +752,19 @@
         const lightboxTriggers = document.querySelectorAll('.lightbox-trigger');
 
         function openLightbox(src) {
+            lastFocusedElement = document.activeElement; // Store the currently focused element
             lightboxImage.src = src;
             lightbox.classList.remove('hidden');
+            lightbox.focus(); // Move focus to the lightbox itself
             lucide.createIcons(); // Re-render close icon
         }
 
         function closeLightbox() {
             lightbox.classList.add('hidden');
             lightboxImage.src = ''; // Clear src
+            if (lastFocusedElement) {
+                lastFocusedElement.focus(); // Return focus to the element that opened the lightbox
+            }
         }
 
         lightboxTriggers.forEach(trigger => {
@@ -738,7 +778,19 @@
 
         lightboxClose.addEventListener('click', closeLightbox);
         lightbox.addEventListener('click', (e) => { if (e.target === lightbox) closeLightbox(); });
-        document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeLightbox(); });
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && !lightbox.classList.contains('hidden')) {
+                closeLightbox();
+            }
+            // Trap focus inside lightbox
+            if (!lightbox.classList.contains('hidden') && e.key === 'Tab') {
+                const focusableElements = lightbox.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+                const firstFocusable = focusableElements[0];
+                const lastFocusable = focusableElements[focusableElements.length - 1];
+                if (e.shiftKey && document.activeElement === firstFocusable) { e.preventDefault(); lastFocusable.focus(); }
+                else if (!e.shiftKey && document.activeElement === lastFocusable) { e.preventDefault(); firstFocusable.focus(); }
+            }
+        });
     </script>
 </body>
 </html>
