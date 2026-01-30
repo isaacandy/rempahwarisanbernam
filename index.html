@@ -278,8 +278,10 @@
             </div>
             
             <div class="hidden lg:flex items-center gap-10 text-base font-bold uppercase tracking-widest nav-links">
-                <button onclick="switchView('brand')" id="btn-brand" class="tab-btn active hover:text-white transition">Brand</button>
-                <button onclick="switchView('industrial')" id="btn-industrial" class="tab-btn hover:text-white transition">Industrial</button>
+                <a href="/index.html?view=brand" id="btn-brand" class="tab-btn active hover:text-white transition">Brand</a>
+                <a href="/index.html?view=industrial" id="btn-industrial" class="tab-btn hover:text-white transition">Industrial</a>
+                <a href="/recipe.html" class="tab-btn hover:text-white transition">Recipe</a>
+                <a href="/blog.html" class="tab-btn hover:text-white transition">Blog</a>
                 <div class="h-6 w-[1px] bg-stone-200 mx-2"></div>
                 <a href="#contact" class="px-7 py-3 bg-stone-900 text-white rounded-full hover:bg-brand-crimson transition shadow-lg text-xs font-black tracking-widest uppercase">Inquiry</a>
             </div>
@@ -293,9 +295,11 @@
     <!-- Mobile Menu Overlay -->
     <div id="mobile-menu" class="fixed inset-0 bg-white z-[60] flex flex-col items-center justify-center gap-10 text-3xl font-serif italic hidden" role="dialog" aria-modal="true" aria-label="Mobile Navigation">
         <button class="absolute top-10 right-10 text-stone-900" id="mobile-close" aria-label="Close mobile menu"><i data-lucide="x" class="w-8 h-8" aria-hidden="true"></i></button>
-        <button onclick="switchView('brand'); closeMenu();" class="mobile-link text-stone-900">Brand Identity</button>
-        <button onclick="switchView('industrial'); closeMenu();" class="mobile-link text-stone-900">Industrial Division</button>
+        <a href="/index.html?view=brand" onclick="closeMenu();" class="mobile-link text-stone-900">Brand Identity</a>
+        <a href="/index.html?view=industrial" onclick="closeMenu();" class="mobile-link text-stone-900">Industrial Division</a>
         <a href="#catalog" onclick="closeMenu();" class="mobile-link text-stone-900">Collection</a>
+        <a href="/recipe.html" onclick="closeMenu();" class="mobile-link text-stone-900">Recipe</a>
+        <a href="/blog.html" onclick="closeMenu();" class="mobile-link text-stone-900">Blog</a>
         <a href="#contact" onclick="closeMenu();" class="mobile-link text-stone-900">Contact Us</a>
     </div>
 
@@ -475,112 +479,6 @@
             </div>
         </section>
         </div>
-
-        <!-- INDUSTRIAL VIEW SECTION -->
-        <div id="view-industrial" class="view-section" aria-hidden="true" role="region" aria-live="polite" aria-labelledby="industrial-heading">
-        <section class="py-24 bg-stone-950 text-white overflow-hidden relative">
-            <div class="max-w-7xl mx-auto px-6 lg:px-12 relative z-10">
-                <h1 class="text-brand-gold font-bold uppercase tracking-[0.5em] text-[10px] mb-4" id="industrial-heading">Industrial Division</h1>
-                <h3 class="font-serif text-5xl lg:text-7xl italic mb-6 leading-none">Precision <br>Engineering.</h3>
-                <p class="text-stone-400 max-w-xl text-base leading-relaxed font-light italic">
-                    Rawang facility high-volume output preserving the traditional flavor finalized in 1972.
-                </p>
-            </div>
-            <div class="absolute -right-20 bottom-0 opacity-10 pointer-events-none">
-                <i data-lucide="settings" class="w-80 h-80 animate-spin-slow" aria-hidden="true"></i>
-            </div>
-        </section>
-
-        <!-- Full 5-Step SOP - Padding py-16 -->
-        <section class="py-16 bg-white border-b border-stone-100">
-            <div class="max-w-7xl mx-auto px-6 lg:px-12">
-                <div class="text-center mb-12">
-                    <h3 class="text-brand-crimson font-bold uppercase tracking-[0.4em] text-[9px] mb-2">Operations & SOP</h3>
-                    <h4 class="font-serif text-4xl italic text-stone-900 uppercase">Production Workflow</h4>
-                </div>
-                <div class="grid grid-cols-1 md:grid-cols-5 gap-4">
-                    <div class="p-6 bg-stone-50 rounded-2xl border border-stone-200">
-                        <span class="text-stone-300 font-serif text-3xl italic block mb-3">01</span>
-                        <h5 class="font-bold text-[10px] uppercase tracking-widest mb-2">Coarse Crush</h5>
-                        <p class="text-stone-500 text-[10px] leading-relaxed">Spices broken into uniform granules using industrial breakers.</p>
-                    </div>
-                    <div class="p-6 bg-stone-50 rounded-2xl border border-stone-200">
-                        <span class="text-stone-300 font-serif text-3xl italic block mb-3">02</span>
-                        <h5 class="font-bold text-[10px] uppercase tracking-widest mb-2">ACM Milling</h5>
-                        <p class="text-stone-500 text-[10px] leading-relaxed">Air-classified milling (80-450 mesh) for ultra-fine consistency.</p>
-                    </div>
-                    <div class="p-6 bg-stone-50 rounded-2xl border border-stone-200">
-                        <span class="text-stone-300 font-serif text-3xl italic block mb-3">03</span>
-                        <h5 class="font-bold text-[10px] uppercase tracking-widest mb-2">Sieving</h5>
-                        <p class="text-stone-500 text-[10px] leading-relaxed">Mechanical vibration screening for absolute uniformity.</p>
-                    </div>
-                    <div class="p-6 bg-stone-50 rounded-2xl border border-stone-200">
-                        <span class="text-stone-300 font-serif text-3xl italic block mb-3">04</span>
-                        <h5 class="font-bold text-[10px] uppercase tracking-widest mb-2">Mixing</h5>
-                        <p class="text-stone-500 text-[10px] leading-relaxed">Blending in 304 stainless steel mixers to preserve aroma.</p>
-                    </div>
-                    <div class="p-6 bg-stone-50 rounded-2xl border border-stone-200">
-                        <span class="text-stone-300 font-serif text-3xl italic block mb-3">05</span>
-                        <h5 class="font-bold text-[10px] uppercase tracking-widest mb-2">Packaging</h5>
-                        <p class="text-stone-500 text-[10px] leading-relaxed">Hygienic retail & bulk packing under strict QC.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Technical Specs & Roadmap - Padding py-16 -->
-        <section class="py-16 bg-stone-900 text-white">
-            <div class="max-w-7xl mx-auto px-6 lg:px-12">
-                <div class="grid lg:grid-cols-2 gap-12">
-                    <div>
-                        <h4 class="font-serif text-3xl italic mb-6">Infrastructure Technicals</h4>
-                        <div class="space-y-4">
-                            <div class="p-6 rounded-3xl bg-white/5 border border-white/10">
-                                <h5 class="text-sm font-bold uppercase tracking-widest mb-3">WKS-60 Grinder</h5>
-                                <ul class="text-stone-400 text-[10px] space-y-2">
-                                    <li class="flex justify-between border-b border-white/5 pb-1"><span>Capacity:</span> <span class="text-white">1200 kg/h</span></li>
-                                    <li class="flex justify-between"><span>Output:</span> <span class="text-white">80-450 Mesh</span></li>
-                                </ul>
-                            </div>
-                            <div class="p-6 rounded-3xl bg-white/5 border border-white/10">
-                                <h5 class="text-sm font-bold uppercase tracking-widest mb-3">CSJ-200 Breaker</h5>
-                                <ul class="text-stone-400 text-[10px] space-y-2">
-                                    <li class="flex justify-between border-b border-white/5 pb-1"><span>Input:</span> <span class="text-white">≤ 100 mm</span></li>
-                                    <li class="flex justify-between"><span>Discharge:</span> <span class="text-white">0.5-20 mm</span></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="bg-stone-950 p-10 rounded-[2.5rem] border border-white/5">
-                        <h4 class="font-serif text-3xl italic mb-8 text-brand-gold">Growth Roadmap</h4>
-                        <div class="space-y-6">
-                            <div class="flex gap-6 relative pb-6 border-l border-brand-gold/20 pl-6 ml-2">
-                                <div class="w-3 h-3 rounded-full bg-brand-gold absolute -left-[7px] top-1"></div>
-                                <div>
-                                    <h6 class="font-bold text-[10px] uppercase tracking-widest mb-1">Year 1-2</h6>
-                                    <p class="text-stone-500 text-[10px] leading-relaxed">RM100k/mo targeting HORECA & Online.</p>
-                                </div>
-                            </div>
-                            <div class="flex gap-6 relative pb-6 border-l border-brand-gold/20 pl-6 ml-2">
-                                <div class="w-3 h-3 rounded-full bg-stone-700 absolute -left-[7px] top-1"></div>
-                                <div>
-                                    <h6 class="font-bold text-[10px] uppercase tracking-widest mb-1 text-stone-400">Year 3</h6>
-                                    <p class="text-stone-600 text-[10px] leading-relaxed">RM200k/mo stabilized retail expansion.</p>
-                                </div>
-                            </div>
-                            <div class="flex gap-6 pl-6 ml-2 relative">
-                                <div class="w-3 h-3 rounded-full bg-stone-700 absolute -left-[7px] top-1"></div>
-                                <div>
-                                    <h6 class="font-bold text-[10px] uppercase tracking-widest mb-1 text-stone-400">Year 5</h6>
-                                    <p class="text-stone-600 text-[10px] leading-relaxed">RM700k/mo regional leadership.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-        </div>
     </main>
 
     <!-- CONTACT SECTION - Padding py-16 -->
@@ -715,10 +613,20 @@
             navbar.classList.toggle('nav-scrolled', window.scrollY > 40);
         });
 
-        let currentActiveView = 'brand';
         let lastFocusedElement = null; // To store the element that opened the lightbox
 
+        document.addEventListener('DOMContentLoaded', function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const view = urlParams.get('view');
+            if (view) {
+                switchView(view, false);
+            } else {
+                switchView('brand', false);
+            }
+        });
+
         function switchView(viewName) {
+            // This function is now only for views on index.html
             const mobileToggle = document.getElementById('mobile-toggle');
             document.querySelectorAll('.view-section').forEach(section => {
                 section.classList.remove('active');
@@ -729,8 +637,6 @@
             targetView.setAttribute('aria-hidden', 'false');
             targetView.focus(); // Move focus to the new view
 
-            currentActiveView = viewName; // Update current active view
-
             document.querySelectorAll('.tab-btn').forEach(btn => {
                 btn.classList.remove('active');
                 btn.setAttribute('aria-selected', 'false');
@@ -738,7 +644,6 @@
             document.getElementById('btn-' + viewName).classList.add('active');
             document.getElementById('btn-' + viewName).setAttribute('aria-selected', 'true');
             mobileToggle.setAttribute('aria-expanded', 'false'); // Close mobile menu if open
-            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
         const toggle = document.getElementById('mobile-toggle'), menu = document.getElementById('mobile-menu'), close = document.getElementById('mobile-close');
@@ -805,6 +710,64 @@
                 else if (!e.shiftKey && document.activeElement === lastFocusable) { e.preventDefault(); firstFocusable.focus(); }
             }
         });
+
+        // --- Blogger Integration for Homepage ---
+        function handleIndexBloggerPosts(data) {
+            const container = document.getElementById('blog-preview-container');
+            if (!container) return;
+
+            if (!data || !data.feed || !data.feed.entry || data.feed.entry.length === 0) {
+                container.innerHTML = '<p class="text-center text-stone-500 col-span-full">No blog posts found.</p>';
+                return;
+            }
+
+            const entries = data.feed.entry;
+            let postsHtml = '';
+
+            for (let i = 0; i < entries.length; i++) {
+                const post = entries[i];
+                const postTitle = post.title.$t;
+                const postUrl = post.link.find(link => link.rel === 'alternate').href;
+                
+                const postDate = new Date(post.published.$t);
+                const formattedDate = postDate.toLocaleDateString('en-US', {
+                    year: 'numeric', month: 'long', day: 'numeric'
+                });
+
+                const contentDiv = document.createElement('div');
+                contentDiv.innerHTML = post.content.$t;
+
+                let thumbnailUrl = 'https://images.unsplash.com/photo-1596040033229-a9821ebd058d?auto=format&fit=crop&q=80&w=800'; // Default image
+                const firstImage = contentDiv.querySelector('img');
+                if (firstImage) {
+                    thumbnailUrl = firstImage.src;
+                }
+
+                const snippet = contentDiv.textContent.substring(0, 150) + '...';
+
+                postsHtml += `
+                    <article class="bg-white rounded-2xl shadow-lg overflow-hidden group reveal">
+                        <a href="${postUrl}" target="_blank" rel="noopener noreferrer" class="block">
+                            <div class="aspect-w-4 aspect-h-3">
+                                <img src="${thumbnailUrl}" alt="${postTitle}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                            </div>
+                            <div class="p-6">
+                                <p class="text-brand-gold font-bold text-[9px] uppercase tracking-widest mb-2">${formattedDate}</p>
+                                <h2 class="font-serif text-2xl italic text-stone-900 mb-3 group-hover:text-brand-crimson transition">${postTitle}</h2>
+                                <p class="text-sm text-stone-500 leading-relaxed">${snippet}</p>
+                            </div>
+                        </a>
+                    </article>
+                `;
+            }
+            container.innerHTML = postsHtml;
+            // Re-run the reveal observer for the new elements
+            document.querySelectorAll('#blog-preview-container .reveal').forEach(el => observer.observe(el));
+        }
+
+        const blogPreviewScript = document.createElement('script');
+        blogPreviewScript.src = `https://blog.rempahwarisanbernam.net/feeds/posts/default?alt=json-in-script&max-results=3&callback=handleIndexBloggerPosts`;
+        document.body.appendChild(blogPreviewScript);
     </script>
 </body>
 </html>

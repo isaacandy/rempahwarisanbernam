@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html>
+<html b:css='false' b:defaultwidgetversion='2' b:layoutsVersion='3' b:responsive='true' b:templateVersion='1.3.0' expr:dir='data:blog.languageDirection' expr:lang='data:blog.locale'>
+<head>
+    <meta charset='UTF-8'/>
+    <meta content='width=device-width, initial-scale=1.0' name='viewport'/>
+    
+    <b:include data='blog' name='all-head-content'/>
+
+    <title><data:blog.pageTitle/></title>
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Premium Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,700;1,600&amp;family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+    
+    <b:skin><![CDATA[
+    /* --- Paste All CSS Here --- */
+    :root {
+        --brand-obsidian: #121212;
+        --brand-crimson: #8b1a1a;
+        --brand-gold: #b39359;
+        --brand-cream: #fdfcf9;
+    }
+    body { 
+        font-family: 'Plus Jakarta Sans', sans-serif; 
+        background-color: var(--brand-cream); 
+        color: var(--brand-obsidian);
+        -webkit-font-smoothing: antialiased;
+    }
+    .font-serif { font-family: 'Cormorant Garamond', serif; }
+    
+    .nav-scrolled {
+        background: rgba(255, 255, 255, 0.98);
+        backdrop-filter: blur(10px);
+        padding: 0.5rem 0;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+    }
+    .nav-links { color: var(--brand-obsidian); }
+    .nav-scrolled .nav-links { color: var(--brand-obsidian); }
+    .nav-scrolled .nav-links .tab-btn { color: #4a5568; }
+    .nav-scrolled .nav-links .tab-btn:hover { color: var(--brand-obsidian); }
+    .nav-scrolled .nav-links .tab-btn.active { color: var(--brand-obsidian); }
+
+    .nav-header-text-main { color: #1c1917; }
+    .nav-header-text-sub { color: #a8a29e; }
+    
+    html { scroll-behavior: smooth; }
+    
+    .tab-btn { position: relative; }
+    .tab-btn.active::after {
+        content: '';
+        position: absolute;
+        bottom: -5px;
+        left: 0;
+        width: 100%;
+        height: 2px;
+        background: var(--brand-gold);
+    }
+
+    /* Blog Post Styling */
+    .post-body img {
+        max-width: 100%;
+        height: auto;
+        border-radius: 1rem;
+        margin-top: 1rem;
+        margin-bottom: 1rem;
+    }
+    .post-body {
+        line-height: 1.75;
+        font-size: 1.125rem;
+        color: #4a5568;
+    }
+    .post-body h1, .post-body h2, .post-body h3 {
+        font-family: 'Cormorant Garamond', serif;
+        font-style: italic;
+        margin-top: 2rem;
+        margin-bottom: 1rem;
+    }
+    .post-body h1 { font-size: 2.5rem; }
+    .post-body h2 { font-size: 2rem; }
+    .post-body h3 { font-size: 1.75rem; }
+    .post-body a {
+        color: var(--brand-gold);
+        text-decoration: underline;
+    }
+    .post-body blockquote {
+        border-left: 4px solid var(--brand-gold);
+        padding-left: 1rem;
+        margin: 1.5rem 0;
+        font-style: italic;
+        color: #71717a;
+    }
+    ]]></b:skin>
+</head>
+<body class="overflow-x-hidden">
+
+    <!-- Premium Navigation -->
+    <nav id="navbar" class="sticky top-0 w-full z-50 transition-all duration-500 py-4 px-6 lg:px-12 nav-scrolled">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <div class="flex items-center gap-4 lg:gap-6">
+                <a href="https://www.rempahwarisanbernam.net/" class="flex items-center gap-4 lg:gap-6">
+                    <img src="https://www.rempahwarisanbernam.net/images/Rempah%20warisan%20logo%20final.png" alt="Rempah Warisan Bernam Logo" class="h-10 lg:h-14 w-auto object-contain transition-all"/>
+                </a>
+                <div class="h-8 lg:h-10 w-[1px] bg-stone-200"></div>
+                <div>
+                    <h1 class="font-serif text-lg lg:text-xl font-bold tracking-tight leading-none transition-colors duration-500 nav-header-text-main">Rempah Warisan Bernam</h1>
+                    <p class="text-[8px] lg:text-[9px] font-bold uppercase tracking-[0.3em] text-stone-300 mt-1 transition-colors duration-500 nav-header-text-sub">202501052286</p>
+                </div>
+            </div>
+            
+            <div class="hidden lg:flex items-center gap-10 text-base font-bold uppercase tracking-widest nav-links">
+                <a href="https://www.rempahwarisanbernam.net/index.html?view=brand" class="tab-btn hover:text-stone-900 transition">Brand</a>
+                <a href="https://www.rempahwarisanbernam.net/index.html?view=industrial" class="tab-btn hover:text-stone-900 transition">Industrial</a>
+                <a href="https://www.rempahwarisanbernam.net/recipe.html" class="tab-btn hover:text-stone-900 transition">Recipe</a>
+                <a href="https://blog.rempahwarisanbernam.net/" class="tab-btn active hover:text-stone-900 transition">Blog</a>
+                <div class="h-6 w-[1px] bg-stone-200 mx-2"></div>
+                <a href="https://www.rempahwarisanbernam.net/index.html#contact" class="px-7 py-3 bg-stone-900 text-white rounded-full hover:bg-brand-crimson transition shadow-lg text-xs font-black tracking-widest uppercase">Inquiry</a>
+            </div>
+
+            <button class="lg:hidden text-stone-900 transition-colors duration-500 nav-header-text-main" id="mobile-toggle" aria-label="Toggle mobile menu">
+                <i data-lucide="menu" aria-hidden="true"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu Overlay -->
+    <div id="mobile-menu" class="fixed inset-0 bg-white z-[60] flex flex-col items-center justify-center gap-10 text-3xl font-serif italic hidden" role="dialog">
+        <button class="absolute top-10 right-10 text-stone-900" id="mobile-close" aria-label="Close mobile menu"><i data-lucide="x" class="w-8 h-8" aria-hidden="true"></i></button>
+        <a href="https://www.rempahwarisanbernam.net/index.html?view=brand" class="mobile-link text-stone-900">Brand Identity</a>
+        <a href="https://www.rempahwarisanbernam.net/index.html?view=industrial" class="mobile-link text-stone-900">Industrial Division</a>
+        <a href="https://www.rempahwarisanbernam.net/index.html#catalog" class="mobile-link text-stone-900">Collection</a>
+        <a href="https://www.rempahwarisanbernam.net/recipe.html" class="mobile-link text-stone-900">Recipe</a>
+        <a href="https://blog.rempahwarisanbernam.net/" class="mobile-link text-stone-900">Blog</a>
+        <a href="https://www.rempahwarisanbernam.net/index.html#contact" class="mobile-link text-stone-900">Contact Us</a>
+    </div>
+
+    <main>
+        <b:section class='main' id='main' showaddelement='no'>
+            <b:widget id='Blog1' locked='true' title='Blog Posts' type='Blog' version='2'>
+                <b:widget-settings>
+                    <b:widget-setting name='showDateHeader'>false</b:widget-setting>
+                    <b:widget-setting name='showShareButtons'>false</b:widget-setting>
+                    <b:widget-setting name='showCommentLink'>false</b:widget-setting>
+                    <b:widget-setting name='showAuthor'>false</b:widget-setting>
+                    <b:widget-setting name='showLabels'>false</b:widget-setting>
+                    <b:widget-setting name='showTimestamp'>true</b:widget-setting>
+                    <b:widget-setting name='postsPerPage'>7</b:widget-setting>
+                    <b:widget-setting name='showBacklinks'>false</b:widget-setting>
+                </b:widget-settings>
+                <b:includable id='main'>
+                    <!-- Page Header -->
+                    <b:if cond='data:blog.pageType == &quot;index&quot;'>
+                        <section class="py-24 bg-stone-100 border-b border-stone-200">
+                            <div class="max-w-7xl mx-auto px-6 lg:px-12 text-center">
+                                <h1 class="font-serif text-5xl lg:text-7xl text-stone-900 italic">From Our Kitchen</h1>
+                                <p class="mt-4 text-lg text-stone-600 max-w-2xl mx-auto">Stories, tips, and the history behind our heritage spices.</p>
+                            </div>
+                        </section>
+                    </b:if>
+
+                    <!-- Blog Posts Section -->
+                    <section class="py-16">
+                        <div class="max-w-4xl mx-auto px-6 lg:px-8">
+                            <div class="space-y-12">
+                                <b:loop values='data:posts' var='post'>
+                                    <b:if cond='data:blog.pageType == &quot;item&quot;'>
+                                        <!-- Single Post View -->
+                                        <article>
+                                            <p class="text-sm text-stone-500"><data:post.timestamp/></p>
+                                            <h1 class="font-serif text-5xl italic text-stone-900 mt-4 mb-8"><data:post.title/></h1>
+                                            <div class='post-body'>
+                                                <data:post.body/>
+                                            </div>
+                                        </article>
+                                    <b:else/>
+                                        <!-- Index/Archive View (List of Posts) -->
+                                        <article class="group">
+                                            <a expr:href='data:post.url'>
+                                                <b:if cond='data:post.firstImageUrl'>
+                                                    <div class="aspect-w-16 aspect-h-9 mb-6 rounded-2xl overflow-hidden shadow-lg">
+                                                        <img expr:alt='data:post.title' expr:src='resizeImage(data:post.firstImageUrl, 1200, "16:9")' class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"/>
+                                                    </div>
+                                                </b:if>
+                                                <p class="text-sm text-stone-500"><data:post.timestamp/></p>
+                                                <h2 class="font-serif text-3xl italic text-stone-900 mt-2 group-hover:text-brand-crimson transition"><data:post.title/></h2>
+                                                <p class="mt-4 text-stone-600 leading-relaxed"><data:post.snippet/></p>
+                                                <span class="mt-4 inline-block font-bold text-sm text-brand-gold uppercase tracking-widest">Read More</span>
+                                            </a>
+                                        </article>
+                                        <b:if cond='data:widget.pageType != &quot;item&quot; and !data:post.isLast'>
+                                            <hr class="border-stone-200"/>
+                                        </b:if>
+                                    </b:if>
+                                </b:loop>
+                            </div>
+                            <!-- Pagination -->
+                            <b:include name='nextprev'/>
+                        </div>
+                    </section>
+                </b:includable>
+                <b:includable id='nextprev'>
+                  <div class='blog-pager mt-12 flex justify-between' id='blog-pager'>
+                    <b:if cond='data:newerPageUrl'>
+                      <a class='newer-link px-6 py-3 bg-stone-200 text-stone-800 font-bold uppercase tracking-widest text-xs rounded-full hover:bg-stone-300 transition' expr:href='data:newerPageUrl' expr:id='data:widget.instanceId + &quot;_blog-pager-newer-link&quot;' expr:title='data:newerPageTitle'>
+                        Newer Posts
+                      </a>
+                    </b:if>
+                    <b:if cond='data:olderPageUrl'>
+                      <a class='older-link px-6 py-3 bg-stone-900 text-white font-bold uppercase tracking-widest text-xs rounded-full hover:bg-brand-crimson transition' expr:href='data:olderPageUrl' expr:id='data:widget.instanceId + &quot;_blog-pager-older-link&quot;' expr:title='data:olderPageTitle'>
+                        Older Posts
+                      </a>
+                    </b:if>
+                    <b:if cond='data:blog.homepageUrl != data:blog.url'>
+                        <a class='home-link px-6 py-3 bg-stone-200 text-stone-800 font-bold uppercase tracking-widest text-xs rounded-full hover:bg-stone-300 transition' expr:href='data:blog.homepageUrl'><data:homeMsg/></a>
+                    </b:if>
+                  </div>
+                </b:includable>
+            </b:widget>
+        </b:section>
+    </main>
+
+    <!-- Re-using the footer from index.html -->
+    <footer class="bg-stone-950 text-white py-8">
+        <div class="max-w-7xl mx-auto px-6 lg:px-12">
+            <div class="pt-6 flex flex-col md:flex-row justify-between items-center gap-4 text-stone-800 text-[8px] font-black uppercase tracking-[0.4em]">
+                <p>&#169; 2025 Rempah Warisan Bernam Sdn Bhd. 
+                    <a href="https://www.izndgroup.com" target="_blank" rel="noopener noreferrer" class="hover:text-white transition">Powered by iZND Group</a>
+                </p>
+                <div class="flex gap-6">
+                    <span>Rawang</span>
+                    <span>Selangor</span>
+                    <span>Malaysia</span>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        //<![CDATA[
+        lucide.createIcons();
+
+        const toggle = document.getElementById('mobile-toggle'), 
+              menu = document.getElementById('mobile-menu'), 
+              close = document.getElementById('mobile-close');
+        
+        if (toggle && menu && close) {
+            const closeMenu = () => menu.classList.add('hidden');
+            toggle.addEventListener('click', () => menu.classList.remove('hidden'));
+            close.addEventListener('click', closeMenu);
+            
+            const mobileLinks = menu.querySelectorAll('a');
+            mobileLinks.forEach(link => link.addEventListener('click', closeMenu));
+        }
+        //]]>
+    </script>
+</body>
+</html>
