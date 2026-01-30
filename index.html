@@ -737,10 +737,12 @@
                 const contentDiv = document.createElement('div');
                 contentDiv.innerHTML = post.content.$t;
 
-                let thumbnailUrl = 'https://images.unsplash.com/photo-1596040033229-a9821ebd058d?auto=format&fit=crop&q=80&w=800'; // Default image
+                let thumbnailUrl = 'https://www.rempahwarisanbernam.net/images/Rempah%20warisan%20logo%20final.png'; // Default image
                 const firstImage = contentDiv.querySelector('img');
                 if (firstImage) {
                     thumbnailUrl = firstImage.src;
+                } else if (post.media$thumbnail && post.media$thumbnail.url) {
+                    thumbnailUrl = post.media$thumbnail.url;
                 }
 
                 const snippet = contentDiv.textContent.substring(0, 150) + '...';
