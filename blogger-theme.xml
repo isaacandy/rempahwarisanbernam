@@ -115,7 +115,7 @@
                 <a href="https://www.rempahwarisanbernam.net/index.html?view=brand" class="tab-btn hover:text-stone-900 transition">Brand</a>
                 <a href="https://www.rempahwarisanbernam.net/index.html?view=industrial" class="tab-btn hover:text-stone-900 transition">Industrial</a>
                 <a href="https://www.rempahwarisanbernam.net/recipe.html" class="tab-btn hover:text-stone-900 transition">Recipe</a>
-                <a href="https://blog.rempahwarisanbernam.net/" class="tab-btn active hover:text-stone-900 transition">Blog</a>
+                <a href="http://blog.rempahwarisanbernam.net/" class="tab-btn active hover:text-stone-900 transition">Blog</a>
                 <div class="h-6 w-[1px] bg-stone-200 mx-2"></div>
                 <a href="https://www.rempahwarisanbernam.net/index.html#contact" class="px-7 py-3 bg-stone-900 text-white rounded-full hover:bg-brand-crimson transition shadow-lg text-xs font-black tracking-widest uppercase">Inquiry</a>
             </div>
@@ -133,7 +133,7 @@
         <a href="https://www.rempahwarisanbernam.net/index.html?view=industrial" class="mobile-link text-stone-900">Industrial Division</a>
         <a href="https://www.rempahwarisanbernam.net/index.html#catalog" class="mobile-link text-stone-900">Collection</a>
         <a href="https://www.rempahwarisanbernam.net/recipe.html" class="mobile-link text-stone-900">Recipe</a>
-        <a href="https://blog.rempahwarisanbernam.net/" class="mobile-link text-stone-900">Blog</a>
+        <a href="http://blog.rempahwarisanbernam.net/" class="mobile-link text-stone-900">Blog</a>
         <a href="https://www.rempahwarisanbernam.net/index.html#contact" class="mobile-link text-stone-900">Contact Us</a>
     </div>
 
@@ -151,55 +151,57 @@
                     <b:widget-setting name='showBacklinks'>false</b:widget-setting>
                 </b:widget-settings>
                 <b:includable id='main'>
-                    <!-- Page Header -->
-                    <b:if cond='data:blog.pageType == &quot;index&quot;'>
-                        <section class="py-24 bg-stone-100 border-b border-stone-200">
-                            <div class="max-w-7xl mx-auto px-6 lg:px-12 text-center">
-                                <h1 class="font-serif text-5xl lg:text-7xl text-stone-900 italic">From Our Kitchen</h1>
-                                <p class="mt-4 text-lg text-stone-600 max-w-2xl mx-auto">Stories, tips, and the history behind our heritage spices.</p>
-                            </div>
-                        </section>
-                    </b:if>
+                  <b:if cond='data:blog.pageType in {&quot;item&quot;, &quot;static_page&quot;}'>
+                    <b:include data='posts' name='post'/>
+                  <b:else/>
+                    <b:include name='stream'/>
+                  </b:if>
+                </b:includable>
 
-                    <!-- Blog Posts Section -->
-                    <section class="py-16">
-                        <div class="max-w-4xl mx-auto px-6 lg:px-8">
-                            <div class="space-y-12">
-                                <b:loop values='data:posts' var='post'>
-                                    <b:if cond='data:blog.pageType == &quot;item&quot;'>
-                                        <!-- Single Post View -->
-                                        <article>
-                                            <p class="text-sm text-stone-500"><data:post.timestamp/></p>
-                                            <h1 class="font-serif text-5xl italic text-stone-900 mt-4 mb-8"><data:post.title/></h1>
-                                            <div class='post-body'>
-                                                <data:post.body/>
-                                            </div>
-                                        </article>
-                                    <b:else/>
-                                        <!-- Index/Archive View (List of Posts) -->
-                                        <article class="group">
-                                            <a expr:href='data:post.url'>
-                                                <b:if cond='data:post.firstImageUrl'>
-                                                    <div class="aspect-w-16 aspect-h-9 mb-6 rounded-2xl overflow-hidden shadow-lg">
-                                                        <img expr:alt='data:post.title' expr:src='resizeImage(data:post.firstImageUrl, 1200, "16:9")' class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"/>
-                                                    </div>
-                                                </b:if>
-                                                <p class="text-sm text-stone-500"><data:post.timestamp/></p>
-                                                <h2 class="font-serif text-3xl italic text-stone-900 mt-2 group-hover:text-brand-crimson transition"><data:post.title/></h2>
-                                                <p class="mt-4 text-stone-600 leading-relaxed"><data:post.snippet/></p>
-                                                <span class="mt-4 inline-block font-bold text-sm text-brand-gold uppercase tracking-widest">Read More</span>
-                                            </a>
-                                        </article>
-                                        <b:if cond='data:widget.pageType != &quot;item&quot; and !data:post.isLast'>
-                                            <hr class="border-stone-200"/>
-                                        </b:if>
-                                    </b:if>
-                                </b:loop>
-                            </div>
-                            <!-- Pagination -->
-                            <b:include name='nextprev'/>
-                        </div>
-                    </section>
+                <b:includable id='post' var='posts'>
+                  <!-- Single Post View -->
+                  <section class='py-16'>
+                    <div class='max-w-4xl mx-auto px-6 lg:px-8'>
+                      <b:loop values='data:posts' var='post'>
+                        <article class='post-body'>
+                            <p class='text-sm text-stone-500'><data:post.timestamp/></p>
+                            <h1 class='font-serif text-5xl italic text-stone-900 mt-4 mb-8'><data:post.title/></h1>
+                            <data:post.body/>
+                        </article>
+                      </b:loop>
+                    </div>
+                  </section>
+                </b:includable>
+
+                <b:includable id='stream'>
+                  <!-- Index/Archive View (List of Posts) -->
+                  <section class='py-24 bg-stone-100 border-b border-stone-200'>
+                      <div class='max-w-7xl mx-auto px-6 lg:px-12 text-center'>
+                          <h1 class='font-serif text-5xl lg:text-7xl text-stone-900 italic'>From Our Kitchen</h1>
+                          <p class='mt-4 text-lg text-stone-600 max-w-2xl mx-auto'>Stories, tips, and the history behind our heritage spices.</p>
+                      </div>
+                  </section>
+
+                  <section class='py-16'>
+                    <div class='max-w-4xl mx-auto px-6 lg:px-8 space-y-12'>
+                      <b:loop values='data:posts' var='post'>
+                        <article class='group'>
+                            <a expr:href='data:post.url'>
+                                <b:if cond='data:post.firstImageUrl'>
+                                    <div class='aspect-w-16 aspect-h-9 mb-6 rounded-2xl overflow-hidden shadow-lg'>
+                                        <img expr:alt='data:post.title' expr:src='resizeImage(data:post.firstImageUrl, 1200, "16:9")' class='w-full h-full object-cover group-hover:scale-105 transition-transform duration-500'/>
+                                    </div>
+                                </b:if>
+                                <p class='text-sm text-stone-500'><data:post.timestamp/></p>
+                                <h2 class='font-serif text-3xl italic text-stone-900 mt-2 group-hover:text-brand-crimson transition'><data:post.title/></h2>
+                                <p class='mt-4 text-stone-600 leading-relaxed'><data:post.snippet/></p>
+                                <span class='mt-4 inline-block font-bold text-sm text-brand-gold uppercase tracking-widest'>Read More</span>
+                            </a>
+                        </article>
+                      </b:loop>
+                    </div>
+                  </section>
+                  <b:include name='nextprev'/>
                 </b:includable>
                 <b:includable id='nextprev'>
                   <div class='blog-pager mt-12 flex justify-between' id='blog-pager'>
@@ -218,6 +220,10 @@
                     </b:if>
                   </div>
                 </b:includable>
+                
+                <b:includable id='postBody' var='post'>
+                    <!-- This includable is no longer needed as we directly use data:post.body -->
+                </b:includable>
             </b:widget>
         </b:section>
     </main>
@@ -225,7 +231,7 @@
     <!-- Re-using the footer from index.html -->
     <footer class="bg-stone-950 text-white py-8">
         <div class="max-w-7xl mx-auto px-6 lg:px-12">
-            <div class="pt-6 flex flex-col md:flex-row justify-between items-center gap-4 text-stone-800 text-[8px] font-black uppercase tracking-[0.4em]">
+            <div class="pt-6 flex flex-col md:flex-row justify-between items-center gap-4 text-stone-400 text-[8px] font-black uppercase tracking-[0.4em]">
                 <p>&#169; 2025 Rempah Warisan Bernam Sdn Bhd. 
                     <a href="https://www.izndgroup.com" target="_blank" rel="noopener noreferrer" class="hover:text-white transition">Powered by iZND Group</a>
                 </p>

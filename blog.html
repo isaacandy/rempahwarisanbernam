@@ -111,22 +111,23 @@
 
     <main>
         <!-- Page Header -->
-        <section class="py-24 bg-stone-100 border-b border-stone-200">
+        <section class="py-24 bg-stone-100 border-b border-stone-200" id="page-header">
             <div class="max-w-7xl mx-auto px-6 lg:px-12 text-center">
                 <h1 class="font-serif text-5xl lg:text-7xl text-stone-900 italic">From Our Kitchen</h1>
                 <p class="mt-4 text-lg text-stone-600 max-w-2xl mx-auto">Stories, tips, and the history behind our heritage spices.</p>
             </div>
         </section>
 
-        <!-- Blog Posts Section -->
+        <!-- Blog Posts Section - This will be populated by JavaScript -->
         <section class="py-16">
-            <div id="blog-posts-container" class="max-w-4xl mx-auto px-6 lg:px-8">
-                <!-- Loading Spinner -->
-                <div id="loading-indicator" class="flex justify-center items-center py-10">
-                    <i data-lucide="loader-2" class="w-12 h-12 text-brand-gold animate-spin"></i>
+            <div id="posts-container" class="max-w-4xl mx-auto px-6 lg:px-8">
+                <!-- Loading spinner -->
+                <div id="loading" class="text-center py-12">
+                    <i data-lucide="loader-2" class="w-10 h-10 text-brand-gold animate-spin mx-auto"></i>
                 </div>
-                <!-- Blog posts will be dynamically inserted here -->
             </div>
+            <!-- Pagination will be inserted here -->
+            <div id="pager" class="max-w-4xl mx-auto px-6 lg:px-8 mt-12 flex justify-between"></div>
         </section>
     </main>
 
@@ -161,6 +162,13 @@
         const maxPosts = 5; // How many posts to display
 
         function handleBloggerPosts(data) {
+            console.log('handleBloggerPosts called with data:', data);
+            // Clear any feed timeout set on window (fallback handler)
+            if (window._bloggerFeedTimeout) {
+                clearTimeout(window._bloggerFeedTimeout);
+                window._bloggerFeedTimeout = null;
+            }
+
             const container = document.getElementById('blog-posts-container');
             const loadingIndicator = document.getElementById('loading-indicator');
             
@@ -168,6 +176,7 @@
             if (loadingIndicator) {
                 loadingIndicator.style.display = 'none';
             }
+            console.log('Loading indicator hidden.');
 
             if (!data || !data.feed || !data.feed.entry) {
                 container.innerHTML = '<p class="text-center text-stone-500">Could not load blog posts. Please check the Blogger URL.</p>';
@@ -176,6 +185,7 @@
 
             const entries = data.feed.entry;
             let postHtml = '<div class="space-y-12">';
+            console.log('Found entries:', entries.length);
 
             for (let i = 0; i < entries.length; i++) {
                 const post = entries[i];
@@ -221,12 +231,41 @@
                 }
             }
             postHtml += '</div>';
+            console.log('Generated post HTML. Setting innerHTML.');
             container.innerHTML = postHtml;
         }
 
         // Dynamically create the script tag to fetch the feed
+        console.log('Attempting to load Blogger feed script.');
         const script = document.createElement('script');
-        script.src = `${bloggerUrl}/feeds/posts/default?alt=json-in-script&max-results=${maxPosts}&callback=handleBloggerPosts`;
+        // Ensure no trailing slash on the base URL
+        const base = bloggerUrl.replace(/\/$/, '');
+        script.src = `${base}/feeds/posts/default?alt=json-in-script&max-results=${maxPosts}&callback=handleBloggerPosts`;
+        script.async = true;
+
+        // Set a fallback timeout so the page doesn't spin forever
+        window._bloggerFeedTimeout = setTimeout(() => {
+            console.warn('Blogger feed timeout triggered.');
+            const loadingIndicator = document.getElementById('loading-indicator');
+            const container = document.getElementById('blog-posts-container');
+            if (loadingIndicator) loadingIndicator.style.display = 'none';
+            if (container) container.innerHTML = '<p class="text-center text-stone-500">Blog feed timeout — could not load posts. Check the `bloggerUrl` and network status.</p>';
+            console.error('Blogger feed request timed out.');
+        }, 8000);
+
+        // Handle script load errors (bad URL, DNS, network, certificate)
+        script.onerror = function (e) {
+            if (window._bloggerFeedTimeout) {
+                clearTimeout(window._bloggerFeedTimeout);
+                window._bloggerFeedTimeout = null;
+            }
+            const loadingIndicator = document.getElementById('loading-indicator');
+            const container = document.getElementById('blog-posts-container');
+            if (loadingIndicator) loadingIndicator.style.display = 'none';
+            if (container) container.innerHTML = '<p class="text-center text-stone-500">Could not load blog posts (network or invalid blog URL). Check `bloggerUrl` in `blog.html`.</p>';
+            console.error('Error loading blogger feed script', e);
+        };
+
         document.body.appendChild(script);
 
     </script>

@@ -713,6 +713,7 @@
 
         // --- Blogger Integration for Homepage ---
         function handleIndexBloggerPosts(data) {
+            console.log('handleIndexBloggerPosts called with data:', data);
             const container = document.getElementById('blog-preview-container');
             if (!container) return;
 
@@ -734,25 +735,28 @@
                     year: 'numeric', month: 'long', day: 'numeric'
                 });
 
-                const contentDiv = document.createElement('div');
-                contentDiv.innerHTML = post.content.$t;
-
+                let snippet = '';
                 let thumbnailUrl = 'https://www.rempahwarisanbernam.net/images/Rempah%20warisan%20logo%20final.png'; // Default image
-                const firstImage = contentDiv.querySelector('img');
-                if (firstImage) {
-                    thumbnailUrl = firstImage.src;
-                } else if (post.media$thumbnail && post.media$thumbnail.url) {
-                    thumbnailUrl = post.media$thumbnail.url;
+
+                try {
+                    const contentDiv = document.createElement('div');
+                    contentDiv.innerHTML = post.content.$t;
+
+                    const firstImage = contentDiv.querySelector('img');
+                    if (firstImage) {
+                        thumbnailUrl = firstImage.src;
+                    } else if (post.media$thumbnail && post.media$thumbnail.url) {
+                        thumbnailUrl = post.media$thumbnail.url;
+                    }
+                    snippet = contentDiv.textContent.substring(0, 150) + '...';
+                } catch (e) {
+                    console.error('Error processing post content for snippet/thumbnail on homepage:', e, post);
+                    snippet = post.summary.$t ? post.summary.$t.substring(0, 150) + '...' : 'Click to read more...';
                 }
-
-                const snippet = contentDiv.textContent.substring(0, 150) + '...';
-
                 postsHtml += `
                     <article class="bg-white rounded-2xl shadow-lg overflow-hidden group reveal">
                         <a href="${postUrl}" target="_blank" rel="noopener noreferrer" class="block">
-                            <div class="aspect-w-4 aspect-h-3">
-                                <img src="${thumbnailUrl}" alt="${postTitle}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-                            </div>
+                            <div class="aspect-w-4 aspect-h-3"><img src="${thumbnailUrl}" alt="${postTitle}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" onerror="this.onerror=null;this.src='https://www.rempahwarisanbernam.net/images/Rempah%20warisan%20logo%20final.png';"/></div>
                             <div class="p-6">
                                 <p class="text-brand-gold font-bold text-[9px] uppercase tracking-widest mb-2">${formattedDate}</p>
                                 <h2 class="font-serif text-2xl italic text-stone-900 mb-3 group-hover:text-brand-crimson transition">${postTitle}</h2>
