@@ -2739,7 +2739,9 @@ display:none
         <b:includable id='snippetedPostThumbnail'>
           <div class='item-thumbnail'>
             <a expr:href='data:post.url'>
-              <b:include data='{                                  image: data:post.featuredImage,                                  imageSizes: [280,560,840,1120,1400]                                }' name='responsiveImage'/>
+              <b:if cond='data:post.featuredImage'>
+                <img class='post-featured-image' expr:src='resizeImage(data:post.featuredImage, 560, "560:0").url' alt='Post featured image' loading='lazy' decoding='async' style='width:100%;height:auto;display:block;'/>
+              </b:if>
             </a>
           </div>
         </b:includable>
@@ -3031,7 +3033,24 @@ display:none
     </b:if>
     <b:include data='blog' name='google-analytics'/>
 
+    <!-- Preconnect to Google Fonts for faster font retrieval -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
+    <!-- Preload critical logo image to improve LCP -->
+    <link rel="preload" href="https://www.rempahwarisanbernam.net/images/Rempah%20warisan%20logo%20final.png" as="image" />
     <script async='async' src='https://www.gstatic.com/external_hosted/clipboardjs/clipboard.min.js'/>
+    <!-- Organization JSON-LD for structured data (site-wide) -->
+    <script type="application/ld+json"><![CDATA[
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "@id": "https://www.rempahwarisanbernam.net/#organization",
+      "name": "Rempah Warisan Bernam",
+      "alternateName": "Rempah Warisan Bernam Sdn Bhd",
+      "url": "https://www.rempahwarisanbernam.net/",
+      "logo": { "@type": "ImageObject", "url": "https://www.rempahwarisanbernam.net/images/Rempah%20warisan%20logo%20final.png" }
+    }
+    ]]></script>
   </head>
 
   <body>
@@ -3090,11 +3109,11 @@ display:none
                         <b:widget-setting name='displayWidth'>0</b:widget-setting>
                       </b:widget-settings>
                       <b:includable id='main' var='this'>
-    <div class='header-widget'>
+    <div class='header-widget' style='background:#ffffff;padding:12px 0;border-bottom:1px solid rgba(0,0,0,0.06);'>
       <!-- Branded header: logo (falls back to blog title) and primary nav -->
       <div class='site-header-inner' style='display:flex;align-items:center;gap:1rem;'>
         <a class='site-logo' expr:href='data:blog.homepageUrl' style='display:inline-block;line-height:1;'>
-          <img alt='Rempah Warisan Bernam' src='https://www.rempahwarisanbernam.net/images/Rempah%20warisan%20logo%20final.png' style='height:72px;max-height:72px;display:block;'/>
+          <img alt='Rempah Warisan Bernam' src='https://www.rempahwarisanbernam.net/images/Rempah%20warisan%20logo%20final.png' style='height:72px;max-height:72px;display:block;' loading='lazy' decoding='async' fetchpriority='low'/>
         </a>
 
         <div class='site-title-and-desc'>
@@ -3104,11 +3123,9 @@ display:none
           <div class='site-desc' style='font-size:0.95rem;color:rgba(0,0,0,0.6);'><data:blog.description/></div>
         </div>
 
-        <nav class='site-nav' style='margin-left:auto;display:flex;gap:1rem;'>
-          <a href='https://www.rempahwarisanbernam.net' style='text-decoration:none;color:inherit;'>Home</a>
-          <a href='/recipe.html' style='text-decoration:none;color:inherit;'>Recipes</a>
-          <a href='/blog.html' style='text-decoration:none;color:inherit;'>Blog</a>
-          <a href='/contact.html' style='text-decoration:none;color:inherit;'>Contact</a>
+        <!-- Simplified header navigation: single, branded CTA to main site -->
+        <nav class='site-nav' style='margin-left:auto;display:flex;gap:1rem;align-items:center;'>
+          <a href='https://www.rempahwarisanbernam.net' style='text-decoration:none;color:inherit;font-weight:700;padding:0.4rem 0.8rem;border-radius:8px;border:1px solid rgba(0,0,0,0.06);background:#ffffff;'>Home</a>
         </nav>
       </div>
 
@@ -3201,63 +3218,7 @@ display:none
                   </div>
                 </b:if>
 
-                <b:if cond='data:view.isLayoutMode or not data:view.isSingleItem'>
-                  <nav class='top-nav' role='navigation'>
-                    <b:section id='page_list_top' name='Page List (Top)' showaddelement='false'>
-                      <b:widget id='PageList1' locked='true' title='' type='PageList' visible='false'>
-                        <b:widget-settings>
-                          <b:widget-setting name='pageListJson'><![CDATA[{"home":{"href":"http://blog.rempahwarisanbernam.net/","position":0,"title":"Home"}}]]></b:widget-setting>
-                          <b:widget-setting name='homeTitle'>Home</b:widget-setting>
-                        </b:widget-settings>
-                        <b:includable id='main'>
-  <b:include name='widget-title'/>
-  <b:include name='content'/>
-</b:includable>
-                        <b:includable id='content'>
-          <div class='widget-content'>
-            <b:include cond='data:widget.sectionId == &quot;page_list_top&quot;' name='overflowablePageList'/>
-            <b:include cond='data:widget.sectionId != &quot;page_list_top&quot;' name='pageList'/>
-          </div>
-        </b:includable>
-                        <b:includable id='overflowButton'>
-  <b:include name='verticalMoreIcon'/>
-</b:includable>
-                        <b:includable id='overflowablePageList'>
-  <div class='overflowable-container'>
-    <div class='overflowable-contents'>
-      <div class='container'>
-        <b:with value='true' var='overflow'>
-        <b:with value='&quot;tabs&quot;' var='pageListClass'>
-          <b:include name='pageList'/>
-        </b:with>
-        </b:with>
-      </div>
-    </div>
-    <div class='overflow-button hidden'>
-      <b:include name='overflowButton'/>
-    </div>
-  </div>
-</b:includable>
-                        <b:includable id='pageLink'>
-  <li>
-    <b:class cond='data:overflow' name='overflowable-item'/>
-    <b:class cond='data:link.isCurrentPage' name='selected'/>
-
-    <a expr:href='data:link.href'><data:link.title/></a>
-  </li>
-</b:includable>
-                        <b:includable id='pageList'>
-  <ul>
-    <b:class cond='data:pageListClass' expr:name='data:pageListClass'/>
-    <b:loop values='data:links' var='link'>
-      <b:include name='pageLink'/>
-    </b:loop>
-  </ul>
-</b:includable>
-                      </b:widget>
-                    </b:section>
-                  </nav>
-                </b:if>
+                <!-- top navigation removed to simplify header and match main site branding -->
               </div>
 
             </header>
@@ -3408,7 +3369,9 @@ display:none
                     <b:includable id='snippetedPostThumbnail'>
           <div class='item-thumbnail'>
             <a expr:href='data:post.url'>
-              <b:include data='{                                  image: data:post.featuredImage,                                  imageSizes: [280,560,840,1120,1400]                                }' name='responsiveImage'/>
+              <b:if cond='data:post.featuredImage'>
+                <img class='post-featured-image' expr:src='resizeImage(data:post.featuredImage, 840, "840:0").url' alt='Post featured image' loading='lazy' decoding='async' style='width:100%;height:auto;display:block;'/>
+              </b:if>
             </a>
           </div>
         </b:includable>
@@ -3685,6 +3648,17 @@ display:none
   <div class='post-body entry-content float-container' expr:id='&quot;post-body-&quot; + data:post.id'>
     <data:post.body/>
   </div>
+  <!-- JSON-LD for this BlogPosting (minimal, references site Organization @id) -->
+  <script type="application/ld+json"><![CDATA[
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "mainEntityOfPage": { "@type": "WebPage", "@id": "<data:post.url/>" },
+    "headline": "<data:post.title/>",
+    "author": { "@type": "Person", "name": "<data:post.author.name/>" },
+    "publisher": { "@id": "https://www.rempahwarisanbernam.net/#organization" }
+  }
+  ]]></script>
 </b:includable>
                     <b:includable id='postBodySnippet' var='post'>
           <div class='post-body entry-content' expr:id='&quot;post-snippet-&quot; + data:post.id'>
@@ -3725,7 +3699,7 @@ display:none
   <b:if cond='data:post.author.aboutMe and data:view.isPost'>
     <div class='author-profile'>
       <b:if cond='data:post.author.authorPhoto.url'>
-        <img class='author-image' expr:src='data:post.author.authorPhoto.url' width='50px'/>
+        <img class='author-image' expr:src='data:post.author.authorPhoto.url' width='50' height='50' loading='lazy' decoding='async'/>
         <div class='author-about'>
           <b:include data='post' name='aboutPostAuthor'/>
         </div>
@@ -3807,7 +3781,9 @@ display:none
                     <b:includable id='snippetedPostThumbnail'>
           <div class='item-thumbnail'>
             <a expr:href='data:post.url'>
-              <b:include data='{                                  image: data:post.featuredImage,                                  imageSizes: [280,560,840,1120,1400]                                }' name='responsiveImage'/>
+              <b:if cond='data:post.featuredImage'>
+                <img class='post-featured-image' expr:src='resizeImage(data:post.featuredImage, 560, "560:0").url' alt='Post featured image' loading='lazy' decoding='async' style='width:100%;height:auto;display:block;'/>
+              </b:if>
             </a>
           </div>
         </b:includable>
