@@ -115,7 +115,7 @@
                 <a href="https://www.rempahwarisanbernam.net/index.html?view=brand" class="tab-btn hover:text-stone-900 transition">Brand</a>
                 <a href="https://www.rempahwarisanbernam.net/index.html?view=industrial" class="tab-btn hover:text-stone-900 transition">Industrial</a>
                 <a href="https://www.rempahwarisanbernam.net/recipe.html" class="tab-btn hover:text-stone-900 transition">Recipe</a>
-                <a href="http://blog.rempahwarisanbernam.net/" class="tab-btn active hover:text-stone-900 transition">Blog</a>
+                <a href="https://blog.rempahwarisanbernam.net/" class="tab-btn active hover:text-stone-900 transition">Blog</a>
                 <div class="h-6 w-[1px] bg-stone-200 mx-2"></div>
                 <a href="https://www.rempahwarisanbernam.net/index.html#contact" class="px-7 py-3 bg-stone-900 text-white rounded-full hover:bg-brand-crimson transition shadow-lg text-xs font-black tracking-widest uppercase">Inquiry</a>
             </div>
@@ -133,7 +133,7 @@
         <a href="https://www.rempahwarisanbernam.net/index.html?view=industrial" class="mobile-link text-stone-900">Industrial Division</a>
         <a href="https://www.rempahwarisanbernam.net/index.html#catalog" class="mobile-link text-stone-900">Collection</a>
         <a href="https://www.rempahwarisanbernam.net/recipe.html" class="mobile-link text-stone-900">Recipe</a>
-        <a href="http://blog.rempahwarisanbernam.net/" class="mobile-link text-stone-900">Blog</a>
+        <a href="https://blog.rempahwarisanbernam.net/" class="mobile-link text-stone-900">Blog</a>
         <a href="https://www.rempahwarisanbernam.net/index.html#contact" class="mobile-link text-stone-900">Contact Us</a>
     </div>
 
