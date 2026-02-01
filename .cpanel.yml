@@ -1,0 +1,13 @@
+---
+# cPanel automatic deployment configuration
+# This file runs post-deploy hooks to copy site files into the cPanel
+# `public_html` folder and build the Vite app in `rempah-website` (if present).
+deployment:
+  tasks: []
+  hooks:
+    post_deploy:
+      - /bin/bash -lc "echo 'cPanel post_deploy: starting.'"
+      - /bin/bash -lc "echo 'Syncing repository root to public_html (excludes .git and this file)...'"
+      - /bin/bash -lc "rsync -a --delete --exclude='.git' --exclude='.cpanel.yml' --exclude='rempah-website/node_modules' --exclude='rempah-website/.git' ./ $HOME/public_html/ || true"
+      - /bin/bash -lc "if [ -d rempah-website ] && [ -f rempah-website/package.json ]; then echo 'Detected rempah-website — installing and building...'; cd rempah-website; if command -v npm >/dev/null 2>&1; then npm ci --no-audit --no-fund || npm install --no-audit --no-fund; fi; npm run build --silent || true; if [ -d dist ]; then rsync -a --delete dist/ $HOME/public_html/rempah-website/; fi; cd - >/dev/null; fi || true"
+      - /bin/bash -lc "echo 'cPanel post_deploy: finished.'"
