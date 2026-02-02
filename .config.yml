@@ -1,2 +1,5 @@
-
-/home4/rempaf5c/
+---
+deployment:
+  tasks:
+    - export DEPLOYPATH=//home4/rempaf5c/public_html/
+    - /bin/cp -R images $DEPLOYPATH
