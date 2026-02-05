@@ -123,7 +123,12 @@
         <section class="py-16">
             <div id="blog-posts-container" class="max-w-4xl mx-auto px-6 lg:px-8">
                 <!-- Loading spinner -->
-                <div id="loading-indicator" class="text-center py-12">
+                <div id="loading-indicator" class="text-center py-12" aria-live="polite" aria-busy="true">
+                    <noscript>
+                        <p class="text-center text-stone-500">
+                            JavaScript is required to load blog posts. Please enable it in your browser or <a href="https://blog.rempahwarisanbernam.net" class="text-brand-crimson underline">visit our blog directly</a>.
+                        </p>
+                    </noscript>
                     <i data-lucide="loader-2" class="w-10 h-10 text-brand-gold animate-spin mx-auto"></i>
                 </div>
             </div>
