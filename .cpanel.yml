@@ -2,7 +2,7 @@
 deployment:
   tasks:
     - export DEPLOYPATH=$HOME/public_html
-    # Copy all HTML files
+    # Copy all HTML files from repo root
     - /bin/cp -u *.html $DEPLOYPATH
     # Copy images folder recursively
     - /bin/cp -Ru images $DEPLOYPATH
