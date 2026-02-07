@@ -9,3 +9,5 @@ deployment:
         --exclude 'README.md' \
         --exclude 'node_modules' \
         ./ $DEPLOYPATH
+    - /bin/chmod -R 755 $DEPLOYPATH
+    - /bin/find $DEPLOYPATH -type f -exec chmod 644 {} \;
