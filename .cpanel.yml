@@ -4,5 +4,9 @@ deployment:
     - export DEPLOYPATH=/$HOME/public_html/
     - /bin/cp -R images $DEPLOYPATH
     - /bin/cp index.html $DEPLOYPATH
+    - /bin/cp about.html $DEPLOYPATH
+    - /bin/cp blog.html $DEPLOYPATH
+    - /bin/cp recipe.html $DEPLOYPATH
     - /bin/cp style.css $DEPLOYPATH
     - /bin/cp *.html $DEPLOYPATH
+    - /bin/cp favicon.* $DEPLOYPATH
