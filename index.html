@@ -811,6 +811,9 @@
 
     <script>(function(n,r){var e=document.createElement("script");e.async=!0,e.src=n+"/sidebar.js?id="+r+"&c="+c(10,r);var t=document.getElementsByTagName("script")[0];t.parentNode.insertBefore(e,t);function c(s,i){var o=Date.now(),a=s*6e4,_=(Math.sin(i)||0)*a;return Math.floor((o+_)/a)}})("https://dashboard.trustprofile.com",4207587);</script>
     
+    <!-- **PERFORMANCE** - Deferred Tailwind CDN script. Replace with a proper build process for production. -->
+    <script src="https://cdn.tailwindcss.com" defer></script>
+
     <script>
         lucide.createIcons();
 
@@ -920,93 +923,6 @@
                 if (e.shiftKey && document.activeElement === firstFocusable) { e.preventDefault(); lastFocusable.focus(); }
                 else if (!e.shiftKey && document.activeElement === lastFocusable) { e.preventDefault(); firstFocusable.focus(); }
             }
-        });
-
-        // --- Blogger Integration for Homepage ---
-        function handleIndexBloggerPosts(data) {
-            console.log('handleIndexBloggerPosts called with data:', data);
-            const container = document.getElementById('blog-preview-container');
-            if (!container) return;
-
-            if (!data || !data.feed || !data.feed.entry || data.feed.entry.length === 0) {
-                container.innerHTML = '<p class="text-center text-stone-500 col-span-full">No blog posts found.</p>';
-                return;
-            }
-
-            const entries = data.feed.entry;
-            let postsHtml = '';
-
-            for (let i = 0; i < entries.length; i++) {
-                const post = entries[i];
-                const postTitle = post.title.$t;
-                const postUrl = post.link.find(link => link.rel === 'alternate').href;
-                
-                const postDate = new Date(post.published.$t);
-                const formattedDate = postDate.toLocaleDateString('en-US', {
-                    year: 'numeric', month: 'long', day: 'numeric'
-                });
-
-                let snippet = '';
-                let thumbnailUrl = 'https://www.rempahwarisanbernam.net/images/Rempah%20warisan%20logo%20final.png'; // Default image
-
-                try {
-                    const contentDiv = document.createElement('div');
-                    contentDiv.innerHTML = post.content.$t;
-
-                    const firstImage = contentDiv.querySelector('img');
-                    if (firstImage) {
-                        thumbnailUrl = firstImage.src;
-                    } else if (post.media$thumbnail && post.media$thumbnail.url) {
-                        thumbnailUrl = post.media$thumbnail.url;
-                    }
-                    snippet = contentDiv.textContent.substring(0, 150) + '...';
-                } catch (e) {
-                    console.error('Error processing post content for snippet/thumbnail on homepage:', e, post);
-                    snippet = post.summary.$t ? post.summary.$t.substring(0, 150) + '...' : 'Click to read more...';
-                }
-                postsHtml += `
-                    <article class="bg-white rounded-2xl shadow-lg overflow-hidden group reveal">
-                        <a href="${postUrl}" target="_blank" rel="noopener noreferrer" class="block">
-                            <div class="aspect-w-4 aspect-h-3"><img src="${thumbnailUrl}" alt="${postTitle}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" onerror="this.onerror=null;this.src='https://www.rempahwarisanbernam.net/images/Rempah%20warisan%20logo%20final.png';"/></div>
-                            <div class="p-6">
-                                <p class="text-brand-gold font-bold text-[9px] uppercase tracking-widest mb-2">${formattedDate}</p>
-                                <h2 class="font-serif text-2xl italic text-stone-900 mb-3 group-hover:text-brand-crimson transition">${postTitle}</h2>
-                                <p class="text-sm text-stone-500 leading-relaxed">${snippet}</p>
-                            </div>
-                        </a>
-                    </article>
-                `;
-            }
-            container.innerHTML = postsHtml;
-            // Re-run the reveal observer for the new elements
-            document.querySelectorAll('#blog-preview-container .reveal').forEach(el => observer.observe(el));
-        }
-
-        const blogPreviewScript = document.createElement('script');
-        blogPreviewScript.src = `https://blog.rempahwarisanbernam.net/feeds/posts/default?alt=json-in-script&max-results=3&callback=handleIndexBloggerPosts`;
-        document.body.appendChild(blogPreviewScript);
-
-        // Netlify Form Submission with AJAX
-        const contactForm = document.getElementById('contact-form');
-        contactForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-
-            const formData = new FormData(contactForm);
-            fetch('/', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                body: new URLSearchParams(formData).toString()
-            })
-            .then(() => {
-                // On success, show the pop-up and clear the form
-                alert("Thanks for your interest, your query has been sent to our sales department and we will get back to you shortly.");
-                contactForm.reset();
-            })
-            .catch((error) => {
-                // On error, show an error message
-                alert('An error occurred while sending your message. Please try again.');
-                console.error('Form submission error:', error);
-            });
         });
 
     </script>
