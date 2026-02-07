@@ -2,6 +2,11 @@
 deployment:
   tasks:
     - export DEPLOYPATH=$HOME/public_html
+    # Copy all HTML files
     - /bin/cp -u *.html $DEPLOYPATH
+    # Copy images folder recursively
     - /bin/cp -Ru images $DEPLOYPATH
-
+    # Fix directory permissions
+    - /bin/find $DEPLOYPATH -type d -exec chmod 755 {} \;
+    # Fix file permissions
+    - /bin/find $DEPLOYPATH -type f -exec chmod 644 {} \;
