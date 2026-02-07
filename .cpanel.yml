@@ -1,8 +1,10 @@
 ---
 deployment:
   tasks:
-    - export DEPLOYPATH=/$HOME/public_html/
-    - /bin/cp -R images $DEPLOYPATH
-    - /bin/cp index.html $DEPLOYPATH
-    - /bin/cp style.css $DEPLOYPATH
-    - /bin/cp *.html $DEPLOYPATH
+    - export DEPLOYPATH=$HOME/public_html/
+    - /bin/rsync -a --delete --exclude '.git' --exclude '.cpanel.yml' --exclude 'rempah-website/' --exclude 'rempah_warisan_website.jsx' --exclude 'blogger-theme.xml' ./ $DEPLOYPATH
+    # The old commands are kept below for reference, but are replaced by the rsync command above.
+    # - /bin/cp -R images $DEPLOYPATH
+    # - /bin/cp -R css $DEPLOYPATH
+    # - /bin/cp *.html $DEPLOYPATH
+    # - /bin/cp favicon.ico apple-touch-icon.png favicon-16x16.png favicon-32x32.png favicon.svg site.webmanifest $DEPLOYPATH
