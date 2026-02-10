@@ -2740,7 +2740,7 @@ display:none
           <div class='item-thumbnail'>
             <a expr:href='data:post.url'>
               <b:if cond='data:post.featuredImage'>
-                <img class='post-featured-image' expr:src='resizeImage(data:post.featuredImage, 560, "560:0").url' alt='Post featured image' loading='lazy' decoding='async' style='width:100%;height:auto;display:block;'/>
+                <img alt='Post featured image' class='post-featured-image' decoding='async' expr:src='resizeImage(data:post.featuredImage, 560, &quot;560:0&quot;).url' loading='lazy' style='width:100%;height:auto;display:block;'/>
               </b:if>
             </a>
           </div>
@@ -3034,13 +3034,13 @@ display:none
     <b:include data='blog' name='google-analytics'/>
 
     <!-- Preconnect to Google Fonts for faster font retrieval -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
+    <link href='https://fonts.googleapis.com' rel='preconnect'/>
+    <link crossorigin='anonymous' href='https://fonts.gstatic.com' rel='preconnect'/>
     <!-- Preload critical logo image to improve LCP -->
-    <link rel="preload" href="https://www.rempahwarisanbernam.net/images/Rempah%20warisan%20logo%20final.png" as="image" />
+    <link as='image' href='https://www.rempahwarisanbernam.net/images/Rempah%20warisan%20logo%20final.png' rel='preload'/>
     <script async='async' src='https://www.gstatic.com/external_hosted/clipboardjs/clipboard.min.js'/>
     <!-- Organization JSON-LD for structured data (site-wide) -->
-    <script type="application/ld+json"><![CDATA[
+    <script type='application/ld+json'><![CDATA[
     {
       "@context": "https://schema.org",
       "@type": "Organization",
@@ -3113,7 +3113,7 @@ display:none
       <!-- Branded header: logo (falls back to blog title) and primary nav -->
       <div class='site-header-inner' style='display:flex;align-items:center;gap:1rem;'>
         <a class='site-logo' expr:href='data:blog.homepageUrl' style='display:inline-block;line-height:1;'>
-          <img alt='Rempah Warisan Bernam' src='https://www.rempahwarisanbernam.net/images/Rempah%20warisan%20logo%20final.png' style='height:72px;max-height:72px;display:block;' loading='lazy' decoding='async' fetchpriority='low'/>
+          <img alt='Rempah Warisan Bernam' decoding='async' fetchpriority='low' loading='lazy' src='https://www.rempahwarisanbernam.net/images/Rempah%20warisan%20logo%20final.png' style='height:72px;max-height:72px;display:block;'/>
         </a>
 
         <div class='site-title-and-desc'>
@@ -3160,10 +3160,34 @@ display:none
           </div>
         </b:includable>
                     </b:widget>
+                    <b:widget id='HTML7' locked='false' title='' type='HTML' visible='true'>
+                      <b:widget-settings>
+                        <b:widget-setting name='content'><![CDATA[<!-- ShareThis BEGIN -->
+<script type='text/javascript' src='https://platform-api.sharethis.com/js/sharethis.js#property=698a127b19466150d6ac0a60&product=privacy-policy-generator&source=platform&cms=sop' async='async'></script>
+<!-- ShareThis END -->]]></b:widget-setting>
+                      </b:widget-settings>
+                      <b:includable id='main'>
+  <b:include name='widget-title'/>
+  <div class='widget-content'>
+    <data:content/>
+  </div>
+</b:includable>
+                    </b:widget>
+                    <b:widget id='HTML4' locked='false' title='' type='HTML' visible='true'>
+                      <b:widget-settings>
+                        <b:widget-setting name='content'><![CDATA[<script type='text/javascript' src='https://platform-api.sharethis.com/js/sharethis.js#property=698a127b19466150d6ac0a60&product=sop' async='async'></script>]]></b:widget-setting>
+                      </b:widget-settings>
+                      <b:includable id='main'>
+  <b:include name='widget-title'/>
+  <div class='widget-content'>
+    <data:content/>
+  </div>
+</b:includable>
+                    </b:widget>
                     <b:widget id='HTML2' locked='false' title='' type='HTML' visible='true'>
                       <b:widget-settings>
                         <b:widget-setting name='content'><![CDATA[<div id="fb-root"></div>
-<script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v24.0&appId=1268635976600604"></script>]]></b:widget-setting>
+<script async="async" defer="defer" crossorigin="anonymous" src="https://connect.facebook.net/en_GB/sdk.js#xfbml=1&amp;version=v24.0&amp;appId=1268635976600604"></script>]]></b:widget-setting>
                       </b:widget-settings>
                       <b:includable id='main'>
   <b:include name='widget-title'/>
@@ -3244,12 +3268,13 @@ display:none
                 </b:if>
 
                 <b:section class='featured-post' id='featured_post' name='Featured Post' showaddelement='false'>
-                  <b:widget cond='data:view.isHomepage' id='FeaturedPost1' locked='true' title='' type='FeaturedPost' visible='true'>
+                  <b:widget cond='data:view.isHomepage' id='FeaturedPost1' locked='true' title='' type='FeaturedPost' version='2' visible='true'>
                     <b:widget-settings>
                       <b:widget-setting name='showSnippet'>false</b:widget-setting>
                       <b:widget-setting name='showPostTitle'>true</b:widget-setting>
+                      <b:widget-setting name='postId'>8421941021992018497</b:widget-setting>
                       <b:widget-setting name='showFirstImage'>true</b:widget-setting>
-                      <b:widget-setting name='useMostRecentPost'>true</b:widget-setting>
+                      <b:widget-setting name='useMostRecentPost'>false</b:widget-setting>
                     </b:widget-settings>
                     <b:includable id='main' var='this'>
   <b:include name='widget-title'/>
@@ -3370,7 +3395,7 @@ display:none
           <div class='item-thumbnail'>
             <a expr:href='data:post.url'>
               <b:if cond='data:post.featuredImage'>
-                <img class='post-featured-image' expr:src='resizeImage(data:post.featuredImage, 840, "840:0").url' alt='Post featured image' loading='lazy' decoding='async' style='width:100%;height:auto;display:block;'/>
+                <img alt='Post featured image' class='post-featured-image' decoding='async' expr:src='resizeImage(data:post.featuredImage, 840, &quot;840:0&quot;).url' loading='lazy' style='width:100%;height:auto;display:block;'/>
               </b:if>
             </a>
           </div>
@@ -3379,12 +3404,12 @@ display:none
                 </b:section>
 
                 <b:section class='main' id='page_body' name='Page Body' showaddelement='false'>
-                  <b:widget id='Blog1' locked='true' title='Blog Posts' type='Blog' visible='true'>
+                  <b:widget id='Blog1' locked='true' title='Blog Posts' type='Blog' version='2' visible='true'>
                     <b:widget-settings>
                       <b:widget-setting name='showDateHeader'>false</b:widget-setting>
                       <b:widget-setting name='style.textcolor'>#ffffff</b:widget-setting>
-                      <b:widget-setting name='showShareButtons'>true</b:widget-setting>
-                      <b:widget-setting name='showCommentLink'>true</b:widget-setting>
+                      <b:widget-setting name='showShareButtons'>false</b:widget-setting>
+                      <b:widget-setting name='showCommentLink'>false</b:widget-setting>
                       <b:widget-setting name='style.urlcolor'>#ffffff</b:widget-setting>
                       <b:widget-setting name='showAuthor'>false</b:widget-setting>
                       <b:widget-setting name='style.linkcolor'>#ffffff</b:widget-setting>
@@ -3397,10 +3422,10 @@ display:none
                       <b:widget-setting name='showLocation'>true</b:widget-setting>
                       <b:widget-setting name='postLabelsLabel'/>
                       <b:widget-setting name='showTimestamp'>true</b:widget-setting>
-                      <b:widget-setting name='postsPerAd'>2</b:widget-setting>
+                      <b:widget-setting name='postsPerAd'>1</b:widget-setting>
                       <b:widget-setting name='showBacklinks'>false</b:widget-setting>
                       <b:widget-setting name='style.bordercolor'>#ffffff</b:widget-setting>
-                      <b:widget-setting name='showInlineAds'>true</b:widget-setting>
+                      <b:widget-setting name='showInlineAds'>false</b:widget-setting>
                       <b:widget-setting name='showReactions'>false</b:widget-setting>
                     </b:widget-settings>
                     <b:includable id='main'>
@@ -3649,7 +3674,7 @@ display:none
     <data:post.body/>
   </div>
   <!-- JSON-LD for this BlogPosting (minimal, references site Organization @id) -->
-  <script type="application/ld+json"><![CDATA[
+  <script type='application/ld+json'><![CDATA[
   {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
@@ -3699,7 +3724,7 @@ display:none
   <b:if cond='data:post.author.aboutMe and data:view.isPost'>
     <div class='author-profile'>
       <b:if cond='data:post.author.authorPhoto.url'>
-        <img class='author-image' expr:src='data:post.author.authorPhoto.url' width='50' height='50' loading='lazy' decoding='async'/>
+        <img class='author-image' decoding='async' expr:src='data:post.author.authorPhoto.url' height='50' loading='lazy' width='50'/>
         <div class='author-about'>
           <b:include data='post' name='aboutPostAuthor'/>
         </div>
@@ -3782,7 +3807,7 @@ display:none
           <div class='item-thumbnail'>
             <a expr:href='data:post.url'>
               <b:if cond='data:post.featuredImage'>
-                <img class='post-featured-image' expr:src='resizeImage(data:post.featuredImage, 560, "560:0").url' alt='Post featured image' loading='lazy' decoding='async' style='width:100%;height:auto;display:block;'/>
+                <img alt='Post featured image' class='post-featured-image' decoding='async' expr:src='resizeImage(data:post.featuredImage, 560, &quot;560:0&quot;).url' loading='lazy' style='width:100%;height:auto;display:block;'/>
               </b:if>
             </a>
           </div>
@@ -3885,11 +3910,31 @@ display:none
   <!-- LINT.ThenChange(//depot/google3/java/com/google/blogger/b2/layouts/widgets/v2-style.css) -->
 </b:includable>
                   </b:widget>
+                  <b:widget id='HTML6' locked='false' title='' type='HTML' visible='true'>
+                    <b:widget-settings>
+                      <b:widget-setting name='content'><![CDATA[<!-- ShareThis BEGIN --><div class="sharethis-inline-share-buttons"></div><!-- ShareThis END -->]]></b:widget-setting>
+                    </b:widget-settings>
+                    <b:includable id='main'>
+  <b:include name='widget-title'/>
+  <div class='widget-content'>
+    <data:content/>
+  </div>
+</b:includable>
+                  </b:widget>
                 </b:section>
               </main>
 
               <b:section ads='true' class='vertical-ad-container' id='ads' name='Ads' showaddelement='false'>
                 <b:widget id='AdSense1' locked='true' title='' type='AdSense' visible='true'>
+                  <b:widget-settings>
+                    <b:widget-setting name='style.bgcolor'>#ffffff</b:widget-setting>
+                    <b:widget-setting name='style.textcolor'>#ffffff</b:widget-setting>
+                    <b:widget-setting name='style.layout'>1x1</b:widget-setting>
+                    <b:widget-setting name='style.bordercolor'>#ffffff</b:widget-setting>
+                    <b:widget-setting name='style.urlcolor'>#ffffff</b:widget-setting>
+                    <b:widget-setting name='style.linkcolor'>#ffffff</b:widget-setting>
+                    <b:widget-setting name='style.unittype'>TextAndImage</b:widget-setting>
+                  </b:widget-settings>
                   <b:includable id='main'>
   <div class='widget-content'>
     <b:if cond='data:adCode'>
@@ -3907,6 +3952,15 @@ display:none
         </b:includable>
                 </b:widget>
                 <b:widget id='AdSense2' locked='true' title='' type='AdSense' visible='true'>
+                  <b:widget-settings>
+                    <b:widget-setting name='style.bgcolor'>#ffffff</b:widget-setting>
+                    <b:widget-setting name='style.textcolor'>#ffffff</b:widget-setting>
+                    <b:widget-setting name='style.layout'>1x1</b:widget-setting>
+                    <b:widget-setting name='style.bordercolor'>#ffffff</b:widget-setting>
+                    <b:widget-setting name='style.urlcolor'>#ffffff</b:widget-setting>
+                    <b:widget-setting name='style.linkcolor'>#ffffff</b:widget-setting>
+                    <b:widget-setting name='style.unittype'>TextAndImage</b:widget-setting>
+                  </b:widget-settings>
                   <b:includable id='main'>
   <div class='widget-content'>
     <b:if cond='data:adCode'>
@@ -3933,6 +3987,28 @@ display:none
                     <b:include data='{ iconClass: &quot;touch-icon sidebar-back&quot; }' name='closeIcon'/>
                   </div>
                   <b:section class='sidebar' id='sidebar_feed' name='Sidebar' preferred='yes'>
+                    <b:widget id='Translate2' locked='false' title='Translate' type='Translate' visible='true'>
+                      <b:widget-settings>
+                        <b:widget-setting name='displayMode'>VERTICAL</b:widget-setting>
+                      </b:widget-settings>
+                      <b:includable id='main'>
+  <b:include name='widget-title'/>
+  <b:include name='content'/>
+</b:includable>
+                      <b:includable id='content'>
+  <div id='google_translate_element'/>
+  <script>
+    function googleTranslateElementInit() {
+      new google.translate.TranslateElement({
+        pageLanguage: &#39;<b:eval expr='data:blog.locale.language ?: &quot;auto&quot;'/>&#39;,
+        autoDisplay: &#39;true&#39;,
+        layout: google.translate.TranslateElement.InlineLayout.<data:layout/>
+      }, &#39;google_translate_element&#39;);
+    }
+  </script>
+  <script src='//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit'/>
+</b:includable>
+                    </b:widget>
                     <b:widget id='HTML1' locked='false' title='' type='HTML' visible='true'>
                       <b:widget-settings>
                         <b:widget-setting name='content'><![CDATA[<div class="fb-page" data-href="https://www.facebook.com/rempahwarisanbernam/" data-tabs="timeline" data-width="" data-height="" data-small-header="true" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true"><blockquote cite="https://www.facebook.com/rempahwarisanbernam/" class="fb-xfbml-parse-ignore"><a href="https://www.facebook.com/rempahwarisanbernam/"></a></blockquote></div>]]></b:widget-setting>
@@ -4141,12 +4217,45 @@ display:none
                 </b:if>
                 <b:if cond='data:view.isSingleItem or data:view.isLayoutMode'>
                   <b:section id='sidebar_item' name='Sidebar (Item Page)'>
+                    <b:widget id='Translate1' locked='false' title='Translate' type='Translate' visible='true'>
+                      <b:widget-settings>
+                        <b:widget-setting name='displayMode'>VERTICAL</b:widget-setting>
+                      </b:widget-settings>
+                      <b:includable id='main'>
+  <b:include name='widget-title'/>
+  <b:include name='content'/>
+</b:includable>
+                      <b:includable id='content'>
+  <div id='google_translate_element'/>
+  <script>
+    function googleTranslateElementInit() {
+      new google.translate.TranslateElement({
+        pageLanguage: &#39;<b:eval expr='data:blog.locale.language ?: &quot;auto&quot;'/>&#39;,
+        autoDisplay: &#39;true&#39;,
+        layout: google.translate.TranslateElement.InlineLayout.<data:layout/>
+      }, &#39;google_translate_element&#39;);
+    }
+  </script>
+  <script src='//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit'/>
+</b:includable>
+                    </b:widget>
+                    <b:widget id='HTML3' locked='false' title='' type='HTML' visible='true'>
+                      <b:widget-settings>
+                        <b:widget-setting name='content'><![CDATA[<div class="fb-page" data-href="https://www.facebook.com/rempahwarisanbernam/" data-tabs="timeline" data-width="auto" data-height="" data-small-header="false" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true"><blockquote cite="https://www.facebook.com/rempahwarisanbernam/" class="fb-xfbml-parse-ignore"><a href="https://www.facebook.com/rempahwarisanbernam/"></a></blockquote></div>]]></b:widget-setting>
+                      </b:widget-settings>
+                      <b:includable id='main'>
+  <b:include name='widget-title'/>
+  <div class='widget-content'>
+    <data:content/>
+  </div>
+</b:includable>
+                    </b:widget>
                     <b:widget cond='data:posts any (p =&gt; p.id != data:view.postId)' id='PopularPosts1' locked='true' title='' type='PopularPosts' visible='true'>
                       <b:widget-settings>
                         <b:widget-setting name='numItemsToShow'>3</b:widget-setting>
                         <b:widget-setting name='showThumbnails'>true</b:widget-setting>
                         <b:widget-setting name='showSnippets'>true</b:widget-setting>
-                        <b:widget-setting name='timeRange'>LAST_YEAR</b:widget-setting>
+                        <b:widget-setting name='timeRange'>ALL_TIME</b:widget-setting>
                       </b:widget-settings>
                       <b:includable id='main'>
           <b:comment>Default the title to &#39;Popular posts from this blog&#39;.</b:comment>
@@ -4192,6 +4301,17 @@ display:none
       </b:with>
 
       <b:section class='footer' id='footer' name='Footer' showaddelement='false' tag='footer'>
+        <b:widget id='HTML5' locked='false' title='' type='HTML' visible='true'>
+          <b:widget-settings>
+            <b:widget-setting name='content'><![CDATA[<!-- ShareThis BEGIN --><div class="sharethis-inline-follow-buttons"></div><!-- ShareThis END -->]]></b:widget-setting>
+          </b:widget-settings>
+          <b:includable id='main'>
+  <b:include name='widget-title'/>
+  <div class='widget-content'>
+    <data:content/>
+  </div>
+</b:includable>
+        </b:widget>
         <b:widget id='Attribution1' locked='true' title='' type='Attribution' visible='true'>
           <b:widget-settings>
             <b:widget-setting name='copyright'/>

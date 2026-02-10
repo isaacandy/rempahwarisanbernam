@@ -123,24 +123,19 @@
 
         <!-- Recipe Grid Section -->
         <section class="py-16">
-            <div class="max-w-7xl mx-auto px-6 lg:px-12">
-                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    <!-- Recipe Card Example -->
-                    <div class="bg-white rounded-2xl shadow-lg overflow-hidden group">
-                        <a href="#" class="block">
-                            <div class="aspect-w-4 aspect-h-3">
-                                <img src="https://images.unsplash.com/photo-1565299585323-15d11e2893a7?q=80&w=1986" loading="lazy" decoding="async" alt="Chicken Curry" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-                            </div>
-                            <div class="p-6">
-                                <p class="text-brand-gold font-bold text-[9px] uppercase tracking-widest mb-2">Main Course</p>
-                                <h2 class="font-serif text-2xl italic text-stone-900 mb-3">Classic Chicken Curry</h2>
-                                <p class="text-sm text-stone-500 leading-relaxed">A rich and aromatic curry made with our signature Meat & Chicken Curry Powder.</p>
-                            </div>
-                        </a>
-                    </div>
-                    <!-- Add more recipe cards here -->
+            <div id="recipe-posts-container" class="max-w-7xl mx-auto px-6 lg:px-12">
+                <!-- Loading spinner -->
+                <div id="loading-indicator" class="text-center py-12" aria-live="polite" aria-busy="true">
+                    <noscript>
+                        <p class="text-center text-stone-500">
+                            JavaScript is required to load recipes. Please enable it in your browser or <a href="https://blog.rempahwarisanbernam.net" class="text-brand-crimson underline">visit our blog directly</a>.
+                        </p>
+                    </noscript>
+                    <i data-lucide="loader-2" class="w-10 h-10 text-brand-gold animate-spin mx-auto"></i>
                 </div>
             </div>
+            <!-- Pagination will be inserted here -->
+            <div id="pager" class="max-w-4xl mx-auto px-6 lg:px-8 mt-12 flex justify-between"></div>
         </section>
     </main>
 
@@ -167,6 +162,127 @@
         toggle.addEventListener('click', () => menu.classList.remove('hidden'));
         close.addEventListener('click', () => menu.classList.add('hidden'));
         function closeMenu() { menu.classList.add('hidden'); }
+
+        // --- Blogger Integration Script for Recipes ---
+
+        const bloggerUrl = "https://blog.rempahwarisanbernam.net"; 
+        const maxPostsToFetch = 20; // Fetch more posts to ensure enough recipes after filtering
+        const desiredTags = ["Recipe", "AI-Generated Recipe"]; // Tags to filter by
+
+        function handleBloggerPosts(data) {
+            console.log('handleBloggerPosts called with data:', data);
+            // Clear any feed timeout set on window (fallback handler)
+            if (window._bloggerFeedTimeout) {
+                clearTimeout(window._bloggerFeedTimeout);
+                window._bloggerFeedTimeout = null;
+            }
+
+            const container = document.getElementById('recipe-posts-container');
+            const loadingIndicator = document.getElementById('loading-indicator');
+            
+            // Hide loading indicator
+            if (loadingIndicator) {
+                loadingIndicator.style.display = 'none';
+            }
+            console.log('Loading indicator hidden.');
+
+            if (!data || !data.feed || !data.feed.entry) {
+                container.innerHTML = '<p class="text-center text-stone-500">Could not load recipes. Please check the Blogger URL.</p>';
+                return;
+            }
+
+            const allEntries = data.feed.entry;
+            const filteredEntries = allEntries.filter(entry => {
+                // Check if any of the desired tags are present in the entry's categories
+                return entry.category && entry.category.some(cat => desiredTags.includes(cat.term));
+            });
+
+            if (filteredEntries.length === 0) {
+                container.innerHTML = '<p class="text-center text-stone-500">No recipes found with the specified tags.</p>';
+                return;
+            }
+
+            let postHtml = '<div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">';
+            console.log('Found filtered entries:', filteredEntries.length);
+
+            for (let i = 0; i < filteredEntries.length; i++) {
+                const post = filteredEntries[i];
+                const postTitle = post.title.$t;
+                const postUrl = post.link.find(link => link.rel === 'alternate').href;
+                
+                // Format the date
+                const postDate = new Date(post.published.$t);
+                const formattedDate = postDate.toLocaleDateString('en-US', {
+                    year: 'numeric', month: 'long', day: 'numeric'
+                });
+
+                // Create a snippet and find the first image for a thumbnail
+                const contentDiv = document.createElement('div');
+                contentDiv.innerHTML = post.content.$t;
+
+                let thumbnailUrl = 'https://www.rempahwarisanbernam.net/images/Rempah%20warisan%20logo%20final.png'; // Default image
+                const firstImage = contentDiv.querySelector('img');
+                if (firstImage) {
+                    thumbnailUrl = firstImage.src;
+                } else if (post.media$thumbnail && post.media$thumbnail.url) {
+                    thumbnailUrl = post.media$thumbnail.url;
+                }
+
+                const snippet = contentDiv.textContent.substring(0, 150) + '...'; // Shorter snippet for recipe cards
+
+                // Build the HTML for one post (recipe card style)
+                postHtml += `
+                    <div class="bg-white rounded-2xl shadow-lg overflow-hidden group">
+                        <a href="${postUrl}" target="_blank" rel="noopener noreferrer" class="block">
+                            <div class="aspect-w-4 aspect-h-3">
+                                <img src="${thumbnailUrl}" alt="${postTitle}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                            </div>
+                            <div class="p-6">
+                                <p class="text-brand-gold font-bold text-[9px] uppercase tracking-widest mb-2">${formattedDate}</p>
+                                <h2 class="font-serif text-2xl italic text-stone-900 mb-3">${postTitle}</h2>
+                                <p class="text-sm text-stone-500 leading-relaxed">${snippet}</p>
+                            </div>
+                        </a>
+                    </div>
+                `;
+            }
+            postHtml += '</div>';
+            console.log('Generated recipe HTML. Setting innerHTML.');
+            container.innerHTML = postHtml;
+        }
+
+        // Dynamically create the script tag to fetch the feed
+        console.log('Attempting to load Blogger feed script for recipes.');
+        const script = document.createElement('script');
+        // Ensure no trailing slash on the base URL
+        const base = bloggerUrl.replace(/\/$/, '');
+        script.src = `${base}/feeds/posts/default?alt=json-in-script&max-results=${maxPostsToFetch}&callback=handleBloggerPosts`;
+        script.async = true;
+
+        // Set a fallback timeout so the page doesn't spin forever
+        window._bloggerFeedTimeout = setTimeout(() => {
+            console.warn('Blogger feed timeout triggered for recipes.');
+            const loadingIndicator = document.getElementById('loading-indicator');
+            const container = document.getElementById('recipe-posts-container');
+            if (loadingIndicator) loadingIndicator.style.display = 'none';
+            if (container) container.innerHTML = '<p class="text-center text-stone-500">Recipe feed timeout — could not load posts. Check the `bloggerUrl` and network status.</p>';
+            console.error('Blogger feed request timed out for recipes.');
+        }, 8000);
+
+        // Handle script load errors (bad URL, DNS, network, certificate)
+        script.onerror = function (e) {
+            if (window._bloggerFeedTimeout) {
+                clearTimeout(window._bloggerFeedTimeout);
+                window._bloggerFeedTimeout = null;
+            }
+            const loadingIndicator = document.getElementById('loading-indicator');
+            const container = document.getElementById('recipe-posts-container');
+            if (loadingIndicator) loadingIndicator.style.display = 'none';
+            if (container) container.innerHTML = '<p class="text-center text-stone-500">Could not load recipes (network or invalid blog URL). Check `bloggerUrl` in `recipe.html`.</p>';
+            console.error('Error loading blogger feed script for recipes', e);
+        };
+
+        document.body.appendChild(script);
     </script>
 </body>
 </html>
