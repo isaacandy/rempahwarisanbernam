@@ -194,8 +194,11 @@
 
             const allEntries = data.feed.entry;
             const entries = allEntries.filter(entry => {
-                // Exclude posts that have any of the specified tags
-                return !(entry.category && entry.category.some(cat => excludedTags.includes(cat.term)));
+                // Check if the post has any of the tags that should be excluded.
+                // The .some() method returns true if at least ONE of the post's tags is found in the excludedTags list.
+                // This works as an "OR" condition (e.g., exclude if tag is "Recipe" OR "AI-Generated Recipe").
+                const hasExcludedTag = entry.category && entry.category.some(cat => excludedTags.includes(cat.term));
+                return !hasExcludedTag; // We return the posts that DO NOT have an excluded tag.
             });
 
             let postHtml = '<div class="space-y-12">';
