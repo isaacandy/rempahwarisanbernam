@@ -167,7 +167,8 @@
 
         // IMPORTANT: Replace this with your Blogger blog URL
         const bloggerUrl = "https://blog.rempahwarisanbernam.net"; 
-        const maxPosts = 5; // How many posts to display
+        const maxPostsToFetch = 20; // Fetch more posts to ensure enough posts after filtering
+        const excludedTags = ["Recipe", "AI-Generated Recipe"]; // Tags to exclude from the blog page
 
         function handleBloggerPosts(data) {
             console.log('handleBloggerPosts called with data:', data);
@@ -191,7 +192,12 @@
                 return;
             }
 
-            const entries = data.feed.entry;
+            const allEntries = data.feed.entry;
+            const entries = allEntries.filter(entry => {
+                // Exclude posts that have any of the specified tags
+                return !(entry.category && entry.category.some(cat => excludedTags.includes(cat.term)));
+            });
+
             let postHtml = '<div class="space-y-12">';
             console.log('Found entries:', entries.length);
 
@@ -248,7 +254,7 @@
         const script = document.createElement('script');
         // Ensure no trailing slash on the base URL
         const base = bloggerUrl.replace(/\/$/, '');
-        script.src = `${base}/feeds/posts/default?alt=json-in-script&max-results=${maxPosts}&callback=handleBloggerPosts`;
+        script.src = `${base}/feeds/posts/default?alt=json-in-script&max-results=${maxPostsToFetch}&callback=handleBloggerPosts`;
         script.async = true;
 
         // Set a fallback timeout so the page doesn't spin forever
