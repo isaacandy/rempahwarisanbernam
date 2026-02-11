@@ -3699,10 +3699,14 @@ display:none
       },
       "description": "<b:eval expr='data:post.metaDescription ? data:post.metaDescription : &quot;A recipe from Rempah Warisan Bernam.&quot;'/>",
       "recipeIngredient": [
-        "1kg Chicken, cut into pieces",
-        "4 tbsp Rempah Warisan Bernam Meat & Chicken Curry Powder",
-        "2 Onions, sliced",
-        "1 cup Coconut milk"
+        "1 kg Chicken, cut into pieces",
+        {
+          "@type": "HowToIngredient",
+          "name": "Rempah Warisan Bernam Meat & Chicken Curry Powder",
+          "item": { "@id": "https://www.rempahwarisanbernam.net/products/meat-chicken-curry-powder" },
+          "quantity": "4 tbsp"
+        },
+        "2 Onions, sliced"
       ],
       "prepTime": "PT15M",
       "cookTime": "PT30M",
