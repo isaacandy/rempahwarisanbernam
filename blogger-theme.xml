@@ -3683,9 +3683,33 @@ display:none
     "mainEntityOfPage": { "@type": "WebPage", "@id": "<data:post.url/>" },
     "headline": "<data:post.title/>",
     "author": { "@type": "Person", "name": "<data:post.author.name/>" },
-    "publisher": { "@id": "https://www.rempahwarisanbernam.net/#organization" }
+    "publisher": { "@id": "https://www.rempahwarisanbernam.net/#organization" },
+    "description": "<b:eval expr='data:post.metaDescription ? data:post.metaDescription : &quot;A recipe from Rempah Warisan Bernam.&quot;'/>"
   }
   ]]></script>
+  <!-- Conditionally add Recipe schema if post is tagged as a recipe -->
+  <b:if cond='data:post.labels any (l => l.name in [&quot;Recipe&quot;, &quot;AI-Generated Recipe&quot;])'>
+    <script type='application/ld+json'><![CDATA[
+    {
+      "@context": "https://schema.org",
+      "@type": "Recipe",
+      "name": "<data:post.title/>",
+      "author": {
+        "@id": "https://www.rempahwarisanbernam.net/#organization"
+      },
+      "description": "<b:eval expr='data:post.metaDescription ? data:post.metaDescription : &quot;A recipe from Rempah Warisan Bernam.&quot;'/>",
+      "recipeIngredient": [
+        "1kg Chicken, cut into pieces",
+        "4 tbsp Rempah Warisan Bernam Meat & Chicken Curry Powder",
+        "2 Onions, sliced",
+        "1 cup Coconut milk"
+      ],
+      "prepTime": "PT15M",
+      "cookTime": "PT30M",
+      "recipeYield": "4 servings"
+    }
+    ]]></script>
+  </b:if>
 </b:includable>
                     <b:includable id='postBodySnippet' var='post'>
           <div class='post-body entry-content' expr:id='&quot;post-snippet-&quot; + data:post.id'>
