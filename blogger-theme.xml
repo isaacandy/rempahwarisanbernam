@@ -3099,6 +3099,17 @@ display:none
 
                 <div class='blog-name'>
                   <b:section id='header' name='Header' showaddelement='false'>
+                    <b:widget id='HTML4' locked='false' title='' type='HTML' visible='true'>
+                      <b:widget-settings>
+                        <b:widget-setting name='content'><![CDATA[<script type='text/javascript' src='https://platform-api.sharethis.com/js/sharethis.js#property=698a127b19466150d6ac0a60&product=sop' async='async'></script>]]></b:widget-setting>
+                      </b:widget-settings>
+                      <b:includable id='main'>
+  <b:include name='widget-title'/>
+  <div class='widget-content'>
+    <data:content/>
+  </div>
+</b:includable>
+                    </b:widget>
                     <b:widget id='Header1' locked='true' title='Rempah Warisan Bernam Blog (Header)' type='Header' version='2' visible='true'>
                       <b:widget-settings>
                         <b:widget-setting name='displayUrl'/>
@@ -3167,17 +3178,6 @@ display:none
 <script type='text/javascript' src='https://platform-api.sharethis.com/js/sharethis.js#property=698a127b19466150d6ac0a60&product=privacy-policy-generator&source=platform&cms=sop' async='async'></script>
 <!-- ShareThis END -->
 <script async="async" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4320909163275818" crossorigin="anonymous"></script>]]></b:widget-setting>
-                      </b:widget-settings>
-                      <b:includable id='main'>
-  <b:include name='widget-title'/>
-  <div class='widget-content'>
-    <data:content/>
-  </div>
-</b:includable>
-                    </b:widget>
-                    <b:widget id='HTML4' locked='false' title='' type='HTML' visible='true'>
-                      <b:widget-settings>
-                        <b:widget-setting name='content'><![CDATA[<script type='text/javascript' src='https://platform-api.sharethis.com/js/sharethis.js#property=698a127b19466150d6ac0a60&product=sop' async='async'></script>]]></b:widget-setting>
                       </b:widget-settings>
                       <b:includable id='main'>
   <b:include name='widget-title'/>
@@ -4364,6 +4364,55 @@ display:none
                     <b:include data='{ iconClass: &quot;touch-icon sidebar-back&quot; }' name='closeIcon'/>
                   </div>
                   <b:section class='sidebar' id='sidebar_feed' name='Sidebar' preferred='yes'>
+                    <b:widget id='HTML8' locked='false' mobile='yes' title='Disqus' type='HTML' version='2' visible='true'>
+                      <b:widget-settings>
+                        <b:widget-setting name='content'><![CDATA[<!-- Disqus comments gadget -->]]></b:widget-setting>
+                      </b:widget-settings>
+                      <b:includable id='main'>
+            <script type='text/javascript'>
+                var disqus_shortname = &#39;https-blog-rempahwarisanbernan-net&#39;;
+                var disqus_blogger_current_url = &quot;<data:blog.canonicalUrl/>&quot;;
+
+                if (!disqus_blogger_current_url.length) {
+                    disqus_blogger_current_url = &quot;<data:blog.url/>&quot;;
+                }
+
+                var disqus_blogger_homepage_url = &quot;<data:blog.homepageUrl/>&quot;;
+                var disqus_blogger_canonical_homepage_url = &quot;<data:blog.canonicalHomepageUrl/>&quot;;
+            </script>
+
+            <b:if cond='data:blog.pageType == &quot;item&quot;'>
+                <style type='text/css'>
+                    #comments {display:none;}
+                </style>
+
+                <script type='text/javascript'>
+                    (function() {
+                        var bloggerjs = document.createElement(&#39;script&#39;);
+                        bloggerjs.type = &#39;text/javascript&#39;;
+                        bloggerjs.async = true;
+                        bloggerjs.src = &#39;//&#39;+disqus_shortname+&#39;.disqus.com/blogger_item.js&#39;;
+                        (document.getElementsByTagName(&#39;head&#39;)[0] || document.getElementsByTagName(&#39;body&#39;)[0]).appendChild(bloggerjs);
+                    })();
+
+                </script>
+            </b:if>
+                <style type='text/css'>
+                    .post-comment-link { visibility: hidden; }
+                </style>
+
+                <script type='text/javascript'>
+                (function() {
+                    var bloggerjs = document.createElement(&#39;script&#39;);
+                    bloggerjs.type = &#39;text/javascript&#39;;
+                    bloggerjs.async = true;
+                    bloggerjs.src = &#39;//&#39;+disqus_shortname+&#39;.disqus.com/blogger_index.js&#39;;
+                    (document.getElementsByTagName(&#39;head&#39;)[0] || document.getElementsByTagName(&#39;body&#39;)[0]).appendChild(bloggerjs);
+                })();
+
+            </script>
+</b:includable>
+                    </b:widget>
                     <b:widget id='Translate2' locked='false' title='Translate' type='Translate' visible='true'>
                       <b:widget-settings>
                         <b:widget-setting name='displayMode'>VERTICAL</b:widget-setting>
@@ -4627,7 +4676,7 @@ display:none
   </div>
 </b:includable>
                     </b:widget>
-                    <b:widget cond='data:posts any (p =&gt; p.id != data:view.postId)' id='PopularPosts1' locked='true' title='' type='PopularPosts' visible='true'>
+                    <b:widget cond='data:posts any (p =&gt; p.id != data:view.postId)' id='PopularPosts1' locked='true' title='' type='PopularPosts' version='2' visible='true'>
                       <b:widget-settings>
                         <b:widget-setting name='numItemsToShow'>3</b:widget-setting>
                         <b:widget-setting name='showThumbnails'>true</b:widget-setting>
@@ -4902,7 +4951,7 @@ display:none
       </b:with>
 
       <b:section class='footer' id='footer' name='Footer' showaddelement='false' tag='footer'>
-        <b:widget id='HTML5' locked='false' title='' type='HTML' visible='true'>
+        <b:widget id='HTML5' locked='false' title='' type='HTML' visible='false'>
           <b:widget-settings>
             <b:widget-setting name='content'><![CDATA[<!-- ShareThis BEGIN --><div class="sharethis-inline-follow-buttons"></div><!-- ShareThis END -->]]></b:widget-setting>
           </b:widget-settings>
