@@ -3690,6 +3690,35 @@ display:none
   <!-- Custom styles for recipe posts -->
   <b:if cond='data:view.isSingleItem and data:post.labels any (l => l.name in [&quot;Recipe&quot;, &quot;AI-Generated Recipe&quot;])'>
     <style>
+      /* General mobile-friendly post body adjustments */
+      .post-body {
+        padding: 0 8px; /* Add some padding on mobile */
+      }
+      .post-body img {
+        max-width: 100%;
+        height: auto;
+      }
+
+      /* Make tables horizontally scrollable on small screens */
+      .table-wrapper {
+        width: 100%;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+        border: 1px solid #e5e7eb;
+        border-radius: 0.75rem;
+        margin: 1.5em 0;
+      }
+      .table-wrapper table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+      .table-wrapper th, .table-wrapper td {
+        padding: 0.75rem 1.25rem;
+        border-bottom: 1px solid #e5e7eb;
+        text-align: left;
+        white-space: nowrap; /* Prevents text from wrapping, forcing the scroll */
+      }
+
       .recipe-ingredients ul {
         list-style: none;
         padding: 0;
