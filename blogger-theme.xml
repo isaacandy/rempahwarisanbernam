@@ -3040,8 +3040,7 @@ display:none
     <link as='image' href='https://www.rempahwarisanbernam.net/images/Rempah%20warisan%20logo%20final.png' rel='preload'/>
     <script async='async' src='https://www.gstatic.com/external_hosted/clipboardjs/clipboard.min.js'/>
     <!-- Organization JSON-LD for structured data (site-wide) -->
-    <script type='application/ld+json'><![CDATA[
-    {
+    <script type='application/ld+json'><![CDATA[{
       "@context": "https://schema.org",
       "@type": "Organization",
       "@id": "https://www.rempahwarisanbernam.net/#organization",
