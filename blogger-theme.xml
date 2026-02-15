@@ -3803,36 +3803,38 @@ display:none
     </style>
   </b:if>
   <!-- A fallback schema for recipes just in case the conditional one has issues -->
-  <script type='application/ld+json'>{
-    &quot;@context&quot;: &quot;https://schema.org&quot;,
-    &quot;@type&quot;: &quot;Recipe&quot;,
-    &quot;name&quot;: &quot;<data:post.title/>&quot;,
-    &quot;author&quot;: { &quot;@id&quot;: &quot;https://www.rempahwarisanbernam.net/#organization&quot; },
-    &quot;recipeIngredient&quot;: [
-      &quot;Please see post for ingredients&quot;
+  <script type='application/ld+json'><![CDATA[
+  {
+    "@context": "https://schema.org",
+    "@type": "Recipe",
+    "name": "<data:post.title/>",
+    "author": { "@id": "https://www.rempahwarisanbernam.net/#organization" },
+    "recipeIngredient": [
+      "Please see post for ingredients"
     ],
-    &quot;recipeInstructions&quot;: [
-      &quot;Please see post for instructions&quot;
+    "recipeInstructions": [
+      "Please see post for instructions"
     ]
-  }</script>
+  }
+  ]]></script>
   <!-- Script to move the product spotlight to the end of the post -->
   <b:if cond='data:view.isSingleItem and data:post.labels any (l =&gt; l.name in [&quot;Recipe&quot;, &quot;AI-Generated Recipe&quot;])'>
-    <script>
-      document.addEventListener(&#39;DOMContentLoaded&#39;, function() {
-        var postBody = document.querySelector(&#39;.post-body.entry-content&#39;);
-        var spotlightSource = document.querySelector(&#39;.product-spotlight-source&#39;);
+    <script>//<![CDATA[
+      document.addEventListener('DOMContentLoaded', function() {
+        var postBody = document.querySelector('.post-body.entry-content');
+        var spotlightSource = document.querySelector('.product-spotlight-source');
         
-        if (postBody &amp;&amp; spotlightSource) {
+        if (postBody && spotlightSource) {
           // Create the new spotlight element
-          var newSpotlight = document.createElement(&#39;div&#39;);
-          newSpotlight.className = &#39;recipe-product-spotlight&#39;;
+          var newSpotlight = document.createElement('div');
+          newSpotlight.className = 'recipe-product-spotlight';
           newSpotlight.innerHTML = spotlightSource.innerHTML; // Copy the content
           
           // Append the new spotlight after the post body
           postBody.parentNode.insertBefore(newSpotlight, postBody.nextSibling);
         }
       });
-    </script>
+    //]]></script>
   </b:if>
 </b:includable>
                     <b:includable id='postBodySnippet' var='post'>
