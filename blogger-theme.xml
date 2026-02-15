@@ -3695,6 +3695,11 @@ display:none
   <!-- Custom styles for recipe posts -->
   <b:if cond='data:view.isSingleItem and data:post.labels any (l =&gt; l.name in [&quot;Recipe&quot;, &quot;AI-Generated Recipe&quot;])'>
     <style>
+      /* Hide malformed schema from AI generator */
+      json-ld {
+        display: none;
+      }
+
       /* General mobile-friendly post body adjustments */
       .post-body {
         padding: 0 8px; /* Add some padding on mobile */
@@ -3832,6 +3837,22 @@ display:none
           
           // Append the new spotlight after the post body
           postBody.parentNode.insertBefore(newSpotlight, postBody.nextSibling);
+        }
+      });
+
+      // --- AI Cleanup Script ---
+      // The AI generator is outputting a raw, untagged JSON block at the end of the post.
+      // This script finds and removes that raw text node to prevent it from being displayed.
+      document.addEventListener('DOMContentLoaded', function() {
+        var postBody = document.querySelector('.post-body.entry-content');
+        if (postBody) {
+          var childNodes = Array.from(postBody.childNodes);
+          // Find the last text node that looks like a JSON object
+          var lastNode = childNodes.reverse().find(node => 
+            node.nodeType === 3 && // Node.TEXT_NODE
+            node.textContent.trim().startsWith('{') && 
+            node.textContent.trim().endsWith('}'));
+          if (lastNode) lastNode.remove();
         }
       });
     //]]></script>
