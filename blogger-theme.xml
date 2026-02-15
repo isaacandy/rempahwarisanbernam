@@ -3125,7 +3125,7 @@ display:none
 
         <!-- Simplified header navigation: single, branded CTA to main site -->
         <nav class='site-nav' style='margin-left:auto;display:flex;gap:1rem;align-items:center;'>
-          <a href='https://www.rempahwarisanbernam.net' style='text-decoration:none;color:inherit;font-weight:700;padding:0.4rem 0.8rem;border-radius:8px;border:1px solid rgba(0,0,0,0.06);background:#ffffff;'>Home</a>
+          <a href='https://www.rempahwarisanbernam.net/recipe.html' style='text-decoration:none;color:inherit;font-weight:700;padding:0.4rem 0.8rem;border-radius:8px;border:1px solid rgba(0,0,0,0.06);background:#ffffff;'>Home</a>
         </nav>
       </div>
 
@@ -3165,8 +3165,7 @@ display:none
                         <b:widget-setting name='content'><![CDATA[<!-- ShareThis BEGIN -->
 <script type='text/javascript' src='https://platform-api.sharethis.com/js/sharethis.js#property=698a127b19466150d6ac0a60&product=privacy-policy-generator&source=platform&cms=sop' async='async'></script>
 <!-- ShareThis END -->
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4320909163275818"
-     crossorigin="anonymous"></script>]]></b:widget-setting>
+<script async="async" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4320909163275818" crossorigin="anonymous"></script>]]></b:widget-setting>
                       </b:widget-settings>
                       <b:includable id='main'>
   <b:include name='widget-title'/>
@@ -3674,6 +3673,12 @@ display:none
   <!-- If metaDescription is empty, use the post body as the schema.org description too, for G+/FB snippeting. -->
   <div class='post-body entry-content float-container' expr:id='&quot;post-body-&quot; + data:post.id'>
     <data:post.body/>
+    
+    <!-- ShareThis BEGIN -->
+    <b:if cond='data:view.isSingleItem'>
+        <div class="sharethis-inline-share-buttons" style="margin-top: 2rem; text-align: center;"/>
+    </b:if>
+    <!-- ShareThis END -->
   </div>
   <!-- JSON-LD for this BlogPosting (minimal, references site Organization @id) -->
   <script type='application/ld+json'><![CDATA[
@@ -3688,7 +3693,7 @@ display:none
   }
   ]]></script>
   <!-- Custom styles for recipe posts -->
-  <b:if cond='data:view.isSingleItem and data:post.labels any (l => l.name in [&quot;Recipe&quot;, &quot;AI-Generated Recipe&quot;])'>
+  <b:if cond='data:view.isSingleItem and data:post.labels any (l =&gt; l.name in [&quot;Recipe&quot;, &quot;AI-Generated Recipe&quot;])'>
     <style>
       /* General mobile-friendly post body adjustments */
       .post-body {
@@ -3738,7 +3743,7 @@ display:none
     </style>
   </b:if>
   <!-- Conditionally add Recipe schema if post is tagged as a recipe -->
-  <b:if cond='data:post.labels any (l => l.name in [&quot;Recipe&quot;, &quot;AI-Generated Recipe&quot;])'>
+  <b:if cond='data:post.labels any (l =&gt; l.name in [&quot;Recipe&quot;, &quot;AI-Generated Recipe&quot;])'>
     <script type='application/ld+json'><![CDATA[
     {
       "@context": "https://schema.org",
@@ -3766,7 +3771,7 @@ display:none
     ]]></script>
   </b:if>
   <!-- Custom styles for product spotlight -->
-  <b:if cond='data:view.isSingleItem and data:post.labels any (l => l.name in [&quot;Recipe&quot;, &quot;AI-Generated Recipe&quot;])'>
+  <b:if cond='data:view.isSingleItem and data:post.labels any (l =&gt; l.name in [&quot;Recipe&quot;, &quot;AI-Generated Recipe&quot;])'>
     <style>
       /* Hide the original product-spotlight div in the post body */
       .post-body .product-spotlight-source {
@@ -3790,7 +3795,7 @@ display:none
         flex-shrink: 0;
       }
       .recipe-product-spotlight h4 {
-        font-family: 'Cormorant Garamond', serif;
+        font-family: &#39;Cormorant Garamond&#39;, serif;
         font-size: 1.5rem;
         font-style: italic;
         margin: 0 0 0.25rem;
@@ -3799,28 +3804,28 @@ display:none
   </b:if>
   <!-- A fallback schema for recipes just in case the conditional one has issues -->
   <script type='application/ld+json'>{
-    "@context": "https://schema.org",
-    "@type": "Recipe",
-    "name": "<data:post.title/>",
-    "author": { "@id": "https://www.rempahwarisanbernam.net/#organization" },
-    "recipeIngredient": [
-      "Please see post for ingredients"
+    &quot;@context&quot;: &quot;https://schema.org&quot;,
+    &quot;@type&quot;: &quot;Recipe&quot;,
+    &quot;name&quot;: &quot;<data:post.title/>&quot;,
+    &quot;author&quot;: { &quot;@id&quot;: &quot;https://www.rempahwarisanbernam.net/#organization&quot; },
+    &quot;recipeIngredient&quot;: [
+      &quot;Please see post for ingredients&quot;
     ],
-    "recipeInstructions": [
-      "Please see post for instructions"
+    &quot;recipeInstructions&quot;: [
+      &quot;Please see post for instructions&quot;
     ]
   }</script>
   <!-- Script to move the product spotlight to the end of the post -->
-  <b:if cond='data:view.isSingleItem and data:post.labels any (l => l.name in [&quot;Recipe&quot;, &quot;AI-Generated Recipe&quot;])'>
+  <b:if cond='data:view.isSingleItem and data:post.labels any (l =&gt; l.name in [&quot;Recipe&quot;, &quot;AI-Generated Recipe&quot;])'>
     <script>
-      document.addEventListener('DOMContentLoaded', function() {
-        var postBody = document.querySelector('.post-body.entry-content');
-        var spotlightSource = document.querySelector('.product-spotlight-source');
+      document.addEventListener(&#39;DOMContentLoaded&#39;, function() {
+        var postBody = document.querySelector(&#39;.post-body.entry-content&#39;);
+        var spotlightSource = document.querySelector(&#39;.product-spotlight-source&#39;);
         
         if (postBody &amp;&amp; spotlightSource) {
           // Create the new spotlight element
-          var newSpotlight = document.createElement('div');
-          newSpotlight.className = 'recipe-product-spotlight';
+          var newSpotlight = document.createElement(&#39;div&#39;);
+          newSpotlight.className = &#39;recipe-product-spotlight&#39;;
           newSpotlight.innerHTML = spotlightSource.innerHTML; // Copy the content
           
           // Append the new spotlight after the post body
@@ -4055,6 +4060,17 @@ display:none
   <!-- LINT.ThenChange(//depot/google3/java/com/google/blogger/b2/layouts/widgets/v2-style.css) -->
 </b:includable>
                   </b:widget>
+                  <b:widget id='HTML5' locked='false' title='' type='HTML' visible='true'>
+                    <b:widget-settings>
+                      <b:widget-setting name='content'><![CDATA[<!-- ShareThis BEGIN --><div class="sharethis-inline-follow-buttons"></div><!-- ShareThis END -->]]></b:widget-setting>
+                    </b:widget-settings>
+                    <b:includable id='main'>
+  <b:include name='widget-title'/>
+  <div class='widget-content'>
+    <data:content/>
+  </div>
+</b:includable>
+                  </b:widget>
                   <b:widget id='HTML6' locked='false' title='' type='HTML' visible='true'>
                     <b:widget-settings>
                       <b:widget-setting name='content'><![CDATA[<!-- ShareThis BEGIN --><div class="sharethis-inline-share-buttons"></div><!-- ShareThis END -->]]></b:widget-setting>
@@ -4165,7 +4181,7 @@ display:none
   </div>
 </b:includable>
                     </b:widget>
-                    <b:widget id='Profile1' locked='false' title='About Me' type='Profile' visible='false'>
+                    <b:widget id='Profile1' locked='false' title='Contributors' type='Profile' visible='false'>
                       <b:widget-settings>
                         <b:widget-setting name='showaboutme'>true</b:widget-setting>
                         <b:widget-setting name='showlocation'>false</b:widget-setting>
@@ -4395,7 +4411,7 @@ display:none
   </div>
 </b:includable>
                     </b:widget>
-                    <b:widget cond='data:posts any (p =&gt; p.id != data:view.postId)' id='PopularPosts1' locked='true' title='' type='PopularPosts' visible='true'>
+                    <b:widget cond='data:posts any (p =&gt; p.id != data:view.postId)' id='PopularPosts1' locked='true' title='' type='PopularPosts' version='2' visible='true'>
                       <b:widget-settings>
                         <b:widget-setting name='numItemsToShow'>3</b:widget-setting>
                         <b:widget-setting name='showThumbnails'>true</b:widget-setting>
@@ -4446,17 +4462,6 @@ display:none
       </b:with>
 
       <b:section class='footer' id='footer' name='Footer' showaddelement='false' tag='footer'>
-        <b:widget id='HTML5' locked='false' title='' type='HTML' visible='true'>
-          <b:widget-settings>
-            <b:widget-setting name='content'><![CDATA[<!-- ShareThis BEGIN --><div class="sharethis-inline-follow-buttons"></div><!-- ShareThis END -->]]></b:widget-setting>
-          </b:widget-settings>
-          <b:includable id='main'>
-  <b:include name='widget-title'/>
-  <div class='widget-content'>
-    <data:content/>
-  </div>
-</b:includable>
-        </b:widget>
         <b:widget id='Attribution1' locked='true' title='' type='Attribution' visible='true'>
           <b:widget-settings>
             <b:widget-setting name='copyright'/>

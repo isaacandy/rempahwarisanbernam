@@ -232,15 +232,20 @@
                 // Build the HTML for one post
                 postHtml += `
                     <article class="group">
-                        <a href="${postUrl}" target="_blank" rel="noopener noreferrer">
-                            <div class="aspect-w-16 aspect-h-9 mb-6 rounded-2xl overflow-hidden shadow-lg">
+                        <a href="${postUrl}" target="_blank" rel="noopener noreferrer" class="block mb-4">
+                            <div class="aspect-w-16 aspect-h-9 rounded-2xl overflow-hidden shadow-lg">
                                 <img src="${thumbnailUrl}" alt="${postTitle}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
                             </div>
-                            <p class="text-sm text-stone-500">${formattedDate}</p>
-                            <h2 class="font-serif text-3xl italic text-stone-900 mt-2 group-hover:text-brand-crimson transition">${postTitle}</h2>
-                            <p class="mt-4 text-stone-600 leading-relaxed">${snippet}</p>
-                            <span class="mt-4 inline-block font-bold text-sm text-brand-gold uppercase tracking-widest">Read More</span>
                         </a>
+                        
+                        <!-- ShareThis BEGIN -->
+                        <div class="sharethis-inline-share-buttons" data-url="${postUrl}" data-title="${postTitle}"></div>
+                        <!-- ShareThis END -->
+
+                        <p class="text-sm text-stone-500 mt-4">${formattedDate}</p>
+                        <h2 class="font-serif text-3xl italic text-stone-900 mt-2 group-hover:text-brand-crimson transition"><a href="${postUrl}" target="_blank" rel="noopener noreferrer">${postTitle}</a></h2>
+                        <p class="mt-4 text-stone-600 leading-relaxed">${snippet}</p>
+                        <a href="${postUrl}" target="_blank" rel="noopener noreferrer" class="mt-4 inline-block font-bold text-sm text-brand-gold uppercase tracking-widest">Read More</a>
                     </article>
                 `;
                 if (i < entries.length - 1) {
