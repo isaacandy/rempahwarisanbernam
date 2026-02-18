@@ -225,7 +225,7 @@
 
         const bloggerUrl = "https://blog.rempahwarisanbernam.net";
         const maxPostsToFetch = 20; // Fetch more posts to ensure enough recipes after filtering
-        const desiredTags = ["Recipe", "AI-Generated Recipe"]; // Tags to filter by
+        const desiredTags = ["Recipe", "Recipes", "AI-Generated Recipe", "AI-Generated Recipes"]; // Tags to filter by
 
         function handleBloggerPosts(data) {
             console.log('handleBloggerPosts called with data:', data);
@@ -325,39 +325,42 @@
             schemaScript.text = JSON.stringify(itemListSchema);
             document.head.appendChild(schemaScript);
             console.log('Injected ItemList schema for recipes.');
+        }
 
-            // Dynamically create the script tag to fetch the feed
-            console.log('Attempting to load Blogger feed script for recipes.');
-            const script = document.createElement('script');
-            // Ensure no trailing slash on the base URL
-            const base = bloggerUrl.replace(/\/$/, '');
-            script.src = `${base}/feeds/posts/default?alt=json-in-script&max-results=${maxPostsToFetch}&callback=handleBloggerPosts`;
-            script.async = true;
+        // Dynamically create the script tag to fetch the feed
+        console.log('Attempting to load Blogger feed script for recipes.');
 
-            // Set a fallback timeout so the page doesn't spin forever
-            window._bloggerFeedTimeout = setTimeout(() => {
-                console.warn('Blogger feed timeout triggered for recipes.');
-                const loadingIndicator = document.getElementById('loading-indicator');
-                const container = document.getElementById('recipe-posts-container');
-                if (loadingIndicator) loadingIndicator.style.display = 'none';
-                if (container) container.innerHTML = '<p class="text-center text-stone-500">Recipe feed timeout — could not load posts. Check the `bloggerUrl` and network status.</p>';
-                console.error('Blogger feed request timed out for recipes.');
-            }, 8000);
+        // Increase max results to basic safety margin
+        const script = document.createElement('script');
+        const base = bloggerUrl.replace(/\/$/, '');
+        // Fetching 50 to ensure we catch tagged recipes if they aren't the very latest
+        script.src = `${base}/feeds/posts/default?alt=json-in-script&max-results=50&callback=handleBloggerPosts`;
+        script.async = true;
 
-            // Handle script load errors (bad URL, DNS, network, certificate)
-            script.onerror = function (e) {
-                if (window._bloggerFeedTimeout) {
-                    clearTimeout(window._bloggerFeedTimeout);
-                    window._bloggerFeedTimeout = null;
-                }
-                const loadingIndicator = document.getElementById('loading-indicator');
-                const container = document.getElementById('recipe-posts-container');
-                if (loadingIndicator) loadingIndicator.style.display = 'none';
-                if (container) container.innerHTML = '<p class="text-center text-stone-500">Could not load recipes (network or invalid blog URL). Check `bloggerUrl` in `recipe.html`.</p>';
-                console.error('Error loading blogger feed script for recipes', e);
-            };
+        // Set a fallback timeout so the page doesn't spin forever
+        window._bloggerFeedTimeout = setTimeout(() => {
+            console.warn('Blogger feed timeout triggered for recipes.');
+            const loadingIndicator = document.getElementById('loading-indicator');
+            const container = document.getElementById('recipe-posts-container');
+            if (loadingIndicator) loadingIndicator.style.display = 'none';
+            if (container) container.innerHTML = '<p class="text-center text-stone-500">Recipe feed timeout — could not load posts. Check the `bloggerUrl` and network status.</p>';
+            console.error('Blogger feed request timed out for recipes.');
+        }, 8000);
 
-            document.body.appendChild(script);
+        // Handle script load errors (bad URL, DNS, network, certificate)
+        script.onerror = function (e) {
+            if (window._bloggerFeedTimeout) {
+                clearTimeout(window._bloggerFeedTimeout);
+                window._bloggerFeedTimeout = null;
+            }
+            const loadingIndicator = document.getElementById('loading-indicator');
+            const container = document.getElementById('recipe-posts-container');
+            if (loadingIndicator) loadingIndicator.style.display = 'none';
+            if (container) container.innerHTML = '<p class="text-center text-stone-500">Could not load recipes (network or invalid blog URL). Check `bloggerUrl` in `recipe.html`.</p>';
+            console.error('Error loading blogger feed script for recipes', e);
+        };
+
+        document.body.appendChild(script);
     </script>
 </body>
 
