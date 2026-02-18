@@ -4185,56 +4185,24 @@ display:none
 </main>
 
 <b:section ads='true' class='vertical-ad-container' id='ads' name='Ads' showaddelement='false'>
-<b:widget id='AdSense1' locked='true' title='' type='AdSense' visible='true'>
+<b:widget id='HTML10' locked='false' title='' type='HTML' visible='true'>
 <b:widget-settings>
-<b:widget-setting name='style.bgcolor'>#ffffff</b:widget-setting>
-<b:widget-setting name='style.textcolor'>#ffffff</b:widget-setting>
-<b:widget-setting name='style.layout'>1x1</b:widget-setting>
-<b:widget-setting name='style.bordercolor'>#ffffff</b:widget-setting>
-<b:widget-setting name='style.urlcolor'>#ffffff</b:widget-setting>
-<b:widget-setting name='style.linkcolor'>#ffffff</b:widget-setting>
-<b:widget-setting name='style.unittype'>TextAndImage</b:widget-setting>
+<b:widget-setting name='content'><![CDATA[<!-- AdSense Placeholder 1 -->]]></b:widget-setting>
 </b:widget-settings>
 <b:includable id='main'>
 <div class='widget-content'>
-<b:if cond='data:adCode'>
-<data:adCode/>
-<b:else/>
-<b:include name='defaultAdUnit'/>
-</b:if>
+<data:content/>
 </div>
-</b:includable>
-<b:includable id='defaultAdUnit'>
-<!-- Clear out style (need non-empty string) -->
-<b:with value='&quot;/* Done in css. */&quot;' var='style'>
-<b:include name='super.defaultAdUnit'/>
-</b:with>
 </b:includable>
 </b:widget>
-<b:widget id='AdSense2' locked='true' title='' type='AdSense' visible='true'>
+<b:widget id='HTML11' locked='false' title='' type='HTML' visible='true'>
 <b:widget-settings>
-<b:widget-setting name='style.bgcolor'>#ffffff</b:widget-setting>
-<b:widget-setting name='style.textcolor'>#ffffff</b:widget-setting>
-<b:widget-setting name='style.layout'>1x1</b:widget-setting>
-<b:widget-setting name='style.bordercolor'>#ffffff</b:widget-setting>
-<b:widget-setting name='style.urlcolor'>#ffffff</b:widget-setting>
-<b:widget-setting name='style.linkcolor'>#ffffff</b:widget-setting>
-<b:widget-setting name='style.unittype'>TextAndImage</b:widget-setting>
+<b:widget-setting name='content'><![CDATA[<!-- AdSense Placeholder 2 -->]]></b:widget-setting>
 </b:widget-settings>
 <b:includable id='main'>
 <div class='widget-content'>
-<b:if cond='data:adCode'>
-<data:adCode/>
-<b:else/>
-<b:include name='defaultAdUnit'/>
-</b:if>
+<data:content/>
 </div>
-</b:includable>
-<b:includable id='defaultAdUnit'>
-<!-- Clear out style (need non-empty string) -->
-<b:with value='&quot;/* Done in css. */&quot;' var='style'>
-<b:include name='super.defaultAdUnit'/>
-</b:with>
 </b:includable>
 </b:widget>
 </b:section>
