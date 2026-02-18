@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Discover authentic Malaysian dishes you can create with Rempah Warisan Bernam's heritage spice blends. Browse our collection of recipes and bring traditional flavors to your kitchen.">
+    <meta name="description"
+        content="Discover authentic Malaysian dishes you can create with Rempah Warisan Bernam's heritage spice blends. Browse our collection of recipes and bring traditional flavors to your kitchen.">
     <title>Recipes | Rempah Warisan Bernam</title>
-    
+
     <!-- FAVICON -->
     <link rel="shortcut icon" href="/favicon.ico">
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" sizes="any">
@@ -16,14 +18,19 @@
     <meta name="msapplication-TileColor" content="#8b1a1a">
     <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
     <meta name="theme-color" content="#0f172a" media="(prefers-color-scheme: dark)">
+    <!--Crisp AI Chatbot-->
+    <script
+        type="text/javascript">window.$crisp = []; window.CRISP_WEBSITE_ID = "32ecd5da-61a4-4885-ac8c-8c7292dbf29a"; (function () { d = document; s = d.createElement("script"); s.src = "https://client.crisp.chat/l.js"; s.async = 1; d.getElementsByTagName("head")[0].appendChild(s); })();</script>
 
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
     <!-- Premium Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,700;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,700;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
     <style>
         :root {
             --brand-obsidian: #121212;
@@ -31,32 +38,61 @@
             --brand-gold: #b39359;
             --brand-cream: #fdfcf9;
         }
-        body { 
-            font-family: 'Plus Jakarta Sans', sans-serif; 
-            background-color: var(--brand-cream); 
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--brand-cream);
             color: var(--brand-obsidian);
             -webkit-font-smoothing: antialiased;
         }
-        .font-serif { font-family: 'Cormorant Garamond', serif; }
-        
+
+        .font-serif {
+            font-family: 'Cormorant Garamond', serif;
+        }
+
         .nav-scrolled {
             background: rgba(255, 255, 255, 0.98);
             backdrop-filter: blur(10px);
             padding: 0.5rem 0;
             box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
         }
-        .nav-links { color: var(--brand-obsidian); }
-        .nav-scrolled .nav-links { color: var(--brand-obsidian); }
-        .nav-scrolled .nav-links .tab-btn { color: #4a5568; }
-        .nav-scrolled .nav-links .tab-btn:hover { color: var(--brand-obsidian); }
-        .nav-scrolled .nav-links .tab-btn.active { color: var(--brand-obsidian); }
 
-        .nav-header-text-main { color: #1c1917; }
-        .nav-header-text-sub { color: #a8a29e; }
-        
-        html { scroll-behavior: smooth; }
-        
-        .tab-btn { position: relative; }
+        .nav-links {
+            color: var(--brand-obsidian);
+        }
+
+        .nav-scrolled .nav-links {
+            color: var(--brand-obsidian);
+        }
+
+        .nav-scrolled .nav-links .tab-btn {
+            color: #4a5568;
+        }
+
+        .nav-scrolled .nav-links .tab-btn:hover {
+            color: var(--brand-obsidian);
+        }
+
+        .nav-scrolled .nav-links .tab-btn.active {
+            color: var(--brand-obsidian);
+        }
+
+        .nav-header-text-main {
+            color: #1c1917;
+        }
+
+        .nav-header-text-sub {
+            color: #a8a29e;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        .tab-btn {
+            position: relative;
+        }
+
         .tab-btn.active::after {
             content: '';
             position: absolute;
@@ -68,6 +104,7 @@
         }
     </style>
 </head>
+
 <body class="overflow-x-hidden">
 
     <!-- Premium Navigation -->
@@ -75,40 +112,56 @@
         <div class="max-w-7xl mx-auto flex justify-between items-center">
             <div class="flex items-center gap-4 lg:gap-6">
                 <a href="/index.html" class="flex items-center gap-4 lg:gap-6">
-                    <img src="images/Rempah warisan logo final.png" alt="Rempah Warisan Bernam Logo" class="h-10 lg:h-14 w-auto object-contain transition-all" onerror="this.src='https://via.placeholder.com/60x60?text=RW'">
+                    <img src="images/Rempah warisan logo final.png" alt="Rempah Warisan Bernam Logo"
+                        class="h-10 lg:h-14 w-auto object-contain transition-all"
+                        onerror="this.src='https://via.placeholder.com/60x60?text=RW'">
                 </a>
                 <div class="h-8 lg:h-10 w-[1px] bg-stone-200"></div>
                 <div>
-                    <h1 class="font-serif text-lg lg:text-xl font-bold tracking-tight leading-none transition-colors duration-500 nav-header-text-main">Rempah Warisan Bernam</h1>
-                    <p class="text-[8px] lg:text-[9px] font-bold uppercase tracking-[0.3em] text-stone-300 mt-1 transition-colors duration-500 nav-header-text-sub">202501052286</p>
+                    <h1
+                        class="font-serif text-lg lg:text-xl font-bold tracking-tight leading-none transition-colors duration-500 nav-header-text-main">
+                        Rempah Warisan Bernam</h1>
+                    <p
+                        class="text-[8px] lg:text-[9px] font-bold uppercase tracking-[0.3em] text-stone-300 mt-1 transition-colors duration-500 nav-header-text-sub">
+                        202501052286</p>
                 </div>
             </div>
-            
+
             <div class="hidden lg:flex items-center gap-10 text-base font-bold uppercase tracking-widest nav-links">
-                <a href="/index.html?view=brand" id="btn-brand" class="tab-btn hover:text-stone-900 transition">Brand</a>
-                <a href="/index.html?view=industrial" id="btn-industrial" class="tab-btn hover:text-stone-900 transition">Industrial</a>
+                <a href="/index.html?view=brand" id="btn-brand"
+                    class="tab-btn hover:text-stone-900 transition">Brand</a>
+                <a href="/index.html?view=industrial" id="btn-industrial"
+                    class="tab-btn hover:text-stone-900 transition">Industrial</a>
                 <a href="/recipe.html" class="tab-btn active hover:text-stone-900 transition">Recipe</a>
                 <a href="/blog.html" class="tab-btn hover:text-stone-900 transition">Blog</a>
-                <a href="https://rempahwarisanrecipe.izndgroup.com" target="_blank" class="tab-btn hover:text-stone-900 transition">AI Recipe Generator</a>
+                <a href="https://rempahwarisanrecipe.izndgroup.com" target="_blank"
+                    class="tab-btn hover:text-stone-900 transition">AI Recipe Generator</a>
                 <div class="h-6 w-[1px] bg-stone-200 mx-2"></div>
-                <a href="/index.html#contact" class="px-7 py-3 bg-stone-900 text-white rounded-full hover:bg-brand-crimson transition shadow-lg text-xs font-black tracking-widest uppercase">Inquiry</a>
+                <a href="/index.html#contact"
+                    class="px-7 py-3 bg-stone-900 text-white rounded-full hover:bg-brand-crimson transition shadow-lg text-xs font-black tracking-widest uppercase">Inquiry</a>
             </div>
 
-            <button class="lg:hidden text-stone-900 transition-colors duration-500 nav-header-text-main" id="mobile-toggle" aria-label="Toggle mobile menu" aria-controls="mobile-menu" aria-expanded="false">
+            <button class="lg:hidden text-stone-900 transition-colors duration-500 nav-header-text-main"
+                id="mobile-toggle" aria-label="Toggle mobile menu" aria-controls="mobile-menu" aria-expanded="false">
                 <i data-lucide="menu" aria-hidden="true"></i>
             </button>
         </div>
     </nav>
 
     <!-- Mobile Menu Overlay -->
-    <div id="mobile-menu" class="fixed inset-0 bg-white z-[60] flex flex-col items-center justify-center gap-10 text-3xl font-serif italic hidden" role="dialog" aria-modal="true" aria-label="Mobile Navigation">
-        <button class="absolute top-10 right-10 text-stone-900" id="mobile-close" aria-label="Close mobile menu"><i data-lucide="x" class="w-8 h-8" aria-hidden="true"></i></button>
+    <div id="mobile-menu"
+        class="fixed inset-0 bg-white z-[60] flex flex-col items-center justify-center gap-10 text-3xl font-serif italic hidden"
+        role="dialog" aria-modal="true" aria-label="Mobile Navigation">
+        <button class="absolute top-10 right-10 text-stone-900" id="mobile-close" aria-label="Close mobile menu"><i
+                data-lucide="x" class="w-8 h-8" aria-hidden="true"></i></button>
         <a href="/index.html?view=brand" onclick="closeMenu();" class="mobile-link text-stone-900">Brand Identity</a>
-        <a href="/index.html?view=industrial" onclick="closeMenu();" class="mobile-link text-stone-900">Industrial Division</a>
+        <a href="/index.html?view=industrial" onclick="closeMenu();" class="mobile-link text-stone-900">Industrial
+            Division</a>
         <a href="/index.html#catalog" onclick="closeMenu();" class="mobile-link text-stone-900">Collection</a>
         <a href="/recipe.html" onclick="closeMenu();" class="mobile-link text-stone-900">Recipe</a>
         <a href="/blog.html" onclick="closeMenu();" class="mobile-link text-stone-900">Blog</a>
-        <a href="https://rempahwarisanrecipe.izndgroup.com" target="_blank" onclick="closeMenu();" class="mobile-link text-stone-900">AI Recipe Generator</a>
+        <a href="https://rempahwarisanrecipe.izndgroup.com" target="_blank" onclick="closeMenu();"
+            class="mobile-link text-stone-900">AI Recipe Generator</a>
         <a href="/index.html#contact" onclick="closeMenu();" class="mobile-link text-stone-900">Contact Us</a>
     </div>
 
@@ -117,7 +170,8 @@
         <section class="py-24 bg-stone-100 border-b border-stone-200">
             <div class="max-w-7xl mx-auto px-6 lg:px-12 text-center">
                 <h1 class="font-serif text-5xl lg:text-7xl text-stone-900 italic">Our Recipes</h1>
-                <p class="mt-4 text-lg text-stone-600 max-w-2xl mx-auto">Discover authentic Malaysian dishes you can create with our heritage spice blends.</p>
+                <p class="mt-4 text-lg text-stone-600 max-w-2xl mx-auto">Discover authentic Malaysian dishes you can
+                    create with our heritage spice blends.</p>
             </div>
         </section>
 
@@ -128,7 +182,9 @@
                 <div id="loading-indicator" class="text-center py-12" aria-live="polite" aria-busy="true">
                     <noscript>
                         <p class="text-center text-stone-500">
-                            JavaScript is required to load recipes. Please enable it in your browser or <a href="https://blog.rempahwarisanbernam.net" class="text-brand-crimson underline">visit our blog directly</a>.
+                            JavaScript is required to load recipes. Please enable it in your browser or <a
+                                href="https://blog.rempahwarisanbernam.net" class="text-brand-crimson underline">visit
+                                our blog directly</a>.
                         </p>
                     </noscript>
                     <i data-lucide="loader-2" class="w-10 h-10 text-brand-gold animate-spin mx-auto"></i>
@@ -142,9 +198,11 @@
     <!-- Re-using the footer from index.html -->
     <footer class="bg-stone-950 text-white py-8">
         <div class="max-w-7xl mx-auto px-6 lg:px-12">
-            <div class="pt-6 flex flex-col md:flex-row justify-between items-center gap-4 text-stone-800 text-[8px] font-black uppercase tracking-[0.4em]">
-                <p>© 2025 Rempah Warisan Bernam Sdn Bhd. 
-                    <a href="https://www.izndgroup.com" target="_blank" rel="noopener noreferrer" class="hover:text-white transition">Powered by iZND Group</a>
+            <div
+                class="pt-6 flex flex-col md:flex-row justify-between items-center gap-4 text-stone-800 text-[8px] font-black uppercase tracking-[0.4em]">
+                <p>© 2025 Rempah Warisan Bernam Sdn Bhd.
+                    <a href="https://www.izndgroup.com" target="_blank" rel="noopener noreferrer"
+                        class="hover:text-white transition">Powered by iZND Group</a>
                 </p>
                 <div class="flex gap-6">
                     <span>Rawang</span>
@@ -165,7 +223,7 @@
 
         // --- Blogger Integration Script for Recipes ---
 
-        const bloggerUrl = "https://blog.rempahwarisanbernam.net"; 
+        const bloggerUrl = "https://blog.rempahwarisanbernam.net";
         const maxPostsToFetch = 20; // Fetch more posts to ensure enough recipes after filtering
         const desiredTags = ["Recipe", "AI-Generated Recipe"]; // Tags to filter by
 
@@ -179,7 +237,7 @@
 
             const container = document.getElementById('recipe-posts-container');
             const loadingIndicator = document.getElementById('loading-indicator');
-            
+
             // Hide loading indicator
             if (loadingIndicator) {
                 loadingIndicator.style.display = 'none';
@@ -209,7 +267,7 @@
                 const post = filteredEntries[i];
                 const postTitle = post.title.$t;
                 const postUrl = post.link.find(link => link.rel === 'alternate').href;
-                
+
                 // Format the date
                 const postDate = new Date(post.published.$t);
                 const formattedDate = postDate.toLocaleDateString('en-US', {
@@ -285,4 +343,5 @@
         document.body.appendChild(script);
     </script>
 </body>
+
 </html>
