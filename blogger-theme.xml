@@ -2652,7 +2652,7 @@ width:1px
 #comment-holder .continue{
 display:none
 }
-]]>    </b:skin>
+    ]]>    </b:skin>
 
     <b:template-skin>
       <![CDATA[
@@ -3199,11 +3199,11 @@ display:none
 </div>
 </b:includable>
 </b:widget>
-<b:widget id='HTML8' locked='false' title='' type='HTML' visible='true'>
+<b:widget id='HTML8' locked='false' title='' type='HTML' version='2' visible='true'>
 <b:widget-settings>
 <b:widget-setting name='content'><![CDATA[<!--Crisp AI Chatbot-->
 <script type="text/javascript">window.$crisp = []; window.CRISP_WEBSITE_ID = "32ecd5da-61a4-4885-ac8c-8c7292dbf29a"; (function () { d = document; s = d.createElement("script"); s.src = "https://client.crisp.chat/l.js"; s.async = 1; d.getElementsByTagName("head")[0].appendChild(s); })();</script
->]]></b:widget-setting>
+></script>]]></b:widget-setting>
 </b:widget-settings>
 <b:includable id='main'>
 <b:include name='widget-title'/>
@@ -3212,7 +3212,7 @@ display:none
 </div>
 </b:includable>
 </b:widget>
-<b:widget id='HTML7' locked='false' title='' type='HTML' visible='true'>
+<b:widget id='HTML7' locked='false' title='' type='HTML' version='2' visible='true'>
 <b:widget-settings>
 <b:widget-setting name='content'><![CDATA[<!-- ShareThis BEGIN -->
 <script type='text/javascript' src='https://platform-api.sharethis.com/js/sharethis.js#property=698a127b19466150d6ac0a60&product=privacy-policy-generator&source=platform&cms=sop' async='async'></script>
@@ -3226,7 +3226,7 @@ display:none
 </div>
 </b:includable>
 </b:widget>
-<b:widget id='HTML4' locked='false' title='' type='HTML' visible='true'>
+<b:widget id='HTML4' locked='false' title='' type='HTML' version='2' visible='true'>
 <b:widget-settings>
 <b:widget-setting name='content'><![CDATA[<script type='text/javascript' src='https://platform-api.sharethis.com/js/sharethis.js#property=698a127b19466150d6ac0a60&product=sop' async='async'></script>]]></b:widget-setting>
 </b:widget-settings>
@@ -3237,7 +3237,7 @@ display:none
 </div>
 </b:includable>
 </b:widget>
-<b:widget id='HTML2' locked='false' title='' type='HTML' visible='true'>
+<b:widget id='HTML2' locked='false' title='' type='HTML' version='2' visible='true'>
 <b:widget-settings>
 <b:widget-setting name='content'><![CDATA[<div id="fb-root"></div>
 <script async="async" defer="defer" crossorigin="anonymous" src="https://connect.facebook.net/en_GB/sdk.js#xfbml=1&amp;version=v24.0&amp;appId=1268635976600604"></script>]]></b:widget-setting>
@@ -3247,6 +3247,59 @@ display:none
 <div class='widget-content'>
 <data:content/>
 </div>
+</b:includable>
+</b:widget>
+<b:widget id='HTML9' locked='false' mobile='yes' title='Disqus' type='HTML' version='2' visible='true'>
+<b:widget-settings>
+<b:widget-setting name='content'><![CDATA[<!-- Disqus comments gadget -->]]></b:widget-setting>
+</b:widget-settings>
+<b:includable id='main'>
+<script type='text/javascript'>
+                var disqus_shortname = &#39;rempah-warisan-bernam&#39;;
+                var disqus_blogger_current_url = &quot;<data:blog.canonicalUrl/>
+&quot;;
+
+                if (!disqus_blogger_current_url.length) {
+                    disqus_blogger_current_url = &quot;<data:blog.url/>
+&quot;;
+                }
+
+                var disqus_blogger_homepage_url = &quot;<data:blog.homepageUrl/>
+&quot;;
+                var disqus_blogger_canonical_homepage_url = &quot;<data:blog.canonicalHomepageUrl/>
+&quot;;
+</script>
+
+<b:if cond='data:blog.pageType == &quot;item&quot;'>
+<style type='text/css'>
+                    #comments {display:none;}
+</style>
+
+<script type='text/javascript'>
+                    (function() {
+                        var bloggerjs = document.createElement(&#39;script&#39;);
+                        bloggerjs.type = &#39;text/javascript&#39;;
+                        bloggerjs.async = true;
+                        bloggerjs.src = &#39;//&#39;+disqus_shortname+&#39;.disqus.com/blogger_item.js&#39;;
+                        (document.getElementsByTagName(&#39;head&#39;)[0] || document.getElementsByTagName(&#39;body&#39;)[0]).appendChild(bloggerjs);
+                    })();
+
+</script>
+</b:if>
+<style type='text/css'>
+                    .post-comment-link { visibility: hidden; }
+</style>
+
+<script type='text/javascript'>
+                (function() {
+                    var bloggerjs = document.createElement(&#39;script&#39;);
+                    bloggerjs.type = &#39;text/javascript&#39;;
+                    bloggerjs.async = true;
+                    bloggerjs.src = &#39;//&#39;+disqus_shortname+&#39;.disqus.com/blogger_index.js&#39;;
+                    (document.getElementsByTagName(&#39;head&#39;)[0] || document.getElementsByTagName(&#39;body&#39;)[0]).appendChild(bloggerjs);
+                })();
+
+</script>
 </b:includable>
 </b:widget>
 </b:section>
@@ -3262,7 +3315,7 @@ display:none
 <b:include data='{ iconClass: &quot;touch-icon search-expand-icon&quot; }' name='searchIcon'/>
 </button>
 <b:section id='search_top' name='Search (Top)' showaddelement='false'>
-<b:widget id='BlogSearch1' locked='true' title='Search This Blog' type='BlogSearch' visible='true'>
+<b:widget id='BlogSearch1' locked='true' title='Search This Blog' type='BlogSearch' version='2' visible='true'>
 <b:includable id='main'>
 <b:include name='widget-title'/>
 <b:include name='content'/>
@@ -3331,7 +3384,7 @@ display:none
 <b:widget-settings>
 <b:widget-setting name='showSnippet'>false</b:widget-setting>
 <b:widget-setting name='showPostTitle'>true</b:widget-setting>
-<b:widget-setting name='postId'>8421941021992018497</b:widget-setting>
+<b:widget-setting name='postId'>8144716422603340909</b:widget-setting>
 <b:widget-setting name='showFirstImage'>true</b:widget-setting>
 <b:widget-setting name='useMostRecentPost'>false</b:widget-setting>
 </b:widget-settings>
@@ -3374,15 +3427,15 @@ display:none
 <div class='labels-container overflowable-container overflowable-no-popup'>
 <div class='labels-items overflowable-contents byline post-labels'>
 <b:loop index='i' values='data:post.labels' var='label'>
-  <span class='overflowable-item'>
-    <a expr:href='data:label.url' rel='tag'>
-      <data:label.name/>
-    </a>
-  </span>
+<span class='overflowable-item'>
+<a expr:href='data:label.url' rel='tag'>
+<data:label.name/>
+</a>
+</span>
 </b:loop>
 </div>
 <span class='labels-more overflow-button hidden'>
-<a expr:href='data:post.link ?: data:post.url'>+  <span class='overflow-count'/>
+<a expr:href='data:post.link ?: data:post.url'>+<span class='overflow-count'/>
 </a>
 </span>
 </div>
@@ -3402,12 +3455,12 @@ display:none
 <b:if cond='data:post.link or (data:post.url and data:view.url != data:post.url)'>
 <a expr:href='data:post.link ?: data:post.url'>
 <div class='snippet-container r-snippet-container'>
-  <div class='r-snippetized'>
-    <data:post.title/>
-  </div>
-  <b:if cond='data:post.title != &quot;&quot;'>
-    <div class='snippet-fade r-snippet-fade hidden'/>
-  </b:if>
+<div class='r-snippetized'>
+<data:post.title/>
+</div>
+<b:if cond='data:post.title != &quot;&quot;'>
+<div class='snippet-fade r-snippet-fade hidden'/>
+</b:if>
 </div>
 </a>
 <b:else/>
@@ -3474,6 +3527,17 @@ display:none
 </b:section>
 
 <b:section class='main' id='page_body' name='Page Body' showaddelement='false'>
+<b:widget id='HTML6' locked='false' title='' type='HTML' version='2' visible='true'>
+<b:widget-settings>
+<b:widget-setting name='content'><![CDATA[<!-- ShareThis BEGIN --><div class="sharethis-inline-share-buttons"></div><!-- ShareThis END -->]]></b:widget-setting>
+</b:widget-settings>
+<b:includable id='main'>
+<b:include name='widget-title'/>
+<div class='widget-content'>
+<data:content/>
+</div>
+</b:includable>
+</b:widget>
 <b:widget id='Blog1' locked='true' title='Blog Posts' type='Blog' version='2' visible='true'>
 <b:widget-settings>
 <b:widget-setting name='showDateHeader'>false</b:widget-setting>
@@ -3827,32 +3891,103 @@ display:none
 </style>
 </b:if>
 <!-- Conditionally add Recipe schema if post is tagged as a recipe -->
+<!-- Dynamic Recipe Schema Generator -->
 <b:if cond='data:post.labels any (l =&gt; l.name in [&quot;Recipe&quot;, &quot;AI-Generated Recipe&quot;])'>
-<script type='application/ld+json'><![CDATA[
-    {
-      "@context": "https://schema.org",
-      "@type": "Recipe",
-      "name": "<data:post.title/>",
-      "author": {
-        "@id": "https://www.rempahwarisanbernam.net/#organization"
-      },
-      "description": "<b:eval expr='data:post.metaDescription ? data:post.metaDescription : &quot;A recipe from Rempah Warisan Bernam.&quot;'/>",
-      "recipeIngredient": [
-        {
-          "@type": "HowToIngredient",
-          "name": "Rempah Warisan Bernam Meat & Chicken Curry Powder",
-          "item": { "@id": "https://www.rempahwarisanbernam.net/products/meat-chicken-curry-powder" },
-          "text": "4 tbsp Rempah Warisan Bernam Meat & Chicken Curry Powder"
-        },
-        "1 kg Chicken, cut into pieces",
-        "2 Onions, sliced",
-        "1 cup Coconut milk"
-      ],
-      "prepTime": "PT15M",
-      "cookTime": "PT30M",
-      "recipeYield": "4 servings"
-    }
-    ]]></script>
+<script>
+    //<![CDATA[
+    document.addEventListener('DOMContentLoaded', function() {
+      // Helper to find the post body
+      var postBody = document.querySelector('.post-body.entry-content');
+      if (!postBody) return;
+
+      var schemaData = null;
+
+      // STRATEGY 1: Look for hidden JSON-LD block from AI generator
+      // The AI generator outputs a raw JSON block at the end of the text.
+      var childNodes = Array.from(postBody.childNodes);
+      var lastTextNode = childNodes.reverse().find(node => 
+        node.nodeType === 3 && 
+        node.textContent.trim().startsWith('{') && 
+        node.textContent.trim().endsWith('}'));
+
+      if (lastTextNode) {
+        try {
+          var jsonData = JSON.parse(lastTextNode.textContent.trim());
+          // Basic validation to check if it looks like a recipe
+          if (jsonData['@type'] === 'Recipe' || jsonData['@context']) {
+            schemaData = jsonData;
+            // Ensure context and type are correct
+            schemaData['@context'] = "https://schema.org";
+            schemaData['@type'] = "Recipe";
+            // Clean up the visible text node
+            lastTextNode.remove();
+          }
+        } catch (e) {
+          console.error("Found JSON-like text but failed to parse:", e);
+        }
+      }
+
+      // STRATEGY 2: Fallback - Scrape the DOM
+      if (!schemaData) {
+        schemaData = {
+          "@context": "https://schema.org",
+          "@type": "Recipe",
+          "name": document.querySelector('h3.post-title') ? document.querySelector('h3.post-title').innerText.trim() : document.title,
+          "author": {
+            "@id": "https://www.rempahwarisanbernam.net/#organization"
+          },
+          "description": document.querySelector('meta[name="description"]') ? document.querySelector('meta[name="description"]').content : "A delicious recipe from Rempah Warisan Bernam.",
+          "recipeIngredient": [],
+          "recipeInstructions": []
+        };
+
+        // Attempt to find image
+        var img = postBody.querySelector('img');
+        if (img) {
+          schemaData.image = img.src;
+        }
+
+        // Attempt to find ingredients (Look for ul)
+        var lists = postBody.querySelectorAll('ul');
+        if (lists.length > 0) {
+          // Heuristic: First UL is often ingredients
+          var ingredientsList = lists[0];
+          schemaData.recipeIngredient = Array.from(ingredientsList.querySelectorAll('li')).map(li => li.innerText.trim());
+        }
+
+        // Attempt to find instructions (Look for ol)
+        var orderedLists = postBody.querySelectorAll('ol');
+        if (orderedLists.length > 0) {
+          schemaData.recipeInstructions = Array.from(orderedLists[0].querySelectorAll('li')).map((li, index) => ({
+            "@type": "HowToStep",
+            "text": li.innerText.trim(),
+            "position": index + 1
+          }));
+        }
+
+        // Attempt to find times (Regex on body text)
+        var bodyText = postBody.innerText;
+        var prepTimeMatch = bodyText.match(/Prep time:?\s*(\d+)\s*min/i);
+        if (prepTimeMatch) {
+            schemaData.prepTime = "PT" + prepTimeMatch[1] + "M";
+        }
+        var cookTimeMatch = bodyText.match(/Cook time:?\s*(\d+)\s*min/i);
+        if (cookTimeMatch) {
+            schemaData.cookTime = "PT" + cookTimeMatch[1] + "M";
+        }
+      }
+
+      // INJECT SCHEMA
+      if (schemaData) {
+        var script = document.createElement('script');
+        script.type = 'application/ld+json';
+        script.text = JSON.stringify(schemaData);
+        document.head.appendChild(script);
+        console.log("Injected generic recipe schema");
+      }
+    });
+    //]]>
+</script>
 </b:if>
 <!-- Custom styles for product spotlight -->
 <b:if cond='data:view.isSingleItem and data:post.labels any (l =&gt; l.name in [&quot;Recipe&quot;, &quot;AI-Generated Recipe&quot;])'>
@@ -3886,21 +4021,6 @@ display:none
       }
 </style>
 </b:if>
-<!-- A fallback schema for recipes just in case the conditional one has issues -->
-<script type='application/ld+json'><![CDATA[
-  {
-    "@context": "https://schema.org",
-    "@type": "Recipe",
-    "name": "<data:post.title/>",
-    "author": { "@id": "https://www.rempahwarisanbernam.net/#organization" },
-    "recipeIngredient": [
-      "Please see post for ingredients"
-    ],
-    "recipeInstructions": [
-      "Please see post for instructions"
-    ]
-  }
-  ]]></script>
 <!-- Script to move the product spotlight to the end of the post -->
 <b:if cond='data:view.isSingleItem and data:post.labels any (l =&gt; l.name in [&quot;Recipe&quot;, &quot;AI-Generated Recipe&quot;])'>
 <script>//<![CDATA[
@@ -3916,22 +4036,6 @@ display:none
           
           // Append the new spotlight after the post body
           postBody.parentNode.insertBefore(newSpotlight, postBody.nextSibling);
-        }
-      });
-
-      // --- AI Cleanup Script ---
-      // The AI generator is outputting a raw, untagged JSON block at the end of the post.
-      // This script finds and removes that raw text node to prevent it from being displayed.
-      document.addEventListener('DOMContentLoaded', function() {
-        var postBody = document.querySelector('.post-body.entry-content');
-        if (postBody) {
-          var childNodes = Array.from(postBody.childNodes);
-          // Find the last text node that looks like a JSON object
-          var lastNode = childNodes.reverse().find(node => 
-            node.nodeType === 3 && // Node.TEXT_NODE
-            node.textContent.trim().startsWith('{') && 
-            node.textContent.trim().endsWith('}'));
-          if (lastNode) lastNode.remove();
         }
       });
     //]]></script>
@@ -4183,20 +4287,9 @@ display:none
 <!-- LINT.ThenChange(//depot/google3/java/com/google/blogger/b2/layouts/widgets/v2-style.css) -->
 </b:includable>
 </b:widget>
-<b:widget id='HTML5' locked='false' title='' type='HTML' visible='true'>
+<b:widget id='HTML5' locked='false' title='' type='HTML' version='2' visible='true'>
 <b:widget-settings>
 <b:widget-setting name='content'><![CDATA[<!-- ShareThis BEGIN --><div class="sharethis-inline-follow-buttons"></div><!-- ShareThis END -->]]></b:widget-setting>
-</b:widget-settings>
-<b:includable id='main'>
-<b:include name='widget-title'/>
-<div class='widget-content'>
-<data:content/>
-</div>
-</b:includable>
-</b:widget>
-<b:widget id='HTML6' locked='false' title='' type='HTML' visible='true'>
-<b:widget-settings>
-<b:widget-setting name='content'><![CDATA[<!-- ShareThis BEGIN --><div class="sharethis-inline-share-buttons"></div><!-- ShareThis END -->]]></b:widget-setting>
 </b:widget-settings>
 <b:includable id='main'>
 <b:include name='widget-title'/>
@@ -4209,7 +4302,7 @@ display:none
 </main>
 
 <b:section ads='true' class='vertical-ad-container' id='ads' name='Ads' showaddelement='false'>
-<b:widget id='AdSense1' locked='true' title='' type='AdSense' visible='true'>
+<b:widget id='AdSense1' locked='true' title='' type='AdSense' version='2' visible='true'>
 <b:widget-settings>
 <b:widget-setting name='style.bgcolor'>#ffffff</b:widget-setting>
 <b:widget-setting name='style.textcolor'>#ffffff</b:widget-setting>
@@ -4235,7 +4328,7 @@ display:none
 </b:with>
 </b:includable>
 </b:widget>
-<b:widget id='AdSense2' locked='true' title='' type='AdSense' visible='true'>
+<b:widget id='AdSense2' locked='true' title='' type='AdSense' version='2' visible='true'>
 <b:widget-settings>
 <b:widget-setting name='style.bgcolor'>#ffffff</b:widget-setting>
 <b:widget-setting name='style.textcolor'>#ffffff</b:widget-setting>
@@ -4271,7 +4364,7 @@ display:none
 <b:include data='{ iconClass: &quot;touch-icon sidebar-back&quot; }' name='closeIcon'/>
 </div>
 <b:section class='sidebar' id='sidebar_feed' name='Sidebar' preferred='yes'>
-<b:widget id='Translate2' locked='false' title='Translate' type='Translate' visible='true'>
+<b:widget id='Translate2' locked='false' title='Translate' type='Translate' version='2' visible='true'>
 <b:widget-settings>
 <b:widget-setting name='displayMode'>VERTICAL</b:widget-setting>
 </b:widget-settings>
@@ -4294,7 +4387,7 @@ display:none
 <script src='//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit'/>
 </b:includable>
 </b:widget>
-<b:widget id='HTML1' locked='false' title='' type='HTML' visible='true'>
+<b:widget id='HTML1' locked='false' title='' type='HTML' version='2' visible='true'>
 <b:widget-settings>
 <b:widget-setting name='content'><![CDATA[<div class="fb-page" data-href="https://www.facebook.com/rempahwarisanbernam/" data-tabs="timeline" data-width="" data-height="" data-small-header="true" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true"><blockquote cite="https://www.facebook.com/rempahwarisanbernam/" class="fb-xfbml-parse-ignore"><a href="https://www.facebook.com/rempahwarisanbernam/"></a></blockquote></div>]]></b:widget-setting>
 </b:widget-settings>
@@ -4305,7 +4398,18 @@ display:none
 </div>
 </b:includable>
 </b:widget>
-<b:widget id='Profile1' locked='false' title='Contributors' type='Profile' visible='false'>
+<b:widget id='HTML10' locked='false' title='' type='HTML' visible='true'>
+<b:widget-settings>
+<b:widget-setting name='content'><![CDATA[<a class="twitter-timeline" data-height="400" href="https://twitter.com/rempahwarisanbe?ref_src=twsrc%5Etfw">Tweets by Rempah Warisan Bernam</a> <script async="async" src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>]]></b:widget-setting>
+</b:widget-settings>
+<b:includable id='main'>
+<b:include name='widget-title'/>
+<div class='widget-content'>
+<data:content/>
+</div>
+</b:includable>
+</b:widget>
+<b:widget id='Profile1' locked='false' title='Contributors' type='Profile' version='2' visible='false'>
 <b:widget-settings>
 <b:widget-setting name='showaboutme'>true</b:widget-setting>
 <b:widget-setting name='showlocation'>false</b:widget-setting>
@@ -4401,7 +4505,7 @@ display:none
 </a>
 </b:includable>
 </b:widget>
-<b:widget id='BlogArchive1' locked='false' title='' type='BlogArchive' visible='true'>
+<b:widget id='BlogArchive1' locked='false' title='' type='BlogArchive' version='2' visible='true'>
 <b:widget-settings>
 <b:widget-setting name='showStyle'>FLAT</b:widget-setting>
 <b:widget-setting name='yearPattern'>yyyy</b:widget-setting>
@@ -4471,7 +4575,7 @@ display:none
 </ul>
 </b:includable>
 </b:widget>
-<b:widget id='Label1' locked='false' title='Labels' type='Label' visible='true'>
+<b:widget id='Label1' locked='false' title='Labels' type='Label' version='2' visible='true'>
 <b:widget-settings>
 <b:widget-setting name='sorting'>ALPHA</b:widget-setting>
 <b:widget-setting name='display'>LIST</b:widget-setting>
@@ -4503,7 +4607,7 @@ display:none
 <b:include data='{                               buttonClass: &quot;flat-button&quot;,                               items: data:this.labels,                               itemSet: &quot;labels&quot;,                               itemsMarkup: &quot;super.list&quot;                             }' name='extendableItems'/>
 </b:includable>
 </b:widget>
-<b:widget id='ReportAbuse1' locked='true' title='' type='ReportAbuse' visible='true'>
+<b:widget id='ReportAbuse1' locked='true' title='' type='ReportAbuse' version='2' visible='true'>
 <b:includable id='main'>
 <b:include name='reportAbuse'/>
 </b:includable>
@@ -4512,7 +4616,7 @@ display:none
 </b:if>
 <b:if cond='data:view.isSingleItem or data:view.isLayoutMode'>
 <b:section id='sidebar_item' name='Sidebar (Item Page)'>
-<b:widget id='Translate1' locked='false' title='Translate' type='Translate' visible='true'>
+<b:widget id='Translate1' locked='false' title='Translate' type='Translate' version='2' visible='true'>
 <b:widget-settings>
 <b:widget-setting name='displayMode'>VERTICAL</b:widget-setting>
 </b:widget-settings>
@@ -4535,7 +4639,7 @@ display:none
 <script src='//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit'/>
 </b:includable>
 </b:widget>
-<b:widget id='HTML3' locked='false' title='' type='HTML' visible='true'>
+<b:widget id='HTML3' locked='false' title='' type='HTML' version='2' visible='true'>
 <b:widget-settings>
 <b:widget-setting name='content'><![CDATA[<div class="fb-page" data-href="https://www.facebook.com/rempahwarisanbernam/" data-tabs="timeline" data-width="auto" data-height="" data-small-header="false" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true"><blockquote cite="https://www.facebook.com/rempahwarisanbernam/" class="fb-xfbml-parse-ignore"><a href="https://www.facebook.com/rempahwarisanbernam/"></a></blockquote></div>]]></b:widget-setting>
 </b:widget-settings>
@@ -4546,7 +4650,7 @@ display:none
 </div>
 </b:includable>
 </b:widget>
-<b:widget cond='data:posts any (p =&gt; p.id != data:view.postId)' id='PopularPosts1' locked='true' title='' type='PopularPosts' version='2' visible='true'>
+<b:widget cond='data:posts any (p =&gt; p.id != data:view.postId)' id='PopularPosts1' locked='true' title='' type='PopularPosts' version='2' visible='false'>
 <b:widget-settings>
 <b:widget-setting name='numItemsToShow'>3</b:widget-setting>
 <b:widget-setting name='showThumbnails'>true</b:widget-setting>
@@ -4597,7 +4701,7 @@ display:none
 </b:with>
 
 <b:section class='footer' id='footer' name='Footer' showaddelement='false' tag='footer'>
-<b:widget id='Attribution1' locked='true' title='' type='Attribution' visible='true'>
+<b:widget id='Attribution1' locked='true' title='' type='Attribution' version='2' visible='true'>
 <b:widget-settings>
 <b:widget-setting name='copyright'/>
 </b:widget-settings>
