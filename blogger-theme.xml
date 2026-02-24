@@ -39,6 +39,12 @@
 ",
               "description": "<data:post.snippet.jsonEscaped/>
 ",
+              "prepTime": "PT15M",
+              "cookTime": "PT30M",
+              "totalTime": "PT45M",
+              "recipeCategory": "Main Course",
+              "recipeCuisine": "Malaysian",
+              "keywords": "recipe, spices, malaysian cuisine, rempah warisan bernam",
               "publisher": {
                 "@type": "Organization",
                 "name": "Rempah Warisan Bernam",
@@ -51,10 +57,7 @@
                 "@type": "WebPage",
                 "@id": "<data:post.url.canonical.jsonEscaped/>
 "
-              },
-              "recipeCategory": "Main Course",
-              "recipeCuisine": "Malaysian",
-              "keywords": "recipe, spices, malaysian cuisine, rempah warisan bernam"
+              }
             }
     </script>
   </b:if>
@@ -5164,14 +5167,20 @@ display:none
     //<![CDATA[
     (function() {
       function fixJsonLd() {
-        // Target scripts in post body OR the specific dynamic ID provided
-        var scripts = document.querySelectorAll('.post-body script[type="application/ld+json"], #dynamic-recipe-schema');
+        // Target scripts in post body OR specific IDs
+        var scripts = document.querySelectorAll('.post-body script[type="application/ld+json"], #dynamic-recipe-schema, .entry-content script[type="application/ld+json"]');
         scripts.forEach(function(s) {
           if (s.getAttribute('data-fixed') === 'true') return;
           
           var content = s.innerHTML || s.textContent;
-          // Clean up Blogger-induced formatting
+          if (!content || content.length < 20) return;
+
+          // Aggressively clean up Blogger-induced formatting and HTML entities
           var cleaned = content
+            .replace(/<!\[CDATA\[/g, '')
+            .replace(/\]\]>/g, '')
+            .replace(/<!--/g, '')
+            .replace(/-->/g, '')
             .replace(/<br\s*\/?>/gi, '\n')
             .replace(/<p\s*\/?>/gi, '\n')
             .replace(/<\/p>/gi, '\n')
@@ -5179,47 +5188,58 @@ display:none
             .replace(/&quot;/g, '"')
             .replace(/&lt;/g, '<')
             .replace(/&gt;/g, '>')
-            .replace(/&amp;/g, '&');
+            .replace(/&amp;/g, '&')
+            .trim();
           
           try {
+            // Find the outermost JSON object
             var jsonStart = cleaned.indexOf('{');
             var jsonEnd = cleaned.lastIndexOf('}');
             if (jsonStart !== -1 && jsonEnd !== -1) {
               var jsonStr = cleaned.substring(jsonStart, jsonEnd + 1);
+              
+              // Basic sanitization for potential trailing commas or minor syntax errors
+              jsonStr = jsonStr.replace(/,\s*([}\]])/g, '$1');
+              
               var parsed = JSON.parse(jsonStr);
               
-              // If it's a valid Recipe, let's promote it to the head
-              if (parsed['@type'] === 'Recipe') {
-                console.log('Successfully repaired and promoted Recipe schema:', parsed.name);
+              // If it's a Recipe or a Graph containing a Recipe, promote it
+              var isRecipe = false;
+              if (parsed['@type'] === 'Recipe') isRecipe = true;
+              else if (parsed['@graph'] && Array.isArray(parsed['@graph'])) {
+                isRecipe = parsed['@graph'].some(function(item) { return item['@type'] === 'Recipe'; });
+              }
+              
+              if (isRecipe) {
+                console.log('Successfully repaired and promoted Recipe schema from post content.');
                 var cleanScript = document.createElement('script');
                 cleanScript.type = 'application/ld+json';
                 cleanScript.text = JSON.stringify(parsed);
                 document.head.appendChild(cleanScript);
                 
-                // Disable the original so it doesn't cause errors or duplication
+                // Mark as fixed and effectively disable the original
                 s.setAttribute('data-fixed', 'true');
                 s.type = 'text/plain'; 
                 s.style.display = 'none';
               }
             }
           } catch (e) {
-            // Only log if it really looks like it should have been JSON
-            if (content.indexOf('{') !== -1) {
-              console.warn('Attempted to fix JSON-LD but failed parsing:', e);
+            // If it really looks like JSON, log the failure for debugging
+            if (content.indexOf('{') !== -1 && content.indexOf('"@type"') !== -1) {
+              console.warn('Failed to parse potential Recipe JSON-LD:', e);
             }
           }
         });
       }
       
-      // Run once on load
-      if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', fixJsonLd);
-      } else {
-        fixJsonLd();
-      }
-      // Run again after a delay to catch dynamically injected scripts (like from the generator)
-      setTimeout(fixJsonLd, 1500);
-      setTimeout(fixJsonLd, 4000); // Second pass for slow loads
+      // Run immediately and then progressively to catch dynamic content
+      if (document.readyState === 'complete') fixJsonLd();
+      else window.addEventListener('load', fixJsonLd);
+      
+      // Multiple passes to handle delayed injection from AI generators
+      setTimeout(fixJsonLd, 1000);
+      setTimeout(fixJsonLd, 3000);
+      setTimeout(fixJsonLd, 6000);
     })();
     //]]>
 </script>

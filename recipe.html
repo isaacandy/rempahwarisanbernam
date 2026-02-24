@@ -312,12 +312,24 @@
             const itemListSchema = {
                 "@context": "https://schema.org",
                 "@type": "ItemList",
-                "itemListElement": filteredEntries.map((post, index) => ({
-                    "@type": "ListItem",
-                    "position": index + 1,
-                    "url": post.link.find(link => link.rel === 'alternate').href,
-                    "name": post.title.$t
-                }))
+                "name": "Rempah Warisan Bernam Recipes",
+                "description": "Authentic Malaysian recipes featuring heritage spice blends.",
+                "itemListElement": filteredEntries.map((post, index) => {
+                    const postUrl = post.link.find(link => link.rel === 'alternate').href;
+                    return {
+                        "@type": "ListItem",
+                        "position": index + 1,
+                        "item": {
+                            "@type": "Recipe",
+                            "name": post.title.$t,
+                            "url": postUrl,
+                            "mainEntityOfPage": {
+                                "@type": "WebPage",
+                                "@id": postUrl
+                            }
+                        }
+                    };
+                })
             };
 
             const schemaScript = document.createElement('script');
