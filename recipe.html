@@ -291,7 +291,7 @@
                 // Build the HTML for one post (recipe card style)
                 postHtml += `
                     <div class="bg-white rounded-2xl shadow-lg overflow-hidden group">
-                        <a href="${postUrl}" target="_blank" rel="noopener noreferrer" class="block">
+                        <a href="${postUrl}" class="block" onclick="localStorage.setItem('lastBlogSource', 'recipe')">
                             <div class="aspect-w-4 aspect-h-3">
                                 <img src="${thumbnailUrl}" alt="${postTitle}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
                             </div>

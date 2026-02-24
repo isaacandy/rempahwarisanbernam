@@ -2740,9 +2740,9 @@ display:none
 <b:includable id='standardPostImageStyle'>
   <b:with value='&quot;post-thumb-&quot; + data:post.id' var='thumbClassName'>
     <style>
-              .      <data:thumbClassName/>
- {background-image:url(<b:eval expr='resizeImage(data:post.featuredImage, 385, &quot;385:184&quot;).cssEscaped'/>
-);}
+      .      <data:thumbClassName/>
+ { background-image: url(<b:eval expr='resizeImage(data:post.featuredImage, 385, &quot;385:184&quot;).cssEscaped'/>
+); }
     </style>
   </b:with>
 </b:includable>
@@ -2993,16 +2993,16 @@ display:none
 <b:if cond='data:post.featuredImage'>
 <style>
                   @media (min-width: 746px) { .hero .<data:thumbClassName/>
- {background-image:url(<b:eval expr='resizeImage(data:post.featuredImage, 800, &quot;800:272&quot;).cssEscaped'/>
-);} }
+ { background-image: url(<b:eval expr='resizeImage(data:post.featuredImage, 800, "800:272").cssEscaped'/>
+); } }
                   @media (min-width: 1545px) { .hero .<data:thumbClassName/>
- {background-image:url(<b:eval expr='resizeImage(data:post.featuredImage, 1185, &quot;1185:272&quot;).cssEscaped'/>
-);} }
+ { background-image: url(<b:eval expr='resizeImage(data:post.featuredImage, 1185, "1185:272").cssEscaped'/>
+); } }
                   @media (max-width: 400px) { .hero .<data:thumbClassName/>
- {background-image:url(<b:eval expr='resizeImage(data:post.featuredImage, 400, &quot;1:1&quot;).cssEscaped'/>
+ { background-image: url(<b:eval expr='resizeImage(data:post.featuredImage, 400, "1:1").cssEscaped'/>
 ); } }
                   @media (min-width: 401px) and (max-width: 745px) { .hero .<data:thumbClassName/>
- {background-image:url(<b:eval expr='resizeImage(data:post.featuredImage, 745, &quot;745:400&quot;).cssEscaped'/>
+ { background-image: url(<b:eval expr='resizeImage(data:post.featuredImage, 745, "745:400").cssEscaped'/>
 ); } }
 </style>
 </b:if>
@@ -3149,7 +3149,7 @@ display:none
 <b:class cond='data:view.isSearch and data:view.search.query' name='search-focused'/>
 
 <b:if cond='data:view.isSingleItem'>
-<a class='return_link' expr:href='data:blog.homepageUrl'>
+<a class='return_link' href='javascript:void(0)' onclick='return navigateBackToSite()'>
 <b:include data='{ iconClass: &quot;touch-icon back-button rtl-reversible-icon&quot; }' name='backArrowIcon'/>
 </a>
 <b:else/>
@@ -5222,6 +5222,20 @@ display:none
       setTimeout(fixJsonLd, 4000); // Second pass for slow loads
     })();
     //]]>
+</script>
+
+<script type='text/javascript'>
+  //<![CDATA[
+  function navigateBackToSite() {
+    var lastSource = localStorage.getItem('lastBlogSource');
+    if (lastSource === 'recipe') {
+      window.location.href = 'https://www.rempahwarisanbernam.net/recipe.html';
+    } else {
+      window.location.href = 'https://www.rempahwarisanbernam.net/blog.html';
+    }
+    return false;
+  }
+  //]]>
 </script>
 
 <b:template-script async='true' name='vegeclub' version='1.0.0'/>
