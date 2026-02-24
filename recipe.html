@@ -167,11 +167,21 @@
 
     <main>
         <!-- Page Header -->
-        <section class="py-24 bg-stone-100 border-b border-stone-200">
-            <div class="max-w-7xl mx-auto px-6 lg:px-12 text-center">
-                <h1 class="font-serif text-5xl lg:text-7xl text-stone-900 italic">Our Recipes</h1>
-                <p class="mt-4 text-lg text-stone-600 max-w-2xl mx-auto">Discover authentic Malaysian dishes you can
-                    create with our heritage spice blends.</p>
+        <section id="home" class="relative min-h-[50vh] flex items-center bg-stone-900 overflow-hidden">
+            <div class="absolute inset-0">
+                <img src="images\Branding\Designer (1).png?auto=format&fit=crop&q=80&w=1920"
+                    class="w-full h-full object-cover opacity-25" alt="Spices background" fetchpriority="high">
+                <div class="absolute inset-0 bg-gradient-to-r from-stone-950 via-stone-900/60 to-transparent"></div>
+            </div>
+            <div class="relative max-w-7xl mx-auto px-6 lg:px-12 w-full">
+                <div class="max-w-4xl">
+                    <h1 class="font-serif text-5xl lg:text-7xl text-white mb-6 italic">
+                        Our Recipes
+                    </h1>
+                    <p class="text-base lg:text-lg text-stone-400 leading-relaxed max-w-xl font-light italic">
+                        Discover authentic Malaysian dishes you can create with our heritage spice blends.
+                    </p>
+                </div>
             </div>
         </section>
 
@@ -286,6 +296,13 @@
                     thumbnailUrl = post.media$thumbnail.url;
                 }
 
+                let labelsHtml = '';
+                if (post.category && post.category.length > 0) {
+                    labelsHtml = post.category.map(cat =>
+                        `<span class="inline-block bg-stone-200 text-stone-600 text-[9px] font-bold uppercase tracking-wider rounded-full px-2 py-1">${cat.term}</span>`
+                    ).join(' ');
+                }
+
                 const snippet = contentDiv.textContent.substring(0, 150) + '...'; // Shorter snippet for recipe cards
 
                 // Build the HTML for one post (recipe card style)
@@ -296,7 +313,9 @@
                                 <img src="${thumbnailUrl}" alt="${postTitle}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
                             </div>
                             <div class="p-6">
-                                <p class="text-brand-gold font-bold text-[9px] uppercase tracking-widest mb-2">${formattedDate}</p>
+                                <div class="flex flex-wrap gap-2 mb-3">
+                                    ${labelsHtml}
+                                </div>
                                 <h2 class="font-serif text-2xl italic text-stone-900 mb-3">${postTitle}</h2>
                                 <p class="text-sm text-stone-500 leading-relaxed">${snippet}</p>
                             </div>
