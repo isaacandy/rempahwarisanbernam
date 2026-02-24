@@ -13,6 +13,9 @@
 
     <b:include data='blog' name='all-head-content'/>
 
+    <!-- ShareThis Social Sharing Script -->
+    <script async='async' src='https://platform-api.sharethis.com/js/sharethis.js#property=698a127b19466150d6ac0a60&amp;product=sop' type='text/javascript'/>
+
     <!-- AUTO-GENERATE RECIPE SCHEMA FOR POSTS LABELED "RECIPE" -->
     <b:if cond='data:view.isSingleItem'>
       <b:loop values='data:posts' var='post'>
@@ -2498,14 +2501,14 @@ display:block
 }
 }
 .item-view .page_body{
-padding-top:70px
+padding-top:100px
 }
 .item-view .centered,.item-view .centered .main,.item-view .centered .main-container,.item-view .page_body.has-vertical-ads .centered,.item-view .page_body.has-vertical-ads .centered .main,.item-view .page_body.has-vertical-ads .centered .main-container{
 width:100%
 }
 .item-view .main-container{
-margin-$endSide:15px;
-max-width:890px
+margin-$endSide:0;
+max-width:100%
 }
 .item-view .centered-bottom{
 margin-left:auto;
@@ -2581,12 +2584,7 @@ text-transform:uppercase
 border:0
 }
 .item-view .sidebar-container{
-margin-$startSide:0;
-box-sizing:border-box;
-margin-top:15px;
-max-width:280px;
-padding:0;
-width:280px
+display:none
 }
 .item-view .sidebar-container .widget{
 padding:15px 0
@@ -4167,10 +4165,16 @@ display:none
 </span>
 </b:includable>
 <b:includable id='postBody' var='post'>
+<!-- ShareThis TOP - Added extra margin and position to prevent header overlap -->
+<div class='sharethis-inline-share-buttons' expr:data-title='data:post.title' expr:data-url='data:post.url.canonical' style='margin-bottom: 25px; margin-top: 15px; position: relative; z-index: 1;'/>
+
 <!-- If metaDescription is empty, use the post body as the schema.org description too, for G+/FB snippeting. -->
 <div class='post-body entry-content float-container' expr:id='&quot;post-body-&quot; + data:post.id'>
 <data:post.body/>
 </div>
+
+<!-- ShareThis BOTTOM -->
+<div class='sharethis-inline-share-buttons' expr:data-title='data:post.title' expr:data-url='data:post.url.canonical' style='margin-top: 30px;'/>
 </b:includable>
 <b:includable id='postBodySnippet' var='post'>
 <div class='post-body entry-content' expr:id='&quot;post-snippet-&quot; + data:post.id'>
