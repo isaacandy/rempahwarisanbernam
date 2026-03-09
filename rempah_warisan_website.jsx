@@ -97,7 +97,7 @@ const App = () => {
             <div className="flex items-center space-x-2">
               <div className="w-12 h-12 bg-red-800 rounded-full flex items-center justify-center overflow-hidden">
                 {/* Logo Placeholder - User should link their actual logo image here */}
-                <span className="text-white font-bold text-xs text-center leading-tight">RW B</span>
+                <span className="text-white font-bold text-xs text-center leading-tight">RWB</span>
               </div>
               <div>
                 <span className="block font-bold text-red-800 text-lg leading-tight uppercase tracking-tight">Rempah Warisan</span>

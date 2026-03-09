@@ -47,13 +47,13 @@ src="https://www.facebook.com/tr?id=2132828370861521&amp;ev=PageView&amp;noscrip
               "name": "<data:post.title.jsonEscaped/>
 ",
               "image": [
-            <b:if cond='data:post.featuredImage'>"              <data:post.featuredImage.url.jsonEscaped/>
+            <b:if cond='data:post.featuredImage'>"<data:post.featuredImage.url.jsonEscaped/>
 "              <b:else/>
 "https://www.rempahwarisanbernam.net/images/Rempah%20warisan%20logo%20final.png"</b:if>
               ],
               "author": {
                 "@type": "Organization",
-                "name": "Rempah Warisan Bernam"
+                "name": "Rempah Warisan Bernam (RWB)"
               },
               "datePublished": "<data:post.date.iso8601.jsonEscaped/>
 ",
@@ -66,10 +66,10 @@ src="https://www.facebook.com/tr?id=2132828370861521&amp;ev=PageView&amp;noscrip
               "totalTime": "PT45M",
               "recipeCategory": "Main Course",
               "recipeCuisine": "Malaysian",
-              "keywords": "recipe, spices, malaysian cuisine, rempah warisan bernam",
+              "keywords": "recipe, spices, malaysian cuisine, rempah warisan bernam, RWB",
               "publisher": {
                 "@type": "Organization",
-                "name": "Rempah Warisan Bernam",
+                "name": "Rempah Warisan Bernam (RWB)",
                 "logo": {
                   "@type": "ImageObject",
                   "url": "https://www.rempahwarisanbernam.net/images/Rempah%20warisan%20logo%20final.png"
@@ -3180,7 +3180,7 @@ display:none
 
 <div class='blog-name'>
 <b:section id='header' name='Header' showaddelement='false'>
-<b:widget id='Header1' locked='true' title='Rempah Warisan Bernam Blog (Header)' type='Header' visible='true'>
+<b:widget id='Header1' locked='true' title='Rempah Warisan Bernam (RWB) Blog' type='Header' visible='true'>
 <b:widget-settings>
 <b:widget-setting name='displayUrl'/>
 <b:widget-setting name='displayHeight'>0</b:widget-setting>
