@@ -224,6 +224,20 @@ src="https://www.facebook.com/tr?id=2132828370861521&ev=PageView&noscript=1"
     <!-- Re-using the footer from index.html -->
     <footer class="bg-stone-950 text-white py-8">
         <div class="max-w-7xl mx-auto px-6 lg:px-12">
+            <div><script id='merchantWidgetScript' src="https://www.gstatic.com/shopping/merchant/merchantwidget.js" defer></script>
+
+<script>
+  merchantWidgetScript.addEventListener('load', function () {
+    merchantwidget.start({
+         // REQUIRED FIELDS
+         merchant_id: 5724505526,
+
+         // OPTIONAL FIELDS
+         position: POSITION,
+         region: REGION,
+    });
+  });
+</script></div>
             <div
                 class="pt-6 flex flex-col md:flex-row justify-between items-center gap-4 text-stone-800 text-[8px] font-black uppercase tracking-[0.4em]">
                 <p>© 2025 Rempah Warisan Bernam (RWB) Sdn Bhd.
