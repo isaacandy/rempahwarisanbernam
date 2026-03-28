@@ -44,29 +44,38 @@ src="https://www.facebook.com/tr?id=2132828370861521&amp;ev=PageView&amp;noscrip
             {
               "@context": "https://schema.org",
               "@type": "Recipe",
-              "name": "<data:post.title.jsonEscaped/>
-",
+              "name": "<data:post.title.jsonEscaped/>",
               "image": [
-            <b:if cond='data:post.featuredImage'>"<data:post.featuredImage.url.jsonEscaped/>
-"              <b:else/>
-"https://www.rempahwarisanbernam.net/images/Rempah%20warisan%20logo%20final.png"</b:if>
+                <b:if cond='data:post.featuredImage'>
+                  "<b:eval expr='resizeImage(data:post.featuredImage, 1200, "16:9")'/>",
+                  "<b:eval expr='resizeImage(data:post.featuredImage, 1200, "4:3")'/>",
+                  "<b:eval expr='resizeImage(data:post.featuredImage, 1200, "1:1")'/>"
+                <b:else/>
+                  "https://www.rempahwarisanbernam.net/images/Rempah%20warisan%20logo%20final.png"
+                </b:if>
               ],
               "author": {
                 "@type": "Organization",
                 "name": "Rempah Warisan Bernam (RWB)"
               },
-              "datePublished": "<data:post.date.iso8601.jsonEscaped/>
-",
-              "dateModified": "<data:post.lastUpdated.iso8601.jsonEscaped/>
-",
-              "description": "<data:post.snippet.jsonEscaped/>
-",
+              "datePublished": "<data:post.date.iso8601.jsonEscaped/>",
+              "dateModified": "<data:post.lastUpdated.iso8601.jsonEscaped/>",
+              "description": "<data:post.snippet.jsonEscaped/>",
               "prepTime": "PT15M",
               "cookTime": "PT30M",
               "totalTime": "PT45M",
               "recipeCategory": "Main Course",
               "recipeCuisine": "Malaysian",
               "keywords": "recipe, spices, malaysian cuisine, rempah warisan bernam, RWB",
+              "recipeIngredient": [
+                "<!-- To populate this, add a list in your post with a class='ingredients-list' -->"
+              ],
+              "recipeInstructions": [
+                {
+                  "@type": "HowToStep",
+                  "text": "<!-- To populate this, add a list in your post with a class='instructions-list' -->"
+                }
+              ],
               "publisher": {
                 "@type": "Organization",
                 "name": "Rempah Warisan Bernam (RWB)",
@@ -77,8 +86,7 @@ src="https://www.facebook.com/tr?id=2132828370861521&amp;ev=PageView&amp;noscrip
               },
               "mainEntityOfPage": {
                 "@type": "WebPage",
-                "@id": "<data:post.url.canonical.jsonEscaped/>
-"
+                "@id": "<data:post.url.canonical.jsonEscaped/>"
               }
             }
     </script>
