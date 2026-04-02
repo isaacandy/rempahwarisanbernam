@@ -2769,7 +2769,7 @@ display:none
   <b:with value='&quot;post-thumb-&quot; + data:post.id' var='thumbClassName'>
     <style>
       .      <data:thumbClassName/>
- { background-image: url(<b:eval expr='resizeImage(data:post.featuredImage, 385, &quot;385:184&quot;).cssEscaped'/>
+ { background-image: url(<b:eval expr='data:post.featuredImage ? resizeImage(data:post.featuredImage, 385, &quot;385:184&quot;).cssEscaped : &quot;https://www.rempahwarisanbernam.net/images/Rempah%20warisan%20logo%20final.png&quot;'/>
 ); }
     </style>
   </b:with>
@@ -2823,7 +2823,11 @@ display:none
 <b:includable id='snippetedPostThumbnail'>
   <div class='item-thumbnail'>
     <a expr:href='data:post.url'>
-      <b:include data='{                                  image: data:post.featuredImage,                                  imageSizes: [280,560,840,1120,1400]                                }' name='responsiveImage'/>
+      <b:if cond='data:post.featuredImage'>
+        <b:include data='{                                  image: data:post.featuredImage,                                  imageSizes: [280,560,840,1120,1400]                                }' name='responsiveImage'/>
+      <b:else/>
+        <img src='https://www.rempahwarisanbernam.net/images/Rempah%20warisan%20logo%20final.png' alt='Rempah Warisan Bernam'/>
+      </b:if>
     </a>
   </div>
 </b:includable>
@@ -2923,7 +2927,7 @@ display:none
       <b:include name='postWrapperClasses'/>
 
       <!-- Standard feed thumbs always added, as they're needed for mobile view. -->
-      <b:include cond='data:post.featuredImage and data:view.isMultipleItems' name='standardPostImageStyle'/>
+      <b:include cond='data:view.isMultipleItems' name='standardPostImageStyle'/>
       <b:include name='feedPostImage'/>
 
       <div class='slide'>
@@ -3788,7 +3792,11 @@ display:none
 <b:includable id='snippetedPostThumbnail'>
 <div class='item-thumbnail'>
 <a expr:href='data:post.url'>
+<b:if cond='data:post.featuredImage'>
 <b:include data='{                                  image: data:post.featuredImage,                                  imageSizes: [280,560,840,1120,1400]                                }' name='responsiveImage'/>
+<b:else/>
+<img src='https://www.rempahwarisanbernam.net/images/Rempah%20warisan%20logo%20final.png' alt='Rempah Warisan Bernam'/>
+</b:if>
 </a>
 </div>
 </b:includable>
@@ -4161,7 +4169,7 @@ display:none
 <b:include name='postWrapperClasses'/>
 
 <!-- Standard feed thumbs always added, as they're needed for mobile view. -->
-<b:include cond='data:post.featuredImage and data:view.isMultipleItems' name='standardPostImageStyle'/>
+<b:include cond='data:view.isMultipleItems' name='standardPostImageStyle'/>
 <b:include name='feedPostImage'/>
 
 <div class='slide'>
@@ -4426,7 +4434,11 @@ display:none
 <b:includable id='snippetedPostThumbnail'>
 <div class='item-thumbnail'>
 <a expr:href='data:post.url'>
+<b:if cond='data:post.featuredImage'>
 <b:include data='{                                  image: data:post.featuredImage,                                  imageSizes: [280,560,840,1120,1400]                                }' name='responsiveImage'/>
+<b:else/>
+<img src='https://www.rempahwarisanbernam.net/images/Rempah%20warisan%20logo%20final.png' alt='Rempah Warisan Bernam'/>
+</b:if>
 </a>
 </div>
 </b:includable>
@@ -5157,7 +5169,11 @@ display:none
 <b:includable id='snippetedPostThumbnail'>
 <div class='item-thumbnail'>
 <a expr:href='data:post.url'>
+<b:if cond='data:post.featuredImage'>
 <b:include data='{                                  image: data:post.featuredImage,                                  imageSizes: [280,560,840,1120,1400]                                }' name='responsiveImage'/>
+<b:else/>
+<img src='https://www.rempahwarisanbernam.net/images/Rempah%20warisan%20logo%20final.png' alt='Rempah Warisan Bernam'/>
+</b:if>
 </a>
 </div>
 </b:includable>

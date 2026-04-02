@@ -211,6 +211,10 @@ src="https://www.facebook.com/tr?id=2132828370861521&ev=PageView&noscript=1"
 
         <!-- Blog Posts Section - This will be populated by JavaScript -->
         <section class="py-16">
+            <div id="sort-buttons" class="max-w-4xl mx-auto px-6 lg:px-8 mb-8 flex justify-center gap-4">
+                <button id="btn-recent" class="px-6 py-3 bg-stone-900 text-white rounded-full hover:bg-brand-crimson transition font-bold text-sm uppercase tracking-widest">Recent Posts</button>
+                <button id="btn-popular" class="px-6 py-3 bg-stone-200 text-stone-900 rounded-full hover:bg-stone-300 transition font-bold text-sm uppercase tracking-widest">Popular Posts</button>
+            </div>
             <div id="blog-posts-container" class="max-w-4xl mx-auto px-6 lg:px-8">
                 <!-- Loading spinner -->
                 <div id="loading-indicator" class="text-center py-12" aria-live="polite" aria-busy="true">
@@ -270,6 +274,27 @@ src="https://www.facebook.com/tr?id=2132828370861521&ev=PageView&noscript=1"
     <script>
         lucide.createIcons();
 
+        document.getElementById('btn-recent').addEventListener('click', () => { currentSort = 'recent'; sortEntries(); updateButtons(); });
+        document.getElementById('btn-popular').addEventListener('click', () => { currentSort = 'popular'; sortEntries(); updateButtons(); });
+
+        function updateButtons() {
+            const btnRecent = document.getElementById('btn-recent');
+            const btnPopular = document.getElementById('btn-popular');
+            if (currentSort === 'recent') {
+                btnRecent.classList.remove('bg-stone-200', 'text-stone-900');
+                btnRecent.classList.add('bg-stone-900', 'text-white');
+                btnPopular.classList.remove('bg-stone-900', 'text-white');
+                btnPopular.classList.add('bg-stone-200', 'text-stone-900');
+            } else {
+                btnPopular.classList.remove('bg-stone-200', 'text-stone-900');
+                btnPopular.classList.add('bg-stone-900', 'text-white');
+                btnRecent.classList.remove('bg-stone-900', 'text-white');
+                btnRecent.classList.add('bg-stone-200', 'text-stone-900');
+            }
+        }
+
+        updateButtons(); // initial
+
         const toggle = document.getElementById('mobile-toggle'), menu = document.getElementById('mobile-menu'), close = document.getElementById('mobile-close');
         toggle.addEventListener('click', () => menu.classList.remove('hidden'));
         close.addEventListener('click', () => menu.classList.add('hidden'));
@@ -279,8 +304,11 @@ src="https://www.facebook.com/tr?id=2132828370861521&ev=PageView&noscript=1"
 
         // IMPORTANT: Replace this with your Blogger blog URL
         const bloggerUrl = "https://blog.rempahwarisanbernam.net";
-        const maxPostsToFetch = 50; // Fetch more posts to ensure enough posts after filtering
-        const excludedTags = ["Recipe", "AI-Generated Recipe"]; // Tags to exclude from the blog page
+        const maxPostsToFetch = 100; // Fetch more posts to ensure enough posts after filtering
+        const excludedTags = []; // Tags to exclude from the blog page
+
+        let allEntries = [];
+        let currentSort = 'recent';
 
         function handleBloggerPosts(data) {
             console.log('handleBloggerPosts called with data:', data);
@@ -304,8 +332,8 @@ src="https://www.facebook.com/tr?id=2132828370861521&ev=PageView&noscript=1"
                 return;
             }
 
-            const allEntries = data.feed.entry;
-            const entries = allEntries.filter(entry => {
+            const allPosts = data.feed.entry;
+            const entries = allPosts.filter(entry => {
                 // Check if the post has any of the tags that should be excluded.
                 // The .some() method returns true if at least ONE of the post's tags is found in the excludedTags list.
                 // This works as an "OR" condition (e.g., exclude if tag is "Recipe" OR "AI-Generated Recipe").
@@ -313,11 +341,55 @@ src="https://www.facebook.com/tr?id=2132828370861521&ev=PageView&noscript=1"
                 return !hasExcludedTag; // We return the posts that DO NOT have an excluded tag.
             });
 
-            let postHtml = '<div class="space-y-12">';
-            console.log('Found entries:', entries.length);
+            allEntries = entries;
+            sortEntries();
 
-            for (let i = 0; i < entries.length; i++) {
-                const post = entries[i];
+            // --- Generate and Inject ItemList Schema ---
+            const itemListSchema = {
+                "@context": "https://schema.org",
+                "@type": "ItemList",
+                "name": "Rempah Warisan Bernam Blog Posts",
+                "description": "Stories, tips, and history behind heritage spices.",
+                "itemListElement": entries.map((post, index) => {
+                    const postUrl = post.link.find(link => link.rel === 'alternate').href;
+                    return {
+                        "@type": "ListItem",
+                        "position": index + 1,
+                        "item": {
+                            "@type": "BlogPosting",
+                            "name": post.title.$t,
+                            "url": postUrl,
+                            "mainEntityOfPage": {
+                                "@type": "WebPage",
+                                "@id": postUrl
+                            }
+                        }
+                    };
+                })
+            };
+
+            const schemaScript = document.createElement('script');
+            schemaScript.type = 'application/ld+json';
+            schemaScript.text = JSON.stringify(itemListSchema);
+            document.head.appendChild(schemaScript);
+            console.log('Injected ItemList schema for blog posts.');
+        }
+
+        function sortEntries() {
+            if (currentSort === 'popular') {
+                allEntries.sort((a, b) => (b.thr$total ? b.thr$total.$t : 0) - (a.thr$total ? a.thr$total.$t : 0));
+            } else {
+                allEntries.sort((a, b) => new Date(b.published.$t) - new Date(a.published.$t));
+            }
+            renderPosts();
+        }
+
+        function renderPosts() {
+            let postHtml = '<div class="space-y-12">';
+            console.log('Rendering', allEntries.length, 'posts with sort:', currentSort);
+
+            for (let i = 0; i < allEntries.length; i++) {
+                const post = allEntries[i];
                 const postTitle = post.title.$t;
                 const postUrl = post.link.find(link => link.rel === 'alternate').href;
 
@@ -332,11 +404,13 @@ src="https://www.facebook.com/tr?id=2132828370861521&ev=PageView&noscript=1"
                 contentDiv.innerHTML = post.content.$t;
 
                 let thumbnailUrl = 'https://www.rempahwarisanbernam.net/images/Rempah%20warisan%20logo%20final.png'; // Default image
-                const firstImage = contentDiv.querySelector('img');
-                if (firstImage) {
-                    thumbnailUrl = firstImage.src;
-                } else if (post.media$thumbnail && post.media$thumbnail.url) {
+                if (post.media$thumbnail && post.media$thumbnail.url) {
                     thumbnailUrl = post.media$thumbnail.url;
+                } else {
+                    const firstImage = contentDiv.querySelector('img');
+                    if (firstImage) {
+                        thumbnailUrl = firstImage.src;
+                    }
                 }
 
                 let labelsHtml = '';
@@ -353,7 +427,7 @@ src="https://www.facebook.com/tr?id=2132828370861521&ev=PageView&noscript=1"
                     <article class="group">
                         <a href="${postUrl}" class="block mb-4" onclick="localStorage.setItem('lastBlogSource', 'blog')">
                             <div class="aspect-w-16 aspect-h-9 rounded-2xl overflow-hidden shadow-lg">
-                                <img src="${thumbnailUrl}" alt="${postTitle}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                                <img src="${thumbnailUrl}" alt="${postTitle}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" onerror="this.src='https://www.rempahwarisanbernam.net/images/Rempah%20warisan%20logo%20final.png'">
                             </div>
                         </a>
                         
@@ -361,24 +435,26 @@ src="https://www.facebook.com/tr?id=2132828370861521&ev=PageView&noscript=1"
                         <div class="sharethis-inline-share-buttons" data-url="${postUrl}" data-title="${postTitle}"></div>
                         <!-- ShareThis END -->
 
-                        <div class="flex flex-wrap gap-2 mt-4" class="flex flex-wrap gap-2 mt-4">
+                        <div class="flex flex-wrap gap-2 mt-4">
                             ${labelsHtml}
                         </div>
 
-                        <h2 class="font-serif text-3xl italic text-stone-900 mt-2 group-hover:text-brand-crimson transition"
-                            class="font-serif text-3xl italic text-stone-900 mt-2 group-hover:text-brand-crimson transition">
-                            <a href="${postUrl}" onclick="localStorage.setItem('lastBlogSource', 'blog')">${postTitle}</a></h2>
+                        <h2 class="font-serif text-3xl italic text-stone-900 mt-2 group-hover:text-brand-crimson transition">
+                            <a href="${postUrl}" onclick="localStorage.setItem('lastBlogSource', 'blog')">${postTitle}</a>
+                        </h2>
                         <p class="mt-4 text-stone-600 leading-relaxed">${snippet}</p>
                         <a href="${postUrl}" class="mt-4 inline-block font-bold text-sm text-brand-gold uppercase tracking-widest" onclick="localStorage.setItem('lastBlogSource', 'blog')">Read More</a>
                     </article>
                 `;
-                if (i < entries.length - 1) {
+                if (i < allEntries.length - 1) {
                     postHtml += '<hr class="border-stone-200">';
                 }
             }
             postHtml += '</div>';
             console.log('Generated post HTML. Setting innerHTML.');
+            const container = document.getElementById('blog-posts-container');
             container.innerHTML = postHtml;
+        }
         }
 
         // Dynamically create the script tag to fetch the feed

@@ -264,7 +264,7 @@ src="https://www.facebook.com/tr?id=2132828370861521&ev=PageView&noscript=1"
         // --- Blogger Integration Script for Recipes ---
 
         const bloggerUrl = "https://blog.rempahwarisanbernam.net";
-        const maxPostsToFetch = 20; // Fetch more posts to ensure enough recipes after filtering
+        const maxPostsToFetch = 100; // Fetch more posts to ensure enough recipes after filtering
         const desiredTags = ["Recipe", "Recipes", "AI-Generated Recipe", "AI-Generated Recipes"]; // Tags to filter by
 
         function handleBloggerPosts(data) {
@@ -319,11 +319,13 @@ src="https://www.facebook.com/tr?id=2132828370861521&ev=PageView&noscript=1"
                 contentDiv.innerHTML = post.content.$t;
 
                 let thumbnailUrl = 'https://www.rempahwarisanbernam.net/images/Rempah%20warisan%20logo%20final.png'; // Default image
-                const firstImage = contentDiv.querySelector('img');
-                if (firstImage) {
-                    thumbnailUrl = firstImage.src;
-                } else if (post.media$thumbnail && post.media$thumbnail.url) {
+                if (post.media$thumbnail && post.media$thumbnail.url) {
                     thumbnailUrl = post.media$thumbnail.url;
+                } else {
+                    const firstImage = contentDiv.querySelector('img');
+                    if (firstImage) {
+                        thumbnailUrl = firstImage.src;
+                    }
                 }
 
                 let labelsHtml = '';
@@ -340,7 +342,7 @@ src="https://www.facebook.com/tr?id=2132828370861521&ev=PageView&noscript=1"
                     <div class="bg-white rounded-2xl shadow-lg overflow-hidden group">
                         <a href="${postUrl}" class="block" onclick="localStorage.setItem('lastBlogSource', 'recipe')">
                             <div class="aspect-w-4 aspect-h-3">
-                                <img src="${thumbnailUrl}" alt="${postTitle}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                                <img src="${thumbnailUrl}" alt="${postTitle}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" onerror="this.src='https://www.rempahwarisanbernam.net/images/Rempah%20warisan%20logo%20final.png'">
                             </div>
                             <div class="p-6">
                                 <div class="flex flex-wrap gap-2 mb-3">
