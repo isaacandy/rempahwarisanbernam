@@ -5356,22 +5356,67 @@ display:none
             return;
           }
 
-          // Sort keys by length, longest first, to avoid partial matches (e.g., "Meat Curry Powder" before "Curry Powder")
+          // --- 1. Link Product Images ---
+          const postImages = postBody.querySelectorAll('img');
+          postImages.forEach(img => {
+            const altText = img.alt ? img.alt.trim() : '';
+            if (productLinks[altText]) {
+              const productUrl = productLinks[altText];
+              const parentElement = img.parentElement;
+
+              // If the image is already wrapped in a link, just update the link's href.
+              if (parentElement.tagName.toLowerCase() === 'a') {
+                parentElement.href = productUrl;
+                parentElement.target = '_blank';
+                parentElement.rel = 'noopener';
+                console.log(`Updated link for image with alt text: "${altText}"`);
+              } else {
+                // If the image is not linked, create a new link and wrap the image.
+                const link = document.createElement('a');
+                link.href = productUrl;
+                link.target = '_blank';
+                link.rel = 'noopener';
+
+                // Wrap the image with the link
+                img.parentNode.insertBefore(link, img);
+                link.appendChild(img);
+                console.log(`Created new link for image with alt text: "${altText}"`);
+              }
+            }
+          });
+
+          // --- 2. Link Product Text ---
+          // Sort product names by length (longest first) to avoid partial matches
           const sortedProductNames = Object.keys(productLinks).sort((a, b) => b.length - a.length);
 
           sortedProductNames.forEach(productName => {
             const productUrl = productLinks[productName];
-            // Use a regular expression to find the product name as a whole word, not already in a link
-            // The negative lookbehind `(?<!<a[^>]*>)` ensures we don't re-link something that's already a link.
-            const regex = new RegExp(`(?<!<a[^>]*>)${productName.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&')}(?!<\\/a>)`, 'gi');
+            // Regex to find the product name as a whole word, not inside an <a> tag's text or attributes.
+            // This is a more robust way to avoid re-linking.
+            const regex = new RegExp(`\\b${productName.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&')}\\b`, 'gi');
             
-            // Check if the product name exists in the post body before replacing
-            if (regex.test(postBody.innerHTML)) {
-              console.log(`Found and linking "${productName}"`);
-              postBody.innerHTML = postBody.innerHTML.replace(regex, 
-                `<a href="${productUrl}" target="_blank" rel="noopener" style="color: var(--brand-crimson, #8b1a1a); text-decoration: underline;">${productName}</a>`
-              );
+            // Walk through all text nodes in the post body
+            const treeWalker = document.createTreeWalker(postBody, NodeFilter.SHOW_TEXT, null, false);
+            let currentNode;
+            const nodesToReplace = [];
+
+            while (currentNode = treeWalker.nextNode()) {
+              // Avoid linking text that is already inside a link
+              if (currentNode.parentElement.tagName.toLowerCase() === 'a') {
+                continue;
+              }
+              if (regex.test(currentNode.nodeValue)) {
+                nodesToReplace.push(currentNode);
+              }
             }
+
+            // Replace nodes with new content to avoid breaking event listeners
+            nodesToReplace.forEach(node => {
+              const newHtml = node.nodeValue.replace(regex, `<a href="${productUrl}" target="_blank" rel="noopener" style="color: var(--brand-crimson, #8b1a1a); text-decoration: underline;">${productName}</a>`);
+              const replacementFragment = document.createRange().createContextualFragment(newHtml);
+              node.parentNode.replaceChild(replacementFragment, node);
+              console.log(`Linked text: "${productName}"`);
+            });
           });
         })
         .catch(error => console.error('Error fetching or processing Google Sheet data for blog:', error));
