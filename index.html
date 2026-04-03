@@ -1338,6 +1338,61 @@ src="https://www.facebook.com/tr?id=2132828370861521&ev=PageView&noscript=1"
             }
         });
 
+        // --- Google Sheet Integration for Product Links ---
+        document.addEventListener('DOMContentLoaded', function () {
+            const sheetId = '1vKPPiD963CK5QLqZ3gwk__xGgnQ1wRgU6agEYMyiqvQ';
+            const sheetName = 'RWB%20Products'; // URL-encoded sheet name
+            const sheetUrl = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:json&sheet=${sheetName}`;
+
+            console.log('Fetching product links from Google Sheet...');
+
+            fetch(sheetUrl)
+                .then(response => response.text())
+                .then(text => {
+                    // Extract the JSON part from the Google Sheets response
+                    const jsonString = text.match(/google\.visualization\.Query\.setResponse\((.*)\);/)[1];
+                    const data = JSON.parse(jsonString);
+
+                    const productLinks = {};
+                    const rows = data.table.rows;
+
+                    // Find column indices for 'product_name' and 'link_to_product'
+                    const headers = data.table.cols.map(col => col.label);
+                    const nameIndex = headers.indexOf('product_name');
+                    const linkIndex = headers.indexOf('link_to_product');
+
+                    if (nameIndex === -1 || linkIndex === -1) {
+                        console.error('Could not find "product_name" or "link_to_product" columns in the sheet.');
+                        return;
+                    }
+
+                    // Create a map of product names to links
+                    rows.forEach(row => {
+                        const productName = row.c[nameIndex] ? row.c[nameIndex].v : null;
+                        const productLink = row.c[linkIndex] ? row.c[linkIndex].v : null;
+                        if (productName && productLink) {
+                            productLinks[productName.trim()] = productLink;
+                        }
+                    });
+
+                    console.log('Product links loaded:', productLinks);
+
+                    // Update the "Buy Now" links on the page
+                    document.querySelectorAll('.product-card').forEach(card => {
+                        const titleElement = card.querySelector('h5');
+                        const buyButton = card.querySelector('a.mt-4'); // The "Buy Now" button
+
+                        if (titleElement && buyButton) {
+                            const cardTitle = titleElement.textContent.trim();
+                            if (productLinks[cardTitle]) {
+                                buyButton.href = productLinks[cardTitle];
+                                console.log(`Updated link for "${cardTitle}" to: ${productLinks[cardTitle]}`);
+                            }
+                        }
+                    });
+                })
+                .catch(error => console.error('Error fetching or processing Google Sheet data:', error));
+        });
     </script>
 </body>
 

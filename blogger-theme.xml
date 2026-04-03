@@ -51,7 +51,7 @@ src="https://www.facebook.com/tr?id=2132828370861521&amp;ev=PageView&amp;noscrip
                   "<b:eval expr='resizeImage(data:post.featuredImage, 1200, "4:3")'/>",
                   "<b:eval expr='resizeImage(data:post.featuredImage, 1200, "1:1")'/>"
                 <b:else/>
-                  "https://www.rempahwarisanbernam.net/images/Rempah%20warisan%20logo%20final.png"
+                  "https://rempahwarisanbernam.net/images/Rempah%20warisan%20logo%20final.png"
                 </b:if>
               ],
               "author": {
@@ -81,7 +81,7 @@ src="https://www.facebook.com/tr?id=2132828370861521&amp;ev=PageView&amp;noscrip
                 "name": "Rempah Warisan Bernam (RWB)",
                 "logo": {
                   "@type": "ImageObject",
-                  "url": "https://www.rempahwarisanbernam.net/images/Rempah%20warisan%20logo%20final.png"
+                  "url": "https://rempahwarisanbernam.net/images/Rempah%20warisan%20logo%20final.png"
                 }
               },
               "mainEntityOfPage": {
@@ -2769,21 +2769,21 @@ display:none
 <b:defaultmarkups>
 <b:defaultmarkup type='Common'>
 <b:includable id='standardPostImageStyle'>
-  <b:with value='&quot;post-thumb-&quot; + data:post.id' var='thumbClassName'>
-    <style>
-      .      <data:thumbClassName/>
- { background-image: url(<b:eval expr='data:post.featuredImage ? resizeImage(data:post.featuredImage, 385, &quot;385:184&quot;).cssEscaped : &quot;https://www.rempahwarisanbernam.net/images/Rempah%20warisan%20logo%20final.png&quot;'/>
-); }
-    </style>
+  <b:with value='data:post.featuredImage ? resizeImage(data:post.featuredImage, 385, &quot;385:184&quot;).cssEscaped : &quot;https://rempahwarisanbernam.net/images/Rempah%20warisan%20logo%20final.png&quot;' var='thumbUrl'>
+    <b:with value='&quot;post-thumb-&quot; + data:post.id' var='thumbClassName'>
+        <style>
+          .          <data:thumbClassName/>
+ { background-image: url(<b:eval expr='data:thumbUrl'/>); }
+        </style>
+      </b:with>
   </b:with>
 </b:includable>
 <b:includable id='feedPostImage'>
   <div class='snippet-thumbnail-container'>
-    <b:if cond='data:post.featuredImage'>
-      <div expr:class='&quot;snippet-thumbnail &quot; + data:thumbClassName'/>
-    <b:else/>
-      <div class='snippet-thumbnail' style='background-image:url("https://www.rempahwarisanbernam.net/images/Rempah%20warisan%20logo%20final.png"); background-size:cover; background-position:center; background-repeat:no-repeat; min-height:150px;' />
-    </b:if>
+    <b:with value='&quot;post-thumb-&quot; + data:post.id' var='thumbClassName'>
+      <div expr:class='&quot;snippet-thumbnail &quot; + data:thumbClassName'
+           style='background-size:cover; background-position:center; background-repeat:no-repeat; min-height:150px;'/>
+    </b:with>
   </div>
 </b:includable>
 <b:includable id='widgetNotAvailableInPreview'>
@@ -2833,7 +2833,7 @@ display:none
       <b:if cond='data:post.featuredImage'>
         <b:include data='{                                  image: data:post.featuredImage,                                  imageSizes: [280,560,840,1120,1400]                                }' name='responsiveImage'/>
       <b:else/>
-        <img src='https://www.rempahwarisanbernam.net/images/Rempah%20warisan%20logo%20final.png' alt='Rempah Warisan Bernam'/>
+        <img src='https://rempahwarisanbernam.net/images/Rempah%20warisan%20logo%20final.png' alt='Rempah Warisan Bernam'/>
       </b:if>
     </a>
   </div>
@@ -2934,7 +2934,7 @@ display:none
       <b:include name='postWrapperClasses'/>
 
       <!-- Standard feed thumbs always added, as they're needed for mobile view. -->
-      <b:include cond='data:post.featuredImage and data:view.isMultipleItems' name='standardPostImageStyle'/>
+      <b:include name='standardPostImageStyle'/>
       <b:include name='feedPostImage'/>
 
       <div class='slide'>
@@ -3249,8 +3249,7 @@ display:none
 <b:widget id='HTML8' locked='false' title='' type='HTML' version='2' visible='true'>
 <b:widget-settings>
 <b:widget-setting name='content'><![CDATA[<!--Crisp AI Chatbot-->
-<script type="text/javascript">window.$crisp = []; window.CRISP_WEBSITE_ID = "32ecd5da-61a4-4885-ac8c-8c7292dbf29a"; (function () { d = document; s = d.createElement("script"); s.src = "https://client.crisp.chat/l.js"; s.async = 1; d.getElementsByTagName("head")[0].appendChild(s); })();</script
-></script>]]></b:widget-setting>
+<script type="text/javascript">window.$crisp = []; window.CRISP_WEBSITE_ID = "32ecd5da-61a4-4885-ac8c-8c7292dbf29a"; (function () { d = document; s = d.createElement("script"); s.src = "https://client.crisp.chat/l.js"; s.async = 1; d.getElementsByTagName("head")[0].appendChild(s); })();</script>]]></b:widget-setting>
 </b:widget-settings>
 <b:includable id='main'>
 <b:include name='widget-title'/>
@@ -3303,18 +3302,14 @@ display:none
 <b:includable id='main'>
 <script type='text/javascript'>
                 var disqus_shortname = &#39;rempah-warisan-bernam&#39;;
-                var disqus_blogger_current_url = &quot;<data:blog.canonicalUrl/>
-&quot;;
+                var disqus_blogger_current_url = &quot;<data:blog.canonicalUrl/>&quot;;
 
                 if (!disqus_blogger_current_url.length) {
-                    disqus_blogger_current_url = &quot;<data:blog.url/>
-&quot;;
+                    disqus_blogger_current_url = &quot;<data:blog.url/>&quot;;
                 }
 
-                var disqus_blogger_homepage_url = &quot;<data:blog.homepageUrl/>
-&quot;;
-                var disqus_blogger_canonical_homepage_url = &quot;<data:blog.canonicalHomepageUrl/>
-&quot;;
+                var disqus_blogger_homepage_url = &quot;<data:blog.homepageUrl/>&quot;;
+                var disqus_blogger_canonical_homepage_url = &quot;<data:blog.canonicalHomepageUrl/>&quot;;
 </script>
 
 <b:if cond='data:blog.pageType == &quot;item&quot;'>
@@ -3802,7 +3797,7 @@ display:none
 <b:if cond='data:post.featuredImage'>
 <b:include data='{                                  image: data:post.featuredImage,                                  imageSizes: [280,560,840,1120,1400]                                }' name='responsiveImage'/>
 <b:else/>
-<img src='https://www.rempahwarisanbernam.net/images/Rempah%20warisan%20logo%20final.png' alt='Rempah Warisan Bernam'/>
+<img src='https://rempahwarisanbernam.net/images/Rempah%20warisan%20logo%20final.png' alt='Rempah Warisan Bernam'/>
 </b:if>
 </a>
 </div>
@@ -4176,7 +4171,7 @@ display:none
 <b:include name='postWrapperClasses'/>
 
 <!-- Standard feed thumbs always added, as they're needed for mobile view. -->
-<b:include cond='data:post.featuredImage and data:view.isMultipleItems' name='standardPostImageStyle'/>
+      <b:include cond='data:view.isMultipleItems' name='standardPostImageStyle'/>
 <b:include name='feedPostImage'/>
 
 <div class='slide'>
@@ -4444,7 +4439,7 @@ display:none
 <b:if cond='data:post.featuredImage'>
 <b:include data='{                                  image: data:post.featuredImage,                                  imageSizes: [280,560,840,1120,1400]                                }' name='responsiveImage'/>
 <b:else/>
-<img src='https://www.rempahwarisanbernam.net/images/Rempah%20warisan%20logo%20final.png' alt='Rempah Warisan Bernam'/>
+<img src='https://rempahwarisanbernam.net/images/Rempah%20warisan%20logo%20final.png' alt='Rempah Warisan Bernam'/>
 </b:if>
 </a>
 </div>
@@ -5179,7 +5174,7 @@ display:none
 <b:if cond='data:post.featuredImage'>
 <b:include data='{                                  image: data:post.featuredImage,                                  imageSizes: [280,560,840,1120,1400]                                }' name='responsiveImage'/>
 <b:else/>
-<img src='https://www.rempahwarisanbernam.net/images/Rempah%20warisan%20logo%20final.png' alt='Rempah Warisan Bernam'/>
+<img src='https://rempahwarisanbernam.net/images/Rempah%20warisan%20logo%20final.png' alt='Rempah Warisan Bernam'/>
 </b:if>
 </a>
 </div>
@@ -5303,12 +5298,86 @@ display:none
   function navigateBackToSite() {
     var lastSource = localStorage.getItem('lastBlogSource');
     if (lastSource === 'recipe') {
-      window.location.href = 'https://www.rempahwarisanbernam.net/recipe.html';
+      window.location.href = 'https://rempahwarisanbernam.net/recipe.html';
     } else {
-      window.location.href = 'https://www.rempahwarisanbernam.net/blog.html';
+      window.location.href = 'https://rempahwarisanbernam.net/blog.html';
     }
     return false;
   }
+  //]]>
+</script>
+<script type='text/javascript'>
+  //<![CDATA[
+    // --- Google Sheet Integration for Product Links in Blog Posts ---
+    function linkProductsInPosts() {
+      // Only run this on single post pages
+      if (!document.body.classList.contains('item-view')) {
+        return;
+      }
+
+      const sheetId = '1vKPPiD963CK5QLqZ3gwk__xGgnQ1wRgU6agEYMyiqvQ';
+      const sheetName = 'RWB%20Products'; // URL-encoded sheet name
+      const sheetUrl = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:json&sheet=${sheetName}`;
+
+      console.log('Fetching product links from Google Sheet for blog post...');
+
+      fetch(sheetUrl)
+        .then(response => response.text())
+        .then(text => {
+          const jsonString = text.match(/google\.visualization\.Query\.setResponse\((.*)\);/)[1];
+          const data = JSON.parse(jsonString);
+
+          const productLinks = {};
+          const rows = data.table.rows;
+
+          const headers = data.table.cols.map(col => col.label);
+          const nameIndex = headers.indexOf('product_name');
+          const linkIndex = headers.indexOf('link_to_product');
+
+          if (nameIndex === -1 || linkIndex === -1) {
+            console.error('Could not find "product_name" or "link_to_product" columns in the sheet.');
+            return;
+          }
+
+          rows.forEach(row => {
+            const productName = row.c[nameIndex] ? row.c[nameIndex].v : null;
+            const productLink = row.c[linkIndex] ? row.c[linkIndex].v : null;
+            if (productName && productLink) {
+              // Store the full name for matching
+              productLinks[productName.trim()] = productLink;
+            }
+          });
+
+          console.log('Product links loaded for blog:', productLinks);
+
+          const postBody = document.querySelector('.post-body.entry-content');
+          if (!postBody) {
+            console.warn('Post body element not found.');
+            return;
+          }
+
+          // Sort keys by length, longest first, to avoid partial matches (e.g., "Meat Curry Powder" before "Curry Powder")
+          const sortedProductNames = Object.keys(productLinks).sort((a, b) => b.length - a.length);
+
+          sortedProductNames.forEach(productName => {
+            const productUrl = productLinks[productName];
+            // Use a regular expression to find the product name as a whole word, not already in a link
+            // The negative lookbehind `(?<!<a[^>]*>)` ensures we don't re-link something that's already a link.
+            const regex = new RegExp(`(?<!<a[^>]*>)${productName.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&')}(?!<\\/a>)`, 'gi');
+            
+            // Check if the product name exists in the post body before replacing
+            if (regex.test(postBody.innerHTML)) {
+              console.log(`Found and linking "${productName}"`);
+              postBody.innerHTML = postBody.innerHTML.replace(regex, 
+                `<a href="${productUrl}" target="_blank" rel="noopener" style="color: var(--brand-crimson, #8b1a1a); text-decoration: underline;">${productName}</a>`
+              );
+            }
+          });
+        })
+        .catch(error => console.error('Error fetching or processing Google Sheet data for blog:', error));
+    }
+
+    window.addEventListener('load', linkProductsInPosts);
   //]]>
 </script>
 
