@@ -209,10 +209,6 @@ src="https://www.facebook.com/tr?id=2132828370861521&ev=PageView&noscript=1"
 
         <!-- Blog Posts Section - This will be populated by JavaScript -->
         <section class="py-16">
-            <div id="sort-buttons" class="max-w-4xl mx-auto px-6 lg:px-8 mb-8 flex justify-center gap-4">
-                <button id="btn-recent" class="px-6 py-3 bg-stone-900 text-white rounded-full hover:bg-brand-crimson transition font-bold text-sm uppercase tracking-widest">Recent Posts</button>
-                <button id="btn-popular" class="px-6 py-3 bg-stone-200 text-stone-900 rounded-full hover:bg-stone-300 transition font-bold text-sm uppercase tracking-widest">Popular Posts</button>
-            </div>
             <div id="blog-posts-container" class="max-w-4xl mx-auto px-6 lg:px-8">
                 <!-- Loading spinner -->
                 <div id="loading-indicator" class="text-center py-12" aria-live="polite" aria-busy="true">
@@ -272,27 +268,6 @@ src="https://www.facebook.com/tr?id=2132828370861521&ev=PageView&noscript=1"
     <script>
         lucide.createIcons();
 
-        document.getElementById('btn-recent').addEventListener('click', () => { currentSort = 'recent'; sortEntries(); updateButtons(); });
-        document.getElementById('btn-popular').addEventListener('click', () => { currentSort = 'popular'; sortEntries(); updateButtons(); });
-
-        function updateButtons() {
-            const btnRecent = document.getElementById('btn-recent');
-            const btnPopular = document.getElementById('btn-popular');
-            if (currentSort === 'recent') {
-                btnRecent.classList.remove('bg-stone-200', 'text-stone-900');
-                btnRecent.classList.add('bg-stone-900', 'text-white');
-                btnPopular.classList.remove('bg-stone-900', 'text-white');
-                btnPopular.classList.add('bg-stone-200', 'text-stone-900');
-            } else {
-                btnPopular.classList.remove('bg-stone-200', 'text-stone-900');
-                btnPopular.classList.add('bg-stone-900', 'text-white');
-                btnRecent.classList.remove('bg-stone-900', 'text-white');
-                btnRecent.classList.add('bg-stone-200', 'text-stone-900');
-            }
-        }
-
-        updateButtons(); // initial
-
         const toggle = document.getElementById('mobile-toggle'), menu = document.getElementById('mobile-menu'), close = document.getElementById('mobile-close');
         toggle.addEventListener('click', () => menu.classList.remove('hidden'));
         close.addEventListener('click', () => menu.classList.add('hidden'));
@@ -306,7 +281,6 @@ src="https://www.facebook.com/tr?id=2132828370861521&ev=PageView&noscript=1"
         const excludedTags = []; // Tags to exclude from the blog page
 
         let allEntries = [];
-        let currentSort = 'recent';
 
         function handleBloggerPosts(data) {
             console.log('handleBloggerPosts called with data:', data);
@@ -360,7 +334,7 @@ src="https://www.facebook.com/tr?id=2132828370861521&ev=PageView&noscript=1"
             }
 
             allEntries = entries;
-            sortEntries();
+            renderPosts();
 
             // --- Generate and Inject ItemList Schema ---
             const itemListSchema = {
@@ -393,18 +367,9 @@ src="https://www.facebook.com/tr?id=2132828370861521&ev=PageView&noscript=1"
             console.log('Injected ItemList schema for blog posts.');
         }
 
-        function sortEntries() {
-            if (currentSort === 'popular') {
-                allEntries.sort((a, b) => (b.thr$total ? b.thr$total.$t : 0) - (a.thr$total ? a.thr$total.$t : 0));
-            } else {
-                allEntries.sort((a, b) => new Date(b.published.$t) - new Date(a.published.$t));
-            }
-            renderPosts();
-        }
-
         function renderPosts() {
             let postHtml = '<div class="space-y-12">';
-            console.log('Rendering', allEntries.length, 'posts with sort:', currentSort);
+            console.log('Rendering', allEntries.length, 'posts.');
 
             for (let i = 0; i < allEntries.length; i++) {
                 const post = allEntries[i];
@@ -485,24 +450,13 @@ src="https://www.facebook.com/tr?id=2132828370861521&ev=PageView&noscript=1"
         // Set a fallback timeout so the page doesn't spin forever
         window._bloggerFeedTimeout = setTimeout(() => {
             console.warn('Blogger feed timeout triggered.');
-            const loadingIndicator = document.getElementById('loading-indicator');
-            const container = document.getElementById('blog-posts-container');
-            if (loadingIndicator) loadingIndicator.style.display = 'none';
-            if (container) container.innerHTML = '<p class="text-center text-stone-500">Blog feed timeout — could not load posts. Check the `bloggerUrl` and network status.</p>';
-            console.error('Blogger feed request timed out.');
+            handleBloggerPosts(null); // Use sample data
         }, 8000);
 
         // Handle script load errors (bad URL, DNS, network, certificate)
         script.onerror = function (e) {
-            if (window._bloggerFeedTimeout) {
-                clearTimeout(window._bloggerFeedTimeout);
-                window._bloggerFeedTimeout = null;
-            }
-            const loadingIndicator = document.getElementById('loading-indicator');
-            const container = document.getElementById('blog-posts-container');
-            if (loadingIndicator) loadingIndicator.style.display = 'none';
-            if (container) container.innerHTML = '<p class="text-center text-stone-500">Could not load blog posts (network or invalid blog URL). Check `bloggerUrl` in `blog.html`.</p>';
             console.error('Error loading blogger feed script', e);
+            handleBloggerPosts(null); // Use sample data
         };
 
         document.body.appendChild(script);
