@@ -1369,13 +1369,14 @@ src="https://www.facebook.com/tr?id=2132828370861521&ev=PageView&noscript=1"
                     // Update the "Buy Now" links on the page
                     document.querySelectorAll('.product-card').forEach(card => {
                         const titleElement = card.querySelector('h5');
-                        const buyButton = card.querySelector('a.mt-4'); // The "Buy Now" button
+                        const buyButton = card.querySelector('a[href^="/products/"]'); // Target the link going to the product page
 
                         if (titleElement && buyButton) {
                             const cardTitle = titleElement.textContent.trim();
                             if (productLinks[cardTitle]) {
                                 buyButton.href = productLinks[cardTitle];
-                                console.log(`Updated link for "${cardTitle}" to: ${productLinks[cardTitle]}`);
+                                buyButton.textContent = 'Purchase Now';
+                                console.log(`Updated link for "${cardTitle}" to direct purchase.`);
                             }
                         }
                     });
