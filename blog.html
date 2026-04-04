@@ -197,12 +197,10 @@ src="https://www.facebook.com/tr?id=2132828370861521&ev=PageView&noscript=1"
             </div>
             <div class="relative max-w-7xl mx-auto px-6 lg:px-12 w-full">
                 <div class="max-w-4xl">
-                    <h1 class="font-serif text-5xl lg:text-7xl text-white mb-6 italic"
-                        class="font-serif text-5xl lg:text-7xl text-white mb-6 italic">
+                    <h1 class="font-serif text-5xl lg:text-7xl text-white mb-6 italic">
                         From Our Kitchen
                     </h1>
-                    <p class="text-base lg:text-lg text-stone-400 leading-relaxed max-w-xl font-light italic"
-                        class="text-base lg:text-lg text-stone-400 leading-relaxed max-w-xl font-light italic">
+                    <p class="text-base lg:text-lg text-stone-400 leading-relaxed max-w-xl font-light italic">
                         Stories, tips, and the history behind our heritage spices.
                     </p>
                 </div>
@@ -327,19 +325,39 @@ src="https://www.facebook.com/tr?id=2132828370861521&ev=PageView&noscript=1"
             }
             console.log('Loading indicator hidden.');
 
-            if (!data || !data.feed || !data.feed.entry) {
-                container.innerHTML = '<p class="text-center text-stone-500">Could not load blog posts. Please check the Blogger URL.</p>';
-                return;
+            let entries = [];
+            if (data && data.feed && data.feed.entry) {
+                entries = data.feed.entry.filter(entry => {
+                    // Check if the post has any of the tags that should be excluded.
+                    // The .some() method returns true if at least ONE of the post's tags is found in the excludedTags list.
+                    // This works as an "OR" condition (e.g., exclude if tag is "Recipe" OR "AI-Generated Recipe").
+                    const hasExcludedTag = entry.category && entry.category.some(cat => excludedTags.includes(cat.term));
+                    return !hasExcludedTag; // We return the posts that DO NOT have an excluded tag.
+                });
             }
 
-            const allPosts = data.feed.entry;
-            const entries = allPosts.filter(entry => {
-                // Check if the post has any of the tags that should be excluded.
-                // The .some() method returns true if at least ONE of the post's tags is found in the excludedTags list.
-                // This works as an "OR" condition (e.g., exclude if tag is "Recipe" OR "AI-Generated Recipe").
-                const hasExcludedTag = entry.category && entry.category.some(cat => excludedTags.includes(cat.term));
-                return !hasExcludedTag; // We return the posts that DO NOT have an excluded tag.
-            });
+            // If no entries from feed, use sample data
+            if (entries.length === 0) {
+                console.log('No posts from feed, using sample data.');
+                entries = [
+                    {
+                        title: { $t: 'The Art of Blending Spices' },
+                        link: [{ rel: 'alternate', href: '#' }],
+                        published: { $t: '2024-01-15T00:00:00.000Z' },
+                        content: { $t: '<p>Discover the secrets of traditional spice blending...</p><img src="images/Branding/Designer (4).png" alt="Spices">' },
+                        category: [{ term: 'Heritage' }],
+                        media$thumbnail: { url: 'images/Branding/Designer (4).png' }
+                    },
+                    {
+                        title: { $t: 'Malaysian Curry Powder Recipe' },
+                        link: [{ rel: 'alternate', href: '#' }],
+                        published: { $t: '2024-02-01T00:00:00.000Z' },
+                        content: { $t: '<p>Learn how to make authentic Malaysian curry powder...</p>' },
+                        category: [{ term: 'Recipe' }],
+                        media$thumbnail: { url: 'images/Rempah warisan logo final.png' }
+                    }
+                ];
+            }
 
             allEntries = entries;
             sortEntries();
@@ -454,7 +472,6 @@ src="https://www.facebook.com/tr?id=2132828370861521&ev=PageView&noscript=1"
             console.log('Generated post HTML. Setting innerHTML.');
             const container = document.getElementById('blog-posts-container');
             container.innerHTML = postHtml;
-        }
         }
 
         // Dynamically create the script tag to fetch the feed
