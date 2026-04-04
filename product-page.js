@@ -1,3 +1,60 @@
+// Define the callback function in the global scope to ensure it's available when the Blogger script loads.
+window.handleRelatedRecipes = function (data) {
+    const recipesContainer = document.getElementById('related-recipes-container');
+    const recipesLoading = document.getElementById('recipes-loading-indicator');
+    const recipeTags = ["Recipe", "Recipes", "AI-Generated Recipe"];
+
+    if (recipesLoading) recipesLoading.style.display = 'none';
+    if (!recipesContainer) return;
+
+    if (!data || !data.feed || !data.feed.entry) {
+        recipesContainer.innerHTML = '<p class="text-center text-stone-500">Could not load recipes at this time.</p>';
+        return;
+    }
+
+    const filteredEntries = data.feed.entry.filter(entry => {
+        const categories = (entry.category || []).map(cat => cat.term.trim());
+        const hasRecipeTag = categories.some(cat => recipeTags.includes(cat));
+        const hasProductTag = categories.includes(CURRENT_PRODUCT_NAME);
+        return hasRecipeTag && hasProductTag;
+    });
+
+    if (filteredEntries.length === 0) {
+        recipesContainer.innerHTML = `<p class="text-center text-stone-500">No specific recipes found for ${CURRENT_PRODUCT_NAME} yet. <a href="/recipe.html" class="text-brand-crimson underline">Explore all recipes</a>.</p>`;
+        return;
+    }
+
+    let postHtml = '<div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">';
+    filteredEntries.forEach(post => {
+        const postTitle = post.title.$t;
+        const postUrl = post.link.find(link => link.rel === 'alternate').href;
+        
+        let thumbnailUrl = '/images/Rempah%20warisan%20logo%20final.png'; // Fallback
+        if (post.media$thumbnail && post.media$thumbnail.url) {
+            thumbnailUrl = post.media$thumbnail.url.replace('/s72-c/', '/w400-h225-c/');
+        } else if (post.content && post.content.$t) {
+            const contentDiv = document.createElement('div');
+            contentDiv.innerHTML = post.content.$t;
+            const firstImage = contentDiv.querySelector('img');
+            if (firstImage) thumbnailUrl = firstImage.src;
+        }
+
+        postHtml += `
+            <a href="${postUrl}" class="bg-white rounded-2xl shadow-lg overflow-hidden group block">
+                <div class="aspect-w-16 aspect-h-9 bg-stone-100">
+                    <img src="${thumbnailUrl}" alt="${postTitle}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" onerror="this.src='/images/Rempah%20warisan%20logo%20final.png'">
+                </div>
+                <div class="p-6">
+                    <h3 class="font-serif text-xl italic text-stone-900">${postTitle}</h3>
+                </div>
+            </a>
+        `;
+    });
+    postHtml += '</div>';
+
+    recipesContainer.innerHTML = postHtml;
+};
+
 document.addEventListener('DOMContentLoaded', function () {
     // This script assumes a `CURRENT_PRODUCT_NAME` constant is defined in the HTML before it's loaded.
     if (typeof CURRENT_PRODUCT_NAME === 'undefined') {
@@ -53,65 +110,8 @@ document.addEventListener('DOMContentLoaded', function () {
     // --- 2. Fetch Related Recipes from Blogger ---
     const bloggerUrl = "https://blog.rempahwarisanbernam.net";
     const maxPostsToFetch = 50;
-    const recipeTags = ["Recipe", "Recipes", "AI-Generated Recipe"];
-
-    const recipesContainer = document.getElementById('related-recipes-container');
-    const recipesLoading = document.getElementById('recipes-loading-indicator');
 
     const script = document.createElement('script');
     script.src = `${bloggerUrl}/feeds/posts/default?alt=json-in-script&max-results=${maxPostsToFetch}&callback=handleRelatedRecipes`;
     document.body.appendChild(script);
-
-    window.handleRelatedRecipes = function (data) {
-        if (recipesLoading) recipesLoading.style.display = 'none';
-        if (!data || !data.feed || !data.feed.entry) {
-            if (recipesContainer) recipesContainer.innerHTML = '<p class="text-center text-stone-500">Could not load recipes at this time.</p>';
-            return;
-        }
-
-        const filteredEntries = data.feed.entry.filter(entry => {
-            const categories = (entry.category || []).map(cat => cat.term.trim());
-            const hasRecipeTag = categories.some(cat => recipeTags.includes(cat));
-            const hasProductTag = categories.includes(CURRENT_PRODUCT_NAME);
-            return hasRecipeTag && hasProductTag;
-        });
-
-        if (filteredEntries.length === 0) {
-            if (recipesContainer) recipesContainer.innerHTML = `<p class="text-center text-stone-500">No specific recipes found for ${CURRENT_PRODUCT_NAME} yet. <a href="/recipe.html" class="text-brand-crimson underline">Explore all recipes</a>.</p>`;
-            return;
-        }
-
-        let postHtml = '<div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">';
-        filteredEntries.forEach(post => {
-            const postTitle = post.title.$t;
-            const postUrl = post.link.find(link => link.rel === 'alternate').href;
-            
-            // Improved thumbnail logic
-            let thumbnailUrl = '/images/Rempah%20warisan%20logo%20final.png'; // Fallback
-            if (post.media$thumbnail && post.media$thumbnail.url) {
-                thumbnailUrl = post.media$thumbnail.url.replace('/s72-c/', '/w400-h225-c/');
-            } else if (post.content && post.content.$t) {
-                const contentDiv = document.createElement('div');
-                contentDiv.innerHTML = post.content.$t;
-                const firstImage = contentDiv.querySelector('img');
-                if (firstImage) {
-                    thumbnailUrl = firstImage.src;
-                }
-            }
-
-            postHtml += `
-                <a href="${postUrl}" class="bg-white rounded-2xl shadow-lg overflow-hidden group block">
-                    <div class="aspect-w-16 aspect-h-9 bg-stone-100">
-                        <img src="${thumbnailUrl}" alt="${postTitle}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" onerror="this.src='/images/Rempah%20warisan%20logo%20final.png'">
-                    </div>
-                    <div class="p-6">
-                        <h3 class="font-serif text-xl italic text-stone-900">${postTitle}</h3>
-                    </div>
-                </a>
-            `;
-        });
-        postHtml += '</div>';
-
-        recipesContainer.innerHTML = postHtml;
-    };
 });
