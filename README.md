@@ -33,6 +33,6 @@ To create a new product page, follow these steps:
     *   **JavaScript Configuration:** At the bottom of the file, inside the `<script>` tag, update the `CURRENT_PRODUCT_NAME` constant to match the product's full name exactly as it appears in the Google Sheet. This is crucial for fetching the correct "Purchase" link and related recipes.
 
 5.  **Update Google Sheet:**
-    Ensure the new product is added to the **"RWB Products"** Google Sheet with its correct `product_name` and `link_to_product` (the WhatsApp purchase link). The `product_name` must be an exact match to the `CURRENT_PRODUCT_NAME` constant in the HTML file for the purchase link to work.
+    Ensure the new product is added to the **"RWB Products"** Google Sheet with its correct `product_name` and `whatsapp_product_link` (the WhatsApp purchase link). The `product_name` must be an exact match to the `CURRENT_PRODUCT_NAME` constant in the HTML file for the purchase link to work.
 
 By following these steps, you will maintain a consistent structure and ensure all dynamic features (like purchase links and related recipes) function correctly for new products.
