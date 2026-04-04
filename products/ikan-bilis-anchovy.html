@@ -139,6 +139,29 @@
             </div>
         </section>
 
+        <!-- Heritage & Nutritional Section -->
+        <section class="py-16 lg:py-24 bg-stone-100 border-y border-stone-200">
+            <div class="max-w-7xl mx-auto px-6 lg:px-8">
+                <div class="grid lg:grid-cols-2 gap-12 lg:gap-16 items-start">
+                    <div class="prose prose-lg text-stone-700 max-w-none">
+                        <h4 class="font-serif text-3xl italic text-stone-900 mb-4">The Umami Powerhouse</h4>
+                        <p>Ikan Bilis is the backbone of umami in Malaysian cuisine. We source our anchovies from trusted local fisheries, ensuring they are sun-dried to perfection to concentrate their savory, salty flavor. Available in bulk 5kg packaging, our Ikan Bilis is ready for industrial-scale production of sambal, broths, and as a crispy, flavorful topping.</p>
+                    </div>
+                    <div>
+                        <h4 class="font-serif text-3xl italic text-stone-900 mb-4">Nutritional Facts</h4>
+                        <p class="text-sm text-stone-600 mb-4">Per 100g serving (dried)</p>
+                        <div class="divide-y divide-stone-200 border-y border-stone-200">
+                            <div class="py-2 flex justify-between font-medium"><span class="text-stone-600">Energy</span> <span>250 kcal</span></div>
+                            <div class="py-2 flex justify-between font-medium"><span class="text-stone-600">Protein</span> <span>42 g</span></div>
+                            <div class="py-2 flex justify-between font-medium"><span class="text-stone-600">Fat</span> <span>8 g</span></div>
+                            <div class="py-2 flex justify-between font-medium"><span class="text-stone-600">Calcium</span> <span>500 mg</span></div>
+                            <div class="py-2 flex justify-between font-medium"><span class="text-stone-600">Sodium</span> <span>1200 mg</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <!-- Related Recipes Section -->
         <section class="py-16 lg:py-24 bg-white">
             <div class="max-w-7xl mx-auto px-6 lg:px-8">
@@ -172,104 +195,13 @@
     </footer>
 
     <script>
-        lucide.createIcons();
-
         // ================== JAVASCRIPT CONFIGURATION ==================
         // This name MUST EXACTLY match the 'product_name' in the Google Sheet and the 'tag' in Blogger.
         const CURRENT_PRODUCT_NAME = "Ikan Bilis (Anchovy)";
         // ==============================================================
-
-        document.addEventListener('DOMContentLoaded', function () {
-            const sheetId = '1vKPPiD963CK5QLqZ3gwk__xGgnQ1wRgU6agEYMyiqvQ';
-            const sheetName = 'RWB%20Products';
-            const sheetUrl = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:json&sheet=${sheetName}`;
-
-            const buyButton = document.getElementById('buy-now-button');
-            const buyLoading = document.getElementById('buy-now-loading');
-            buyLoading.style.display = 'block';
-
-            // --- 1. Fetch Purchase Link from Google Sheet ---
-            fetch(sheetUrl)
-                .then(response => response.text())
-                .then(text => {
-                    const jsonString = text.match(/google\.visualization\.Query\.setResponse\((.*)\);/)[1];
-                    const data = JSON.parse(jsonString);
-                    const rows = data.table.rows;
-                    const headers = data.table.cols.map(col => col.label);
-                    const nameIndex = headers.indexOf('product_name');
-                    const linkIndex = headers.indexOf('whatsapp_product_link');
-
-                    const productRow = rows.find(row => row.c[nameIndex] && row.c[nameIndex].v.trim() === CURRENT_PRODUCT_NAME);
-
-                    if (productRow && productRow.c[linkIndex] && productRow.c[linkIndex].v) {
-                        buyButton.href = productRow.c[linkIndex].v;
-                    } else {
-                        buyButton.href = "https://wa.me/601154554438"; // Fallback link
-                        console.warn(`Purchase link for "${CURRENT_PRODUCT_NAME}" not found in Google Sheet.`);
-                    }
-                })
-                .catch(error => {
-                    console.error('Error fetching purchase link:', error);
-                    buyButton.href = "https://wa.me/601154554438"; // Fallback on error
-                })
-                .finally(() => {
-                    buyLoading.style.display = 'none';
-                    buyButton.style.display = 'block';
-                });
-
-            // --- 2. Fetch Related Recipes from Blogger ---
-            const bloggerUrl = "https://blog.rempahwarisanbernam.net";
-            const maxPostsToFetch = 50;
-            const recipeTags = ["Recipe", "Recipes", "AI-Generated Recipe"];
-
-            const recipesContainer = document.getElementById('related-recipes-container');
-            const recipesLoading = document.getElementById('recipes-loading-indicator');
-
-            const script = document.createElement('script');
-            script.src = `${bloggerUrl}/feeds/posts/default?alt=json-in-script&max-results=${maxPostsToFetch}&callback=handleRelatedRecipes`;
-            document.body.appendChild(script);
-
-            window.handleRelatedRecipes = function (data) {
-                recipesLoading.style.display = 'none';
-                if (!data || !data.feed || !data.feed.entry) {
-                    recipesContainer.innerHTML = '<p class="text-center text-stone-500">Could not load recipes at this time.</p>';
-                    return;
-                }
-
-                const filteredEntries = data.feed.entry.filter(entry => {
-                    const categories = (entry.category || []).map(cat => cat.term.trim());
-                    const hasRecipeTag = categories.some(cat => recipeTags.includes(cat));
-                    const hasProductTag = categories.includes(CURRENT_PRODUCT_NAME);
-                    return hasRecipeTag && hasProductTag;
-                });
-
-                if (filteredEntries.length === 0) {
-                    recipesContainer.innerHTML = `<p class="text-center text-stone-500">No specific recipes found for ${CURRENT_PRODUCT_NAME} yet. <a href="/recipe.html" class="text-brand-crimson underline">Explore all recipes</a>.</p>`;
-                    return;
-                }
-
-                let postHtml = '<div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">';
-                filteredEntries.forEach(post => {
-                    const postTitle = post.title.$t;
-                    const postUrl = post.link.find(link => link.rel === 'alternate').href;
-                    let thumbnailUrl = post.media$thumbnail ? post.media$thumbnail.url.replace('/s72-c/', '/w400-h225-c/') : '/images/Rempah%20warisan%20logo%20final.png';
-
-                    postHtml += `
-                        <a href="${postUrl}" class="bg-white rounded-2xl shadow-lg overflow-hidden group block">
-                            <div class="aspect-w-16 aspect-h-9">
-                                <img src="${thumbnailUrl}" alt="${postTitle}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" onerror="this.src='/images/Rempah%20warisan%20logo%20final.png'">
-                            </div>
-                            <div class="p-6">
-                                <h3 class="font-serif text-xl italic text-stone-900">${postTitle}</h3>
-                            </div>
-                        </a>
-                    `;
-                });
-                postHtml += '</div>';
-                recipesContainer.innerHTML = postHtml;
-            };
-        });
     </script>
+    <!-- Shared script for product page logic -->
+    <script src="/js/product-page.js"></script>
 </body>
 
 </html>
