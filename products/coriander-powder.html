@@ -27,6 +27,9 @@
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
     <link rel="manifest" href="/site.webmanifest">
 
+    <!-- ShareThis Script -->
+    <script type='text/javascript' src='https://platform-api.sharethis.com/js/sharethis.js#property=698a1e118ea334cc0e5b7c4e&product=sop' async='async'></script>
+
     <!-- Tailwind CSS, Fonts, Icons -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
@@ -125,18 +128,15 @@
                         </div>
 
                         <!-- Purchase Button -->
-                        <div class="mt-10 space-y-4">
+                        <div class="mt-10">
                             <a id="buy-now-button" href="#"
                                 class="w-full text-center block bg-brand-crimson text-white font-bold uppercase tracking-widest py-4 rounded-xl hover:bg-stone-900 transition shadow-lg shadow-red-900/20">
                                 Purchase Now
                             </a>
                             <p id="buy-now-loading" class="text-center text-stone-500 mt-4" style="display: none;">
                                 <i data-lucide="loader-2" class="inline-block animate-spin mr-2"></i>Loading purchase options...
-                            </p>
-                            <button id="copy-link-button" class="w-full text-center flex items-center justify-center bg-stone-200 text-stone-700 font-bold text-xs py-3 rounded-xl hover:bg-stone-300 transition">
-                                <i data-lucide="copy" class="w-4 h-4 mr-2"></i>
-                                Copy Product Link
-                            </button>
+                            </p>                            
+                            <!-- ShareThis BEGIN --><div class="sharethis-inline-share-buttons mt-4"></div><!-- ShareThis END -->
                         </div>
                     </div>
                 </div>

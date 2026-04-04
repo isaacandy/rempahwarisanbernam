@@ -140,24 +140,4 @@ document.addEventListener('DOMContentLoaded', function () {
   };
 
   document.body.appendChild(script);
-
-  // --- 3. "Copy Link" button functionality ---
-  const copyLinkButton = document.getElementById('copy-link-button');
-  if (copyLinkButton) {
-    copyLinkButton.addEventListener('click', function(event) {
-      event.preventDefault();
-      const urlToCopy = window.location.href;
-      navigator.clipboard.writeText(urlToCopy).then(function() {
-        const originalText = copyLinkButton.innerHTML;
-        copyLinkButton.innerHTML = '<i data-lucide="check" class="w-4 h-4 mr-2"></i> Copied!';
-        lucide.createIcons();
-        setTimeout(function() {
-          copyLinkButton.innerHTML = originalText;
-          lucide.createIcons();
-        }, 2000);
-      }, function(err) {
-        console.error('Could not copy text: ', err);
-      });
-    });
-  }
 });
