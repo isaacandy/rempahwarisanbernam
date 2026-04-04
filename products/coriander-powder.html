@@ -43,6 +43,7 @@
     <script>
         // This name MUST EXACTLY match the 'product_name' in the Google Sheet and the 'tag' in Blogger.
         const CURRENT_PRODUCT_NAME = "Coriander Powder";
+        const PRODUCT_SKU = "RWB-SCOR-01"; // Used for precise purchase link matching.
     </script>
     <!-- Shared script for product page logic -->
     <script src="/js/product-page.js" defer></script>
@@ -143,7 +144,7 @@
                                 Purchase Now
                             </a>
                             <p id="buy-now-loading" class="text-center text-stone-500 mt-4" style="display: none;">
-                                <i data-lucide="loader-2" class="inline-block animate-spin mr-2"></i>Loading purchase options...
+                                <i data-lucide="loader-2" class="inline-block animate-spin mr-2" aria-hidden="true"></i>Loading purchase options...
                             </p>                            
                         </div>
                     </div>

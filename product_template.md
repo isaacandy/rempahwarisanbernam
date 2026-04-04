@@ -10,7 +10,7 @@ To create a new product page, follow these steps:
     In the `/products` directory, make a copy of an existing product page (e.g., `chilli-powder.html`) and rename it for the new product (e.g., `new-spice-powder.html`). Use lowercase and hyphens for the filename.
 
 2.  **Update Product-Specific Metadata:**
-    In the `<head>` of the new file, locate the `PRODUCT-SPECIFIC METADATA` section and update these tags:
+    In the `<head>` of the new file, locate and update these tags:
     *   `<title>`: The page title.
     *   `<meta name="description">`: A detailed description for SEO.
     *   `<meta property="og:title">`: Title for social media sharing.
@@ -18,8 +18,16 @@ To create a new product page, follow these steps:
     *   `<meta property="og:image">`: The **absolute URL** to the product's packaging image (e.g., `https://www.rempahwarisanbernam.net/images/Packaging/new-spice.png`).
     *   `<meta property="og:url">`: The **absolute URL** to the new product page (e.g., `https://www.rempahwarisanbernam.net/products/new-spice-powder.html`).
 
-3.  **Update Product Schema (JSON-LD):**
-    Find the `PRODUCT-SPECIFIC SCHEMA` script tag and edit the JSON content:
+3.  **Configure Dynamic Content (JavaScript):**
+    Still in the `<head>`, find the `JAVASCRIPT CONFIGURATION & LOGIC` section.
+    *   **Update `CURRENT_PRODUCT_NAME`:** Change the value of this constant to match the product's full name **exactly** as it appears in the Google Sheet and as a tag in Blogger.
+        *   **Example:** `const CURRENT_PRODUCT_NAME = "Serbuk Kari Daging & Ayam";`
+    *   This constant is critical for two functions:
+    *   **Add `PRODUCT_SKU`:** Add the unique SKU for the default product variant you want to sell from this page. This is used for a precise match to find the purchase link.
+        *   **Example:** `const PRODUCT_SKU = "RWB-SKDA-01";`
+
+4.  **Update Product Schema (JSON-LD):**
+    Find the `PRODUCT-SPECIFIC SCHEMA` script tag (also in the `<head>`) and edit the JSON content:
     *   `name`: Full product name.
     *   `image`: Absolute URL to the product image.
     *   `description`: The same detailed description from the meta tag.
@@ -27,33 +35,30 @@ To create a new product page, follow these steps:
     *   `offers.url`: The absolute URL to the new product page.
     *   `offers.price`: The retail price.
 
-4.  **Update Page Content:**
-    *   **Product Image:** Update the `src` and `alt` text for the main product image.
-    *   **Product Information:**
-        *   Update the category `<p>` tag (e.g., "Spice Blend").
-        *   Update the `<h1>` title.
-        *   Update the main description paragraph.
-    *   **Common Uses:** Update the `<ul>` list with common applications for the product.
-    *   **Key Ingredients:** Update the paragraph with the product's ingredients.
+5.  **Update Page Content (in the `<body>`):**
+    *   **Product Details Section:**
+        *   **Product Image:** Update the `src` and `alt` text for the main product image. The ShareThis buttons are positioned directly below this image and will update automatically.
+        *   **Product Information:**
+            *   Update the category `<p>` tag (e.g., "Spice Blend").
+            *   Update the `<h1>` title.
+            *   Update the main description paragraph.
+        *   **Common Uses:** Update the `<ul>` list with common applications for the product.
+        *   **Key Ingredients:** Update the paragraph with the product's ingredients.
     *   **Heritage & Nutritional Section:**
         *   Update the `<h4>` title and the descriptive paragraph to tell the story of the product.
         *   Fill in the nutritional facts table with the correct values per 100g serving.
+    *   **Related Recipes Section:**
+        *   Update the `<h2>` title to reflect the product name (e.g., "Recipes with Coriander Powder").
 
-5.  **Configure Dynamic Content (JavaScript):** 
-    At the bottom of the file, inside the `<script>` tag, find the `JAVASCRIPT CONFIGURATION` section.
-    *   **Update `CURRENT_PRODUCT_NAME`:** Change the value of this constant to match the product's full name **exactly** as it appears in the Google Sheet and as a tag in Blogger.
-        *   **Example:** `const CURRENT_PRODUCT_NAME = "Serbuk Kari Daging & Ayam";`
-    *   This constant is critical for two functions:
-        1.  Fetching the correct **WhatsApp purchase link** from the Google Sheet.
-        2.  Fetching **related recipes** from the Blogger site by filtering for posts tagged with this name.
-
-6.  **Update Centralized Data Sources:** 
+6.  **Update Centralized Data Sources:**
     *   **Google Sheet ("RWB Products"):**
         *   Add a new row for the product.
         *   Ensure the `product_name` column is an **exact match** to the `CURRENT_PRODUCT_NAME` constant in the HTML file.
+        *   **Crucially, add a `sku` column and ensure it contains the exact SKU used in `PRODUCT_SKU`.**
         *   Add the correct `whatsapp_product_link`.
-    *   **Blogger (`blog.rempahwarisanbernam.net`):**
-        *   When creating recipes that use this new product, add a **label/tag** to the post that is an **exact match** to the `CURRENT_PRODUCT_NAME` constant.
-        *   Also, ensure the post is tagged with "Recipe" for it to be correctly identified.
+    *   **AI Recipe Generator & Blogger:**
+        *   Recipes are generated by an external AI system at izndgroup.com and published to the Blogger site.
+        *   To ensure recipes appear on the correct product pages, the AI system must be configured to add a **label/tag** to the blog post that is an **exact match** to the product's `CURRENT_PRODUCT_NAME`.
+        *   The post must also be tagged with "Recipe" to be correctly categorized.
 
 By following these steps, you will maintain a consistent structure and ensure all dynamic features (purchase links and related recipes) function correctly for new products.

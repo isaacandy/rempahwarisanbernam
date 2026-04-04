@@ -1,6 +1,10 @@
 document.addEventListener('DOMContentLoaded', function () {
   // This script assumes a `CURRENT_PRODUCT_NAME` constant is defined in the HTML before it's loaded.
-  if (typeof CURRENT_PRODUCT_NAME === 'undefined') {
+  // It also looks for a specific PRODUCT_SKU for precise matching.
+  if (typeof CURRENT_PRODUCT_NAME === 'undefined' || typeof PRODUCT_SKU === 'undefined') {
+    if (typeof PRODUCT_SKU === 'undefined') {
+        console.error("`PRODUCT_SKU` is not defined in the HTML. This is required for fetching the purchase link.");
+    }
     console.error("`CURRENT_PRODUCT_NAME` is not defined in the HTML. Product page script cannot run.");
     return;
   }
@@ -26,9 +30,13 @@ document.addEventListener('DOMContentLoaded', function () {
         const rows = data.table.rows;
         const headers = data.table.cols.map(col => col.label);
         const nameIndex = headers.indexOf('product_name');
+        const skuIndex = headers.indexOf('sku');
         const linkIndex = headers.indexOf('whatsapp_product_link');
 
-        const productRow = rows.find(row => row.c[nameIndex] && row.c[nameIndex].v.trim() === CURRENT_PRODUCT_NAME);
+        // Use SKU-based exact matching for precision.
+        const productRow = rows.find(row => 
+            row.c[skuIndex] && row.c[skuIndex].v.trim() === PRODUCT_SKU
+        );
 
         if (buyButton) {
           if (productRow && productRow.c[linkIndex] && productRow.c[linkIndex].v) {

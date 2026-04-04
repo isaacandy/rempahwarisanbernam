@@ -1370,13 +1370,16 @@ src="https://www.facebook.com/tr?id=2132828370861521&ev=PageView&noscript=1"
                     document.querySelectorAll('.product-card').forEach(card => {
                         const titleElement = card.querySelector('h5');
                         const buyButton = card.querySelector('a[href^="/products/"]'); // Target the link going to the product page
-
+                        
                         if (titleElement && buyButton) {
                             const cardTitle = titleElement.textContent.trim();
-                            if (productLinks[cardTitle]) {
-                                buyButton.href = productLinks[cardTitle];
+                            // Find a product link where the name in the sheet includes the card title (e.g., "Chilli Powder" is in "Chilli Powder 250g")
+                            const matchingProductName = Object.keys(productLinks).find(sheetProductName => sheetProductName.toLowerCase().includes(cardTitle.toLowerCase()));
+
+                            if (matchingProductName) {
+                                buyButton.href = productLinks[matchingProductName];
                                 buyButton.textContent = 'Purchase Now';
-                                console.log(`Updated link for "${cardTitle}" to direct purchase.`);
+                                console.log(`Updated link for "${cardTitle}" to: ${productLinks[matchingProductName]}`);
                             }
                         }
                     });
