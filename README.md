@@ -1,38 +1,40 @@
-# Product Page Creation Guide
+# Rempah Warisan Bernam Website
 
-This guide outlines the process for creating a new product page within the Rempah Warisan Bernam website. All product pages are located in the main (root) directory.
+Welcome to the official repository for the Rempah Warisan Bernam corporate website. This project is a static website built with HTML and Tailwind CSS, designed to showcase the company's brand, products, and heritage.
 
-## Instructions
+## Project Overview
 
-To create a new product page, follow these steps:
+The website consists of several key static pages that integrate with external services for dynamic content.
 
-1.  **Duplicate the Template:**
-    Make a copy of an existing product page like `meat-chicken-curry-powder.html` and rename it for the new product (e.g., `new-spice-powder.html`). Use lowercase and hyphens for the filename.
+*   **`index.html`**: The main landing page.
+*   **Product Pages (e.g., `chilli-powder.html`)**: Individual, template-based pages for each spice product.
+*   **`blog.html`**: A blog listing page that fetches and displays posts from a Blogger blog.
+*   **`recipe.html`**: A recipe collection page, also powered by the Blogger blog, filtering for posts tagged as "Recipe".
 
-2.  **Update Product-Specific Metadata:**
-    In the `<head>` of the new file, locate the `PRODUCT-SPECIFIC METADATA` section and update the following tags:
-    *   `<title>`: The page title.
-    *   `<meta name="description">`: A detailed description for SEO.
-    *   `<meta property="og:title">`: Title for social media sharing.
-    *   `<meta property="og:description">`: Description for social media.
-    *   `<meta property="og:image">`: The absolute URL to the product's packaging image (e.g., `https://www.rempahwarisanbernam.net/images/Packaging/new-spice.png`).
-    *   `<meta property="og:url">`: The absolute URL to the new product page (e.g., `https://www.rempahwarisanbernam.net/new-spice-powder.html`).
+### Key Technologies & Integrations
 
-3.  **Update Product Schema (JSON-LD):**
-    Find the `PRODUCT-SPECIFIC SCHEMA` script tag and edit the JSON content:
-    *   `name`: Full product name.
-    *   `image`: Absolute URL to the product image.
-    *   `description`: The same detailed description from the meta tag.
-    *   `sku`: The product's unique SKU.
-    *   `offers.url`: The absolute URL to the new product page.
-    *   `offers.price`: The retail price.
+*   **Styling**: Tailwind CSS is used for styling, loaded via a CDN link in the `<head>` of each HTML file.
+*   **Icons**: Lucide Icons are used for iconography.
+*   **Content Management (Blog/Recipes)**: All blog posts and recipes are managed on an external Blogger site. The `blog.html` and `recipe.html` pages use JavaScript to fetch posts from the Blogger JSON feed.
+*   **Content Management (Products)**: Product purchase links are managed centrally in a Google Sheet. Product pages fetch the correct link at runtime based on the product name.
 
-4.  **Update Page Content:**
-    *   **Product Details Section:** Change the product image `src` and `alt` text, category, `<h1>` title, description, and key ingredients.
-    *   **Heritage & Nutritional Section:** Update the `<h4>` title and paragraph content to reflect the new product's story. Update the nutritional facts table with the correct values.
-    *   **JavaScript Configuration:** At the bottom of the file, inside the `<script>` tag, update the `CURRENT_PRODUCT_NAME` constant to match the product's full name exactly as it appears in the Google Sheet. This is crucial for fetching the correct "Purchase" link and related recipes.
+## Content Management
 
-5.  **Update Google Sheet:**
-    Ensure the new product is added to the **"RWB Products"** Google Sheet with its correct `product_name` and `whatsapp_product_link` (the WhatsApp purchase link). The `product_name` must be an exact match to the `CURRENT_PRODUCT_NAME` constant in the HTML file for the purchase link to work.
+This project is designed to be managed without a complex CMS. Here’s how to update different parts of the site:
 
-By following these steps, you will maintain a consistent structure and ensure all dynamic features (like purchase links and related recipes) function correctly for new products.
+### Adding a New Product
+
+To add a new product to the website, you need to create a new HTML file for it. This process involves duplicating a template and updating its content.
+
+> **For detailed instructions, please see the Product Page Creation Guide.**
+
+### Adding a New Blog Post or Recipe
+
+1.  Go to the Rempah Warisan Bernam Blogger dashboard.
+2.  Create a new post.
+3.  To make it appear on the **Recipes** page, add the label `Recipe` or `AI-Generated Recipe` to the post.
+4.  Posts without a recipe-related label will automatically appear on the **Blog** page.
+
+## Deployment
+
+This site is deployed via cPanel. The `.cpanel.yml` file in the repository root controls the deployment process. It copies all `*.html` files and the `images` directory to the `public_html` folder on the server.
