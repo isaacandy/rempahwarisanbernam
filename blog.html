@@ -301,11 +301,10 @@ src="https://www.facebook.com/tr?id=2132828370861521&ev=PageView&noscript=1"
 
             let entries = [];
             if (data && data.feed && data.feed.entry) {
-                const normalizedExcludedTags = excludedTags.map(tag => tag.toLowerCase().trim());
                 entries = data.feed.entry.filter(entry => {
                     const categoryTerms = (entry.category || []).map(cat => String(cat.term || '').toLowerCase().trim());
-                    const hasExcludedTag = categoryTerms.some(term => normalizedExcludedTags.includes(term));
-                    return !hasExcludedTag; // Exclude recipe posts from blog.html.
+                    const hasRecipeTag = categoryTerms.some(term => term.includes('recipe'));
+                    return !hasRecipeTag; // Exclude any posts with 'recipe' in the tag name.
                 });
             }
 
