@@ -112,8 +112,6 @@ document.addEventListener('DOMContentLoaded', function () {
         });
         postHtml += '</div>';
 
-        if (recipesContainer) {
-            recipesContainer.innerHTML = postHtml;
-        }
+        recipesContainer.innerHTML = postHtml;
     };
 });
