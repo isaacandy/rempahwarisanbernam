@@ -113,13 +113,21 @@ document.addEventListener('DOMContentLoaded', function () {
     
     window._bloggerFeedTimeout = setTimeout(() => {
       const recipesContainer = document.getElementById('related-recipes-container');
-      if (recipesContainer) recipesContainer.innerHTML = '<p class="text-center text-stone-500">Recipe feed timeout. Please try again later.</p>';
+      if (recipesContainer) {
+        const loadingIndicator = document.getElementById('recipes-loading-indicator');
+        if(loadingIndicator) loadingIndicator.style.display = 'none';
+        recipesContainer.innerHTML = '<p class="text-center text-stone-500">Recipe feed timeout. Please try again later.</p>';
+      }
     }, 8000);
 
     script.onerror = () => {
       if (window._bloggerFeedTimeout) clearTimeout(window._bloggerFeedTimeout);
       const recipesContainer = document.getElementById('related-recipes-container');
-      if (recipesContainer) recipesContainer.innerHTML = '<p class="text-center text-stone-500">Error loading recipes.</p>';
+      if (recipesContainer) {
+         const loadingIndicator = document.getElementById('recipes-loading-indicator');
+        if(loadingIndicator) loadingIndicator.style.display = 'none';
+        recipesContainer.innerHTML = '<p class="text-center text-stone-500">Error loading recipes.</p>';
+      }
     };
 
     document.head.appendChild(script);

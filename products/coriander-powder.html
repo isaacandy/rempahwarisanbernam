@@ -27,14 +27,6 @@
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
     <link rel="manifest" href="/site.webmanifest">
 
-    <!-- JAVASCRIPT CONFIGURATION -->
-    <script>
-        // This name MUST EXACTLY match the 'product_name' in the Google Sheet and the 'tag' in Blogger.
-        const CURRENT_PRODUCT_NAME = "Coriander Powder";
-    </script>
-    <!-- Shared script for product page logic -->
-    <script src="/js/product-page.js" defer></script>
-
     <!-- ShareThis Script -->
     <script type='text/javascript' src='https://platform-api.sharethis.com/js/sharethis.js#property=698a1e118ea334cc0e5b7c4e&product=sop' async='async'></script>
 
@@ -46,6 +38,14 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,700;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap"
         rel="stylesheet">
+
+    <!-- JAVASCRIPT CONFIGURATION & LOGIC -->
+    <script>
+        // This name MUST EXACTLY match the 'product_name' in the Google Sheet and the 'tag' in Blogger.
+        const CURRENT_PRODUCT_NAME = "Coriander Powder";
+    </script>
+    <!-- Shared script for product page logic -->
+    <script src="/js/product-page.js" defer></script>
 
     <!-- ================== PRODUCT-SPECIFIC SCHEMA (JSON-LD) ================== -->
     <script type="application/ld+json">
@@ -107,7 +107,7 @@
                     <div class="bg-white p-8 rounded-3xl shadow-lg">
                         <img src="/images/Packaging/Coriander-Powder.png" alt="Coriander Powder Packaging"
                             class="w-full h-auto object-contain aspect-square">
-                        <!-- ShareThis BEGIN --><div class="sharethis-inline-share-buttons mt-6"></div><!-- ShareThis END -->
+                        <!-- ShareThis BEGIN --><div class="sharethis-inline-share-buttons mt-6 text-center"></div><!-- ShareThis END -->
                     </div>
 
                     <!-- Product Information -->
