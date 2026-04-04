@@ -278,7 +278,7 @@ src="https://www.facebook.com/tr?id=2132828370861521&ev=PageView&noscript=1"
         // IMPORTANT: Replace this with your Blogger blog URL
         const bloggerUrl = "https://blog.rempahwarisanbernam.net";
         const maxPostsToFetch = 100; // Fetch more posts to ensure enough posts after filtering
-        const excludedTags = []; // Tags to exclude from the blog page
+        const excludedTags = ['Recipe', 'AI-Generated Recipe']; // Tags to exclude from the blog page
 
         let allEntries = [];
 
@@ -301,12 +301,11 @@ src="https://www.facebook.com/tr?id=2132828370861521&ev=PageView&noscript=1"
 
             let entries = [];
             if (data && data.feed && data.feed.entry) {
+                const normalizedExcludedTags = excludedTags.map(tag => tag.toLowerCase().trim());
                 entries = data.feed.entry.filter(entry => {
-                    // Check if the post has any of the tags that should be excluded.
-                    // The .some() method returns true if at least ONE of the post's tags is found in the excludedTags list.
-                    // This works as an "OR" condition (e.g., exclude if tag is "Recipe" OR "AI-Generated Recipe").
-                    const hasExcludedTag = entry.category && entry.category.some(cat => excludedTags.includes(cat.term));
-                    return !hasExcludedTag; // We return the posts that DO NOT have an excluded tag.
+                    const categoryTerms = (entry.category || []).map(cat => String(cat.term || '').toLowerCase().trim());
+                    const hasExcludedTag = categoryTerms.some(term => normalizedExcludedTags.includes(term));
+                    return !hasExcludedTag; // Exclude recipe posts from blog.html.
                 });
             }
 
@@ -323,11 +322,11 @@ src="https://www.facebook.com/tr?id=2132828370861521&ev=PageView&noscript=1"
                         media$thumbnail: { url: 'images/Branding/Designer (4).png' }
                     },
                     {
-                        title: { $t: 'Malaysian Curry Powder Recipe' },
+                        title: { $t: 'Malaysian Spice Traditions' },
                         link: [{ rel: 'alternate', href: '#' }],
                         published: { $t: '2024-02-01T00:00:00.000Z' },
-                        content: { $t: '<p>Learn how to make authentic Malaysian curry powder...</p>' },
-                        category: [{ term: 'Recipe' }],
+                        content: { $t: '<p>Explore the legacy of Malaysian spice markets and family traditions...</p>' },
+                        category: [{ term: 'Heritage' }],
                         media$thumbnail: { url: 'images/Rempah warisan logo final.png' }
                     }
                 ];
