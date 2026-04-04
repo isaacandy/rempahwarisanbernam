@@ -45,7 +45,7 @@ To create a new product page, follow these steps:
         2.  Fetching **related recipes** from the Blogger site by filtering for posts tagged with this name.
 
 6.  **Update Centralized Data Sources:**
-    *   **Google Sheet ("RWB Products"):**
+    *   **Google Sheet ("RWB Products"):** (https://docs.google.com/spreadsheets/d/1vKPPiD963CK5QLqZ3gwk__xGgnQ1wRgU6agEYMyiqvQ/edit?usp=sharing)
         *   Add a new row for the product.
         *   Ensure the `product_name` column is an **exact match** to the `CURRENT_PRODUCT_NAME` constant in the HTML file.
         *   Add the correct `whatsapp_product_link`.

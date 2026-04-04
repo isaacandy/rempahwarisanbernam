@@ -4,6 +4,8 @@ deployment:
     - export DEPLOYPATH=$HOME/public_html
     # Copy all HTML files from repo root
     - /bin/cp -u *.html $DEPLOYPATH
+    # Copy products folder recursively
+    - /bin/cp -Ru products $DEPLOYPATH
     # Copy images folder recursively
     - /bin/cp -Ru images $DEPLOYPATH
     # Fix directory permissions
