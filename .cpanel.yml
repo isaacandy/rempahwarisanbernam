@@ -6,6 +6,8 @@ deployment:
     - /bin/cp -u *.html $DEPLOYPATH
     # Copy products folder recursively
     - /bin/cp -Ru products $DEPLOYPATH
+    # Copy js folder recursively
+    - /bin/cp -Ru js $DEPLOYPATH
     # Copy images folder recursively
     - /bin/cp -Ru images $DEPLOYPATH
     # Fix directory permissions
