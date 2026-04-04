@@ -1348,7 +1348,7 @@ src="https://www.facebook.com/tr?id=2132828370861521&ev=PageView&noscript=1"
                     // Find column indices for 'product_name' and 'link_to_product'
                     const headers = data.table.cols.map(col => col.label);
                     const nameIndex = headers.indexOf('product_name');
-                    const linkIndex = headers.indexOf('whatsapp_product_link');
+                    const linkIndex = headers.indexOf('whatsapp_product_link'); // Corrected column name
 
                     if (nameIndex === -1 || linkIndex === -1) {
                         console.error('Could not find "product_name" or "whatsapp_product_link" columns in the sheet.');

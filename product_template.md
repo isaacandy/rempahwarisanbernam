@@ -35,8 +35,11 @@ To create a new product page, follow these steps:
         *   Update the main description paragraph.
     *   **Common Uses:** Update the `<ul>` list with common applications for the product.
     *   **Key Ingredients:** Update the paragraph with the product's ingredients.
+    *   **Heritage & Nutritional Section:**
+        *   Update the `<h4>` title and the descriptive paragraph to tell the story of the product.
+        *   Fill in the nutritional facts table with the correct values per 100g serving.
 
-5.  **Configure Dynamic Content (JavaScript):**
+5.  **Configure Dynamic Content (JavaScript):** 
     At the bottom of the file, inside the `<script>` tag, find the `JAVASCRIPT CONFIGURATION` section.
     *   **Update `CURRENT_PRODUCT_NAME`:** Change the value of this constant to match the product's full name **exactly** as it appears in the Google Sheet and as a tag in Blogger.
         *   **Example:** `const CURRENT_PRODUCT_NAME = "Serbuk Kari Daging & Ayam";`
@@ -44,8 +47,8 @@ To create a new product page, follow these steps:
         1.  Fetching the correct **WhatsApp purchase link** from the Google Sheet.
         2.  Fetching **related recipes** from the Blogger site by filtering for posts tagged with this name.
 
-6.  **Update Centralized Data Sources:**
-    *   **Google Sheet ("RWB Products"):** (https://docs.google.com/spreadsheets/d/1vKPPiD963CK5QLqZ3gwk__xGgnQ1wRgU6agEYMyiqvQ/edit?usp=sharing)
+6.  **Update Centralized Data Sources:** 
+    *   **Google Sheet ("RWB Products"):**
         *   Add a new row for the product.
         *   Ensure the `product_name` column is an **exact match** to the `CURRENT_PRODUCT_NAME` constant in the HTML file.
         *   Add the correct `whatsapp_product_link`.
