@@ -45,8 +45,6 @@
         const CURRENT_PRODUCT_NAME = "Coriander Powder";
         const PRODUCT_SKU = "RWB-SCOR-01"; // Used for precise purchase link matching.
     </script>
-    <!-- Shared script for product page logic -->
-    <script src="/js/product-page.js" defer></script>
 
     <!-- ================== PRODUCT-SPECIFIC SCHEMA (JSON-LD) ================== -->
     <script type="application/ld+json">
@@ -210,99 +208,107 @@
         </div>
     </footer>
 
-    <script>
-        // This script is now self-contained to ensure reliability, mirroring the working recipe.html page.
-        lucide.createIcons();
+<script>
+    // This script is now self-contained to ensure reliability, mirroring the working recipe.html page.
+    lucide.createIcons();
 
-        // --- Fetch Purchase Link ---
-        (function fetchPurchaseLink() {
-            const sheetId = '1vKPPiD963CK5QLqZ3gwk__xGgnQ1wRgU6agEYMyiqvQ';
-            const sheetName = 'RWB%20Products';
-            const sheetUrl = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:json&sheet=${sheetName}`;
+    // --- Fetch Purchase Link ---
+    (function fetchPurchaseLink() {
+        const sheetId = '1vKPPiD963CK5QLqZ3gwk__xGgnQ1wRgU6agEYMyiqvQ';
+        const sheetName = 'RWB%20Products';
+        const sheetUrl = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:json&sheet=${sheetName}`;
 
-            const buyButton = document.getElementById('buy-now-button');
-            const buyLoading = document.getElementById('buy-now-loading');
-            if (buyButton && buyLoading) buyLoading.style.display = 'block';
+        const buyButton = document.getElementById('buy-now-button');
+        const buyLoading = document.getElementById('buy-now-loading');
+        if (buyButton && buyLoading) buyLoading.style.display = 'block';
 
-            fetch(sheetUrl)
-                .then(response => response.text())
-                .then(text => {
-                    const jsonString = text.match(/google\.visualization\.Query\.setResponse\((.*)\);/)[1];
-                    const data = JSON.parse(jsonString);
-                    const rows = data.table.rows;
-                    const headers = data.table.cols.map(col => col.label);
-                    const skuIndex = headers.indexOf('sku');
-                    const linkIndex = headers.indexOf('whatsapp_product_link');
+        fetch(sheetUrl)
+            .then(response => response.text())
+            .then(text => {
+                const jsonString = text.match(/google\.visualization\.Query\.setResponse\((.*)\);/)[1];
+                const data = JSON.parse(jsonString);
+                const rows = data.table.rows;
+                const headers = data.table.cols.map(col => col.label);
+                const skuIndex = headers.indexOf('sku');
+                const linkIndex = headers.indexOf('whatsapp_product_link');
 
-                    const productRow = rows.find(row => row.c[skuIndex] && row.c[skuIndex].v.trim() === PRODUCT_SKU);
+                const productRow = rows.find(row => row.c[skuIndex] && row.c[skuIndex].v.trim() === PRODUCT_SKU);
 
-                    if (buyButton) {
-                        if (productRow && productRow.c[linkIndex] && productRow.c[linkIndex].v) {
-                            buyButton.href = productRow.c[linkIndex].v;
-                        } else {
-                            buyButton.href = "https://wa.me/601154554438";
-                            console.warn(`Purchase link for SKU "${PRODUCT_SKU}" not found.`);
-                        }
+                if (buyButton) {
+                    if (productRow && productRow.c[linkIndex] && productRow.c[linkIndex].v) {
+                        buyButton.href = productRow.c[linkIndex].v;
+                    } else {
+                        buyButton.href = "https://wa.me/601154554438";
+                        console.warn(`Purchase link for SKU "${PRODUCT_SKU}" not found.`);
                     }
-                })
-                .catch(error => {
-                    console.error('Error fetching purchase link:', error);
-                    if (buyButton) buyButton.href = "https://wa.me/601154554438";
-                })
-                .finally(() => {
-                    if (buyButton && buyLoading) {
-                        buyLoading.style.display = 'none';
-                        buyButton.style.display = 'block';
-                    }
-                });
-        })();
+                }
+            })
+            .catch(error => {
+                console.error('Error fetching purchase link:', error);
+                if (buyButton) buyButton.href = "https://wa.me/601154554438";
+            })
+            .finally(() => {
+                if (buyButton && buyLoading) {
+                    buyLoading.style.display = 'none';
+                    buyButton.style.display = 'block';
+                }
+            });
+    })();
 
-        // --- Fetch Related Recipes ---
-        window.handleRelatedRecipes = function(data) {
+    // --- Fetch Related Recipes ---
+    window.handleRelatedRecipes = function(data) {
+        const container = document.getElementById('related-recipes-container');
+        const loading = document.getElementById('recipes-loading-indicator');
+        if (loading) loading.style.display = 'none';
+        if (!container) return;
+
+        if (!data || !data.feed || !data.feed.entry) {
+            container.innerHTML = '<p class="text-center text-stone-500">Could not load recipes at this time.</p>';
+            return;
+        }
+
+        const recipeTags = ["Recipe", "Recipes", "AI-Generated Recipe"];
+        const filtered = data.feed.entry.filter(entry => {
+            const categories = (entry.category || []).map(cat => cat.term.trim());
+            const hasRecipeTag = categories.some(cat => recipeTags.includes(cat));
+            const hasProductTag = categories.includes(CURRENT_PRODUCT_NAME);
+            return hasRecipeTag && hasProductTag;
+        });
+
+        if (filtered.length === 0) {
+            container.innerHTML = `<p class="text-center text-stone-500">No specific recipes found for ${CURRENT_PRODUCT_NAME} yet. <a href="/recipe.html" class="text-brand-crimson underline">Explore all recipes</a>.</p>`;
+            return;
+        }
+
+        let html = '<div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">';
+        filtered.forEach(post => {
+            const title = post.title.$t;
+            const url = post.link.find(link => link.rel === 'alternate').href;
+            let thumb = '/images/Rempah%20warisan%20logo%20final.png'; // Default fallback
+            if (post.media$thumbnail && post.media$thumbnail.url) {
+                thumb = post.media$thumbnail.url.replace('/s72-c/', '/w400-h225-c/');
+            } else if (post.content && post.content.$t) {
+                const contentDiv = document.createElement('div');
+                contentDiv.innerHTML = post.content.$t;
+                const firstImage = contentDiv.querySelector('img');
+                if (firstImage) thumb = firstImage.src;
+            }
+            html += `<a href="${url}" class="bg-white rounded-2xl shadow-lg overflow-hidden group block"><div class="aspect-w-16 aspect-h-9 bg-stone-100"><img src="${thumb}" alt="${title}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" onerror="this.src='/images/Rempah%20warisan%20logo%20final.png'"></div><div class="p-6"><h3 class="font-serif text-xl italic text-stone-900">${title}</h3></div></a>`;
+        });
+        html += '</div>';
+        container.innerHTML = html;
+    };
+
+    (function fetchRecipes() {
+        const script = document.createElement('script');
+        script.src = `https://blog.rempahwarisanbernam.net/feeds/posts/default?alt=json-in-script&max-results=50&callback=handleRelatedRecipes`;
+        script.onerror = () => {
             const container = document.getElementById('related-recipes-container');
-            const loading = document.getElementById('recipes-loading-indicator');
-            if (loading) loading.style.display = 'none';
-            if (!container) return;
-
-            if (!data || !data.feed || !data.feed.entry) {
-                container.innerHTML = '<p class="text-center text-stone-500">Could not load recipes at this time.</p>';
-                return;
-            }
-
-            const recipeTags = ["Recipe", "Recipes", "AI-Generated Recipe"];
-            const filtered = data.feed.entry.filter(entry => {
-                const categories = (entry.category || []).map(cat => cat.term.trim());
-                const hasRecipeTag = categories.some(cat => recipeTags.includes(cat));
-                const hasProductTag = categories.includes(CURRENT_PRODUCT_NAME);
-                return hasRecipeTag && hasProductTag;
-            });
-
-            if (filtered.length === 0) {
-                container.innerHTML = `<p class="text-center text-stone-500">No specific recipes found for ${CURRENT_PRODUCT_NAME} yet. <a href="/recipe.html" class="text-brand-crimson underline">Explore all recipes</a>.</p>`;
-                return;
-            }
-
-            let html = '<div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">';
-            filtered.forEach(post => {
-                const title = post.title.$t;
-                const url = post.link.find(link => link.rel === 'alternate').href;
-                let thumb = post.media$thumbnail ? post.media$thumbnail.url.replace('/s72-c/', '/w400-h225-c/') : '/images/Rempah%20warisan%20logo%20final.png';
-                html += `<a href="${url}" class="bg-white rounded-2xl shadow-lg overflow-hidden group block"><div class="aspect-w-16 aspect-h-9 bg-stone-100"><img src="${thumb}" alt="${title}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" onerror="this.src='/images/Rempah%20warisan%20logo%20final.png'"></div><div class="p-6"><h3 class="font-serif text-xl italic text-stone-900">${title}</h3></div></a>`;
-            });
-            html += '</div>';
-            container.innerHTML = html;
+            if(container) container.innerHTML = '<p class="text-center text-stone-500">Error loading recipes.</p>';
         };
-
-        (function fetchRecipes() {
-            const script = document.createElement('script');
-            script.src = `https://blog.rempahwarisanbernam.net/feeds/posts/default?alt=json-in-script&max-results=50&callback=handleRelatedRecipes`;
-            script.onerror = () => {
-                const container = document.getElementById('related-recipes-container');
-                if(container) container.innerHTML = '<p class="text-center text-stone-500">Error loading recipes.</p>';
-            };
-            document.head.appendChild(script);
-        })();
-    </script>
+        document.head.appendChild(script);
+    })();
+</script>
 </body>
 
 </html>
