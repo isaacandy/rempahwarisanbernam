@@ -2934,7 +2934,7 @@ display:none
       <b:include name='postWrapperClasses'/>
 
       <!-- Standard feed thumbs always added, as they're needed for mobile view. -->
-      <b:include name='standardPostImageStyle'/>
+      <b:include cond='data:view.isMultipleItems' name='standardPostImageStyle'/>
       <b:include name='feedPostImage'/>
 
       <div class='slide'>
