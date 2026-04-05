@@ -23,7 +23,7 @@ To create a new product page, follow these steps:
     *   **Update `CURRENT_PRODUCT_NAME`:** Change the value of this constant to match the product's full name **exactly** as it appears in the Google Sheet and as a tag in Blogger.
         *   **Example:** `const CURRENT_PRODUCT_NAME = "Serbuk Kari Daging & Ayam";`
     *   This constant is critical for two functions:
-    *   **Add `PRODUCT_SKU`:** Add the unique SKU for the default product variant you want to sell from this page. This is used for a precise match to find the purchase link.
+    *   **Update `PRODUCT_SKU`:** Add the unique SKU for the default product variant you want to sell from this page. This is used for a precise match to find the purchase link.
         *   **Example:** `const PRODUCT_SKU = "RWB-SKDA-01";`
 
 4.  **Update Product Schema (JSON-LD):**
@@ -62,3 +62,5 @@ To create a new product page, follow these steps:
         *   The post must also be tagged with "Recipe" to be correctly categorized.
 
 By following these steps, you will maintain a consistent structure and ensure all dynamic features (purchase links and related recipes) function correctly for new products.
+
+**Note:** The JavaScript for fetching purchase links and related recipes is now self-contained at the bottom of each product page. There is no need to edit a separate `.js` file.
