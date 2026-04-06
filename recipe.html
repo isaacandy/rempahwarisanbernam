@@ -478,36 +478,6 @@ src="https://www.facebook.com/tr?id=2132828370861521&ev=PageView&noscript=1"
 
         document.body.appendChild(script);
 
-        // This script runs on the individual post page to populate recipe schema
-        function populateRecipeSchema() {
-            const ingredientsList = document.querySelector('.ingredients-list');
-            const instructionsList = document.querySelector('.instructions-list');
-            const schemaScript = document.querySelector('script[type="application/ld+json"]');
-
-            if (!schemaScript || (!ingredientsList && !instructionsList)) {
-                return;
-            }
-
-            try {
-                const schema = JSON.parse(schemaScript.textContent);
-
-                if (schema['@type'] === 'Recipe') {
-                    if (ingredientsList) {
-                        const ingredients = Array.from(ingredientsList.querySelectorAll('li')).map(li => li.textContent.trim());
-                        if (ingredients.length > 0) schema.recipeIngredient = ingredients;
-                    }
-
-                    if (instructionsList) {
-                        const instructions = Array.from(instructionsList.querySelectorAll('li')).map(li => ({ "@type": "HowToStep", "text": li.textContent.trim() }));
-                        if (instructions.length > 0) schema.recipeInstructions = instructions;
-                    }
-                    schemaScript.textContent = JSON.stringify(schema, null, 2);
-                }
-            } catch (e) {
-                console.error("Failed to parse or update recipe schema:", e);
-            }
-        }
-        window.addEventListener('load', populateRecipeSchema);
     </script>
 </body>
 

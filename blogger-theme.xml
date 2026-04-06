@@ -32,6 +32,21 @@ src="https://www.facebook.com/tr?id=2132828370861521&amp;ev=PageView&amp;noscrip
 
     <b:include data='blog' name='all-head-content'/>
 
+    <!-- ENHANCED OG & TWITTER META FOR SOCIAL SHARING THUMBNAILS -->
+    <b:if cond='data:view.isSingleItem'>
+      <b:loop values='data:posts' var='post'>
+        <b:if cond='data:post.featuredImage'>
+          <meta property='og:image' expr:content='resizeImage(data:post.featuredImage, 1200, "1200:630")'/>
+          <meta name='twitter:image' expr:content='resizeImage(data:post.featuredImage, 1200, "1200:630")'/>
+        <b:else/>
+          <meta property='og:image' content='https://www.rempahwarisanbernam.net/images/Rempah%20warisan%20logo%20final.png'/>
+          <meta name='twitter:image' content='https://www.rempahwarisanbernam.net/images/Rempah%20warisan%20logo%20final.png'/>
+        </b:if>
+        <meta name='twitter:card' content='summary_large_image'/>
+        <meta name='twitter:title' expr:content='data:post.title'/>
+      </b:loop>
+    </b:if>
+
     <!-- ShareThis Social Sharing Script -->
     <script async='async' src='https://platform-api.sharethis.com/js/sharethis.js#property=698a127b19466150d6ac0a60&amp;product=sop' type='text/javascript'/>
 
@@ -41,6 +56,7 @@ src="https://www.facebook.com/tr?id=2132828370861521&amp;ev=PageView&amp;noscrip
         <b:loop values='data:post.labels' var='label'>
           <b:if cond='data:label.name == "Recipe" or data:label.name == "Recipes" or data:label.name == "AI-Generated Recipe" or data:label.name == "AI-Generated Recipes"'>
             <script type='application/ld+json'>
+            <script type='application/ld+json' id='blogger-recipe-schema'>
             {
               "@context": "https://schema.org",
               "@type": "Recipe",
@@ -90,6 +106,7 @@ src="https://www.facebook.com/tr?id=2132828370861521&amp;ev=PageView&amp;noscrip
               }
             }
     </script>
+            <!-- The script to populate recipeIngredient and recipeInstructions will be added after the JSON-LD repair script -->
   </b:if>
 </b:loop>
 </b:loop>
