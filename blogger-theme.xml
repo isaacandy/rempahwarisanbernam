@@ -55,7 +55,6 @@ src="https://www.facebook.com/tr?id=2132828370861521&amp;ev=PageView&amp;noscrip
       <b:loop values='data:posts' var='post'>
         <b:loop values='data:post.labels' var='label'>
           <b:if cond='data:label.name == "Recipe" or data:label.name == "Recipes" or data:label.name == "AI-Generated Recipe" or data:label.name == "AI-Generated Recipes"'>
-            <script type='application/ld+json'>
             <script type='application/ld+json' id='blogger-recipe-schema'>
             {
               "@context": "https://schema.org",
