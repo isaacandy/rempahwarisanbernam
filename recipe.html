@@ -296,9 +296,9 @@ src="https://www.facebook.com/tr?id=2132828370861521&ev=PageView&noscript=1"
          // REQUIRED FIELDS
          merchant_id: 5724505526,
 
-         // OPTIONAL FIELDS
-         position: POSITION,
-         region: REGION,
+         // OPTIONAL FIELDS - Set a default position
+         position: 'BOTTOM_RIGHT',
+         // region: REGION, // This was also undefined, commenting out.
     });
   });
 </script></div>
@@ -461,7 +461,7 @@ src="https://www.facebook.com/tr?id=2132828370861521&ev=PageView&noscript=1"
         const script = document.createElement('script');
         const base = bloggerUrl.replace(/\/$/, '');
         // Fetching 50 to ensure we catch tagged recipes if they aren't the very latest
-        script.src = `${base}/feeds/posts/default?alt=json-in-script&max-results=50&callback=handleBloggerPosts`;
+        script.src = `${base}/feeds/posts/default?alt=json-in-script&max-results=50&callback=handleBloggerPosts&_=${new Date().getTime()}`;
         script.async = true;
         script.crossOrigin = 'anonymous'; // Add this line to handle CORS issues
 
