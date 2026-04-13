@@ -453,6 +453,7 @@ src="https://www.facebook.com/tr?id=2132828370861521&ev=PageView&noscript=1"
         // Fetching 50 to ensure we catch tagged recipes if they aren't the very latest
         script.src = `${base}/feeds/posts/default?alt=json-in-script&max-results=50&callback=handleBloggerPosts`;
         script.async = true;
+        script.crossOrigin = 'anonymous'; // Add this line to handle CORS issues
 
         // Set a fallback timeout so the page doesn't spin forever
         window._bloggerFeedTimeout = setTimeout(() => {

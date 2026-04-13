@@ -455,6 +455,7 @@ src="https://www.facebook.com/tr?id=2132828370861521&ev=PageView&noscript=1"
         const base = bloggerUrl.replace(/\/$/, '');
         script.src = `${base}/feeds/posts/default?alt=json-in-script&max-results=${maxPostsToFetch}&callback=handleBloggerPosts`;
         script.async = true;
+        script.crossOrigin = 'anonymous'; // Add this line to handle CORS issues
 
         // Set a fallback timeout so the page doesn't spin forever
         window._bloggerFeedTimeout = setTimeout(() => {
