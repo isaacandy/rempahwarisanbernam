@@ -35,6 +35,24 @@ To create a new product page, follow these steps:
     *   `offers.url`: The absolute URL to the new product page.
     *   `offers.price`: The retail price.
 
+5.  **Include Google Customer Reviews Badge:**
+    Add the following script block just before the closing `</body>` tag (or within the `<footer>` like `index.html`):
+    ```html
+    <!-- Google Customer Reviews Merchant Widget -->
+    <script id='merchantWidgetScript' src="https://www.gstatic.com/shopping/merchant/merchantwidget.js" defer></script>
+    <script>
+      merchantWidgetScript.addEventListener('load', function () {
+        merchantwidget.start({
+             // REQUIRED FIELDS
+             merchant_id: 5724505526,
+             // OPTIONAL FIELDS
+             position: 'BOTTOM_RIGHT', // You can choose other positions like 'LEFT_BOTTOM', 'TOP_LEFT', etc.
+             // region: 'REGION_CODE', // Optional: uncomment and replace with your region code if needed (e.g., 'US', 'MY')
+        });
+      });
+    </script>
+    ```
+
 5.  **Update Page Content (in the `<body>`):**
     *   **Product Details Section:**
         *   **Product Image:** Update the `src` and `alt` text for the main product image. The ShareThis buttons are positioned directly below this image and will update automatically.

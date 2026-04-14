@@ -240,26 +240,42 @@ src="https://www.facebook.com/tr?id=2132828370861521&ev=PageView&noscript=1"
 
     <!-- Re-using the footer from index.html -->
     <footer class="bg-stone-950 text-white py-8">
-        <div><script src="https://apis.google.com/js/platform.js?onload=renderOptIn" async defer></script>
+        <div>
+            <!-- Google Customer Reviews Merchant Widget -->
+            <script id='merchantWidgetScript' src="https://www.gstatic.com/shopping/merchant/merchantwidget.js" defer></script>
+            <script>
+                merchantWidgetScript.addEventListener('load', function () {
+                    merchantwidget.start({
+                        // REQUIRED FIELDS
+                        merchant_id: 5724505526,
 
-<script>
-  window.renderOptIn = function() {
-    window.gapi.load('surveyoptin', function() {
-      window.gapi.surveyoptin.render(
-        {
-          // REQUIRED FIELDS
-          "merchant_id": 5724505526,
-          "order_id": "ORDER_ID",
-          "email": "CUSTOMER_EMAIL",
-          "delivery_country": "COUNTRY_CODE",
-          "estimated_delivery_date": "YYYY-MM-DD",
+                        // OPTIONAL FIELDS
+                        position: 'BOTTOM_RIGHT', // Recommended for consistency
+                        // region: 'REGION_CODE', // Optional: uncomment and replace with region code if needed (e.g., 'US')
+                    });
+                });
+            </script>
+            <!-- Existing Google Survey Opt-in script -->
+            <script src="https://apis.google.com/js/platform.js?onload=renderOptIn" async defer></script>
+            <script>
+              window.renderOptIn = function() {
+                window.gapi.load('surveyoptin', function() {
+                  window.gapi.surveyoptin.render(
+                    {
+                      // REQUIRED FIELDS
+                      "merchant_id": 5724505526,
+                      "order_id": "ORDER_ID",
+                      "email": "CUSTOMER_EMAIL",
+                      "delivery_country": "COUNTRY_CODE",
+                      "estimated_delivery_date": "YYYY-MM-DD",
 
-          // OPTIONAL FIELDS
-          "products": [{"gtin":"GTIN1"}, {"gtin":"GTIN2"}]
-        });
-    });
-  }
-</script></div>
+                      // OPTIONAL FIELDS
+                      "products": [{"gtin":"GTIN1"}, {"gtin":"GTIN2"}]
+                    });
+                });
+              }
+            </script>
+        </div>
         <div class="max-w-7xl mx-auto px-6 lg:px-12">
             <div
                 class="pt-6 flex flex-col md:flex-row justify-between items-center gap-4 text-stone-800 text-[8px] font-black uppercase tracking-[0.4em]">
