@@ -78,12 +78,12 @@ fbq(&#39;track&#39;, &#39;PageView&#39;);
               &quot;recipeCuisine&quot;: &quot;Malaysian&quot;,
               &quot;keywords&quot;: &quot;recipe, spices, malaysian cuisine, rempah warisan bernam, RWB&quot;,
               &quot;recipeIngredient&quot;: [
-                &quot;<!-- To populate this, add a list in your post with a class='ingredients-list' -->&quot;
+                
               ],
               &quot;recipeInstructions&quot;: [
                 {
                   &quot;@type&quot;: &quot;HowToStep&quot;,
-                  &quot;text&quot;: &quot;<!-- To populate this, add a list in your post with a class='instructions-list' -->&quot;
+                  &quot;text&quot;: &quot;Instructions are in the post body.&quot;
                 }
               ],
               &quot;publisher&quot;: {
@@ -100,7 +100,7 @@ fbq(&#39;track&#39;, &#39;PageView&#39;);
               }
             }
     </script>
-            <!-- The script to populate recipeIngredient and recipeInstructions will be added after the JSON-LD repair script -->
+            
   </b:if>
 </b:loop>
 </b:loop>
@@ -5304,6 +5304,55 @@ display:none
     }
     return false;
   }
+  //]]>
+</script>
+<script type='text/javascript'>
+  //<![CDATA[
+    // --- DYNAMICALLY POPULATE RECIPE SCHEMA FROM POST CONTENT ---
+    function populateRecipeSchema() {
+      // Only run on single item pages that have a recipe schema
+      const recipeSchemaScript = document.getElementById('blogger-recipe-schema');
+      if (!recipeSchemaScript || !document.body.classList.contains('item-view')) {
+        return;
+      }
+
+      try {
+        const schema = JSON.parse(recipeSchemaScript.textContent);
+        
+        // Only proceed if it's a Recipe schema
+        if (schema['@type'] !== 'Recipe') return;
+
+        const postBody = document.querySelector('.post-body.entry-content');
+        if (!postBody) return;
+
+        // --- Populate Ingredients ---
+        const ingredientsList = postBody.querySelector('.ingredients-list, ul:first-of-type');
+        if (ingredientsList) {
+          const ingredients = Array.from(ingredientsList.querySelectorAll('li')).map(li => li.textContent.trim()).filter(Boolean);
+          if (ingredients.length > 0) {
+            schema.recipeIngredient = ingredients;
+          }
+        }
+
+        // --- Populate Instructions ---
+        const instructionsList = postBody.querySelector('.instructions-list, ol');
+        if (instructionsList) {
+          const instructions = Array.from(instructionsList.querySelectorAll('li')).map((li, index) => ({
+            "@type": "HowToStep",
+            "name": `Step ${index + 1}`,
+            "text": li.textContent.trim()
+          })).filter(step => step.text);
+          if (instructions.length > 0) {
+            schema.recipeInstructions = instructions;
+          }
+        }
+        
+        recipeSchemaScript.textContent = JSON.stringify(schema, null, 2);
+      } catch (e) {
+        console.warn('Could not populate dynamic recipe schema:', e);
+      }
+    }
+    window.addEventListener('load', populateRecipeSchema);
   //]]>
 </script>
 <script type='text/javascript'>
