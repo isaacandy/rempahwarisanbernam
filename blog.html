@@ -248,7 +248,7 @@ src="https://www.facebook.com/tr?id=2132828370861521&ev=PageView&noscript=1"
                     merchantwidget.start({
                         // REQUIRED FIELDS
                         merchant_id: 5724505526,
-
+blog
                         // OPTIONAL FIELDS
                         position: 'BOTTOM_RIGHT', // Recommended for consistency
                         // region: 'REGION_CODE', // Optional: uncomment and replace with region code if needed (e.g., 'US')
@@ -470,6 +470,7 @@ src="https://www.facebook.com/tr?id=2132828370861521&ev=PageView&noscript=1"
         // Ensure no trailing slash on the base URL
         const base = bloggerUrl.replace(/\/$/, '');
         script.src = `${base}/feeds/posts/default?alt=json-in-script&max-results=${maxPostsToFetch}&callback=handleBloggerPosts&_=${new Date().getTime()}`;
+        script.src = `${base}/feeds/posts/default?alt=json-in-script&max-results=${maxPostsToFetch}&callback=handleBloggerPosts`;
         script.async = true;
 
         // Set a fallback timeout so the page doesn't spin forever
