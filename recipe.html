@@ -301,7 +301,7 @@ src="https://www.facebook.com/tr?id=2132828370861521&ev=PageView&noscript=1"
 
         // --- Blogger Integration Script for Recipes ---
 
-        const bloggerUrl = "https://rempahwarisanbernam.blogspot.com";
+        const bloggerUrl = "https://blog.rempahwarisanbernam.net";
         const maxPostsToFetch = 100; // Fetch more posts to ensure enough recipes after filtering
         const desiredTags = ["Recipe", "Recipes", "AI-Generated Recipe", "AI-Generated Recipes"]; // Tags to filter by
 
@@ -434,8 +434,9 @@ src="https://www.facebook.com/tr?id=2132828370861521&ev=PageView&noscript=1"
         // Increase max results to basic safety margin
         const script = document.createElement('script');
         const base = bloggerUrl.replace(/\/$/, '');
-        // Fetching 50 to ensure we catch tagged recipes if they aren't the very latest. Using the /-/label format is more robust.
-        script.src = `${base}/feeds/posts/default?alt=json-in-script&max-results=50&callback=handleBloggerPosts`;
+        // Fetching posts specifically tagged as recipes directly from Blogger API for robustness.
+        const tagsForUrl = desiredTags.map(tag => encodeURIComponent(tag)).join('|');
+        script.src = `${base}/feeds/posts/default/-/${tagsForUrl}?alt=json-in-script&max-results=${maxPostsToFetch}&callback=handleBloggerPosts`;
         script.async = true;
 
         // Set a fallback timeout so the page doesn't spin forever
