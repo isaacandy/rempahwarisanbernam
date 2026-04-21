@@ -434,9 +434,8 @@ src="https://www.facebook.com/tr?id=2132828370861521&ev=PageView&noscript=1"
         // Increase max results to basic safety margin
         const script = document.createElement('script');
         const base = bloggerUrl.replace(/\/$/, '');
-        // Fetching posts specifically tagged as recipes directly from Blogger API for robustness.
-        const tagsForUrl = desiredTags.map(tag => encodeURIComponent(tag)).join('|');
-        script.src = `${base}/feeds/posts/default/-/${tagsForUrl}?alt=json-in-script&max-results=${maxPostsToFetch}&callback=handleBloggerPosts`;
+        // Fetching all posts and then filtering client-side for robustness.
+        script.src = `${base}/feeds/posts/default?alt=json-in-script&max-results=${maxPostsToFetch}&callback=handleBloggerPosts`;
         script.async = true;
 
         // Set a fallback timeout so the page doesn't spin forever
