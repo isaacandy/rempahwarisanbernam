@@ -137,7 +137,6 @@
                             <p class="font-semibold">100% Fennel Seeds.</p>
                         </div>
 
-                        <!-- Purchase Button -->
                         <!-- DYNAMIC PURCHASE OPTIONS CONTAINER -->
                         <div id="purchase-options-container" class="mt-10 space-y-4">
                             <p class="text-sm text-stone-500">Select a size to purchase:</p>
@@ -209,7 +208,7 @@
     lucide.createIcons();
 
     // --- Fetch Purchase Link ---
-    (function fetchPurchaseOptions() {
+    (function fetchPurchaseLink() {
         const sheetId = '1vKPPiD963CK5QLqZ3gwk__xGgnQ1wRgU6agEYMyiqvQ';
         const sheetName = 'catalog_products.csv';
         const sheetUrl = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:json&sheet=${sheetName}&headers=1`;

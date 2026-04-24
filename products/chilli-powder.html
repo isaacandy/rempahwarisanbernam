@@ -132,7 +132,7 @@
                             <p class="font-semibold">100% Dried Red Chilli.</p>
                         </div>
 
-                        <!-- Purchase Button -->
+                        <!-- DYNAMIC PURCHASE OPTIONS CONTAINER -->
                         <div id="purchase-options-container" class="mt-10 space-y-4">
                             <p class="text-sm text-stone-500">Select a size to purchase:</p>
                             <!-- Purchase option buttons will be injected here by JavaScript -->
@@ -203,7 +203,7 @@
     lucide.createIcons();
 
     // --- Fetch Purchase Link ---
-    (function fetchPurchaseLink() {
+    (function fetchPurchaseOptions() {
         const sheetId = '1vKPPiD963CK5QLqZ3gwk__xGgnQ1wRgU6agEYMyiqvQ';
         const sheetName = 'catalog_products.csv';
         const sheetUrl = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:json&sheet=${sheetName}&headers=1`;
@@ -213,7 +213,9 @@
             .then(text => {
                 const match = text.match(/google\.visualization\.Query\.setResponse\((.*)\);/);
                 if (!match || !match[1]) {
-                    throw new Error('Invalid response from Google Sheet. Check permissions.');
+                    const errorContainer = document.getElementById('purchase-options-container');
+                    if (errorContainer) errorContainer.innerHTML = '<p class="text-center text-red-600 col-span-full">Error: Could not load purchase options. Please check sheet permissions.</p>';
+                    throw new Error("Invalid JSONP response. Check if the Google Sheet is set to 'Anyone with the link can view'.");
                 }
                 const jsonString = match[1];
                 const data = JSON.parse(jsonString);
@@ -242,7 +244,7 @@
 
                 if ([idIndex, nameIndex, priceIndex, purchaseLinkIndex].some(index => index === -1)) {
                     const missing = Object.keys(columnMap).filter(key => findIndex(columnMap[key]) === -1);
-                    throw new Error(`Missing columns. Found: [${headers.join(', ')}]. Missing: [${missing.join(', ')}].`);
+                    throw new Error(`Missing required columns. Found: [${headers.join(', ')}]. Missing mappings for: [${missing.join(', ')}]. Please check your Google Sheet for columns like 'id', 'title', 'price', and 'link'.`);
                 }
 
                 const variants = rows.map(row => ({
