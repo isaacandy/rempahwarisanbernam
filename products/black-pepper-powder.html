@@ -410,7 +410,8 @@
                         id: ['id'],
                         name: ['title'],
                         price: ['price'],
-                        link: ['link']
+                        link: ['link'],
+                        is_best_seller: ['is_best_seller', 'bestseller']
                     };
 
                     function findIndex(possibleNames) {
@@ -425,6 +426,7 @@
                     const nameIndex = findIndex(columnMap.name);
                     const priceIndex = findIndex(columnMap.price);
                     const purchaseLinkIndex = findIndex(columnMap.link);
+                    const bestSellerIndex = findIndex(columnMap.is_best_seller);
 
                     if ([idIndex, nameIndex, priceIndex, purchaseLinkIndex].some(index => index === -1)) {
                         const missing = Object.keys(columnMap).filter(key => findIndex(columnMap[key]) === -1);
@@ -436,6 +438,7 @@
                         name: row.c[nameIndex] ? row.c[nameIndex].v : null,
                         price: row.c[priceIndex] ? row.c[priceIndex].f || row.c[priceIndex].v : null,
                         link: row.c[purchaseLinkIndex] ? row.c[purchaseLinkIndex].v : null,
+                        isBestSeller: bestSellerIndex !== -1 && row.c[bestSellerIndex] && String(row.c[bestSellerIndex].v).toLowerCase() === 'true'
                     })).filter(variant => variant.name === CURRENT_PRODUCT_NAME && variant.link)
                        .map(variant => {
                             // Extract size from ID, e.g., "RWB-001-1KG" -> "1KG"
@@ -448,18 +451,20 @@
                     if (container) {
                         if (variants.length > 0) {
                             container.innerHTML = '<p class="text-sm text-stone-500 mb-2">Select a size to purchase:</p>';
-                            const buttonWrapper = document.createElement('div');
-                            buttonWrapper.className = 'flex flex-wrap gap-4';
                             variants.forEach(variant => {
                                 const button = document.createElement('a');
                                 button.href = variant.link;
-                                button.target = '_blank';
-                                button.rel = 'noopener noreferrer';
-                                button.className = 'flex-grow text-center px-6 py-3 bg-brand-crimson text-white font-bold uppercase tracking-widest text-[10px] rounded-full hover:bg-brand-gold transition shadow-lg';
-                                button.innerHTML = `${variant.size} - RM ${variant.price}`;
-                                buttonWrapper.appendChild(button);
+                                button.className = 'relative w-full text-center block bg-brand-crimson text-white font-bold uppercase tracking-widest py-4 rounded-xl hover:bg-stone-900 transition shadow-lg shadow-red-900/20';
+                                
+                                let buttonHTML = `<span>${variant.size} - RM ${variant.price}</span>`;
+                                if (variant.isBestSeller) {
+                                    button.classList.add('pt-6'); // Add extra top padding to make space for the badge
+                                    buttonHTML += `<span class="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 px-3 py-0.5 bg-amber-400 text-stone-900 text-[9px] font-black rounded-full shadow-md uppercase tracking-wider">Best Seller</span>`;
+                                }
+                                
+                                button.innerHTML = buttonHTML;
+                                container.appendChild(button);
                             });
-                            container.appendChild(buttonWrapper);
                         } else {
                             container.innerHTML = '<p class="text-center text-stone-500 col-span-full">This product is currently unavailable for online purchase.</p>';
                         }

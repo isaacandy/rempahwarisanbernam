@@ -386,7 +386,7 @@
 
         // --- Google Sheet Integration for Purchase Link ---
         const sheetId = '1vKPPiD963CK5QLqZ3gwk__xGgnQ1wRgU6agEYMyiqvQ';
-        const sheetName = 'RWB%20Products'; // URL-encoded sheet name
+        const sheetName = 'catalog_products.csv'; // CORRECTED sheet name
         const sheetUrl = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:json&sheet=${sheetName}`;
 
         document.addEventListener('DOMContentLoaded', function () {
@@ -406,42 +406,65 @@
                     const rows = data.table.rows;
                     const headers = data.table.cols.map(col => col.label.toLowerCase().trim());
 
-                    // Map headers to indices
-                    const nameIndex = headers.indexOf('product_name'.toLowerCase());
-                    const sizeIndex = headers.indexOf('size'.toLowerCase());
-                    const priceIndex = headers.indexOf('price'.toLowerCase());
-                    const purchaseLinkIndex = headers.indexOf('purchase_link'.toLowerCase());
+                    // Flexible column mapping
+                    const columnMap = {
+                        id: ['id'],
+                        name: ['title'],
+                        price: ['price'],
+                        link: ['link'],
+                        is_best_seller: ['is_best_seller', 'bestseller']
+                    };
 
-                    if ([nameIndex, sizeIndex, priceIndex, purchaseLinkIndex].some(index => index === -1)) {
-                        console.error('Missing required columns in Google Sheet. Ensure "product_name", "size", "price", and "purchase_link" exist.');
-                        return;
+                    function findIndex(possibleNames) {
+                        for (const name of possibleNames) {
+                            const index = headers.indexOf(name);
+                            if (index !== -1) return index;
+                        }
+                        return -1;
+                    }
+
+                    const idIndex = findIndex(columnMap.id);
+                    const nameIndex = findIndex(columnMap.name);
+                    const priceIndex = findIndex(columnMap.price);
+                    const purchaseLinkIndex = findIndex(columnMap.link);
+                    const bestSellerIndex = findIndex(columnMap.is_best_seller);
+
+                    if ([idIndex, nameIndex, priceIndex, purchaseLinkIndex].some(index => index === -1)) {
+                        const missing = Object.keys(columnMap).filter(key => findIndex(columnMap[key]) === -1);
+                        throw new Error(`Missing required columns. Found: [${headers.join(', ')}]. Missing mappings for: [${missing.join(', ')}]. Please check your Google Sheet for columns like 'id', 'title', 'price', and 'link'.`);
                     }
 
                     const variants = rows.map(row => ({
+                        id: row.c[idIndex] ? row.c[idIndex].v : null,
                         name: row.c[nameIndex] ? row.c[nameIndex].v : null,
-                        size: row.c[sizeIndex] ? row.c[sizeIndex].v : null,
-                        price: row.c[priceIndex] ? row.c[priceIndex].f || row.c[priceIndex].v : null, // .f for formatted value (e.g., RM 6.50), .v for raw value
+                        price: row.c[priceIndex] ? row.c[priceIndex].f || row.c[priceIndex].v : null,
                         link: row.c[purchaseLinkIndex] ? row.c[purchaseLinkIndex].v : null,
-                    })).filter(variant => variant.name === CURRENT_PRODUCT_NAME && variant.link);
+                        isBestSeller: bestSellerIndex !== -1 && row.c[bestSellerIndex] && String(row.c[bestSellerIndex].v).toLowerCase() === 'true'
+                    })).filter(variant => variant.name === CURRENT_PRODUCT_NAME && variant.link)
+                       .map(variant => {
+                            const idParts = variant.id.split('-');
+                            const size = idParts.length > 2 ? idParts.slice(2).join('-') : 'Standard';
+                            return { ...variant, size: size };
+                       });
 
                     const container = document.getElementById('purchase-options-container');
                     if (container) {
                         if (variants.length > 0) {
-                            // Clear loading text
                             container.innerHTML = '<p class="text-sm text-stone-500 mb-2">Select a size to purchase:</p>';
-                            const buttonWrapper = document.createElement('div');
-                            buttonWrapper.className = 'flex flex-wrap gap-4';
-                            
                             variants.forEach(variant => {
                                 const button = document.createElement('a');
                                 button.href = variant.link;
-                                button.target = '_blank';
-                                button.rel = 'noopener noreferrer';
-                                button.className = 'flex-grow text-center px-6 py-3 bg-brand-crimson text-white font-bold uppercase tracking-widest text-[10px] rounded-full hover:bg-brand-gold transition shadow-lg';
-                                button.innerHTML = `${variant.size} - RM ${variant.price}`;
-                                buttonWrapper.appendChild(button);
+                                button.className = 'relative w-full text-center block bg-brand-crimson text-white font-bold uppercase tracking-widest py-4 rounded-xl hover:bg-stone-900 transition shadow-lg shadow-red-900/20';
+                                
+                                let buttonHTML = `<span>${variant.size} - RM ${variant.price}</span>`;
+                                if (variant.isBestSeller) {
+                                    button.classList.add('pt-6');
+                                    buttonHTML += `<span class="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 px-3 py-0.5 bg-amber-400 text-stone-900 text-[9px] font-black rounded-full shadow-md uppercase tracking-wider">Best Seller</span>`;
+                                }
+                                
+                                button.innerHTML = buttonHTML;
+                                container.appendChild(button);
                             });
-                            container.appendChild(buttonWrapper);
                         } else {
                             container.innerHTML = '<p class="text-center text-stone-500 col-span-full">This product is currently unavailable for online purchase.</p>';
                         }
@@ -449,9 +472,8 @@
                 })
                 .catch(error => {
                     console.error('Error fetching or processing Google Sheet data:', error);
-                    const errorContainer = document.getElementById('purchase-options-container');
-                    // Display a user-friendly error on the page
-                    if (errorContainer) errorContainer.innerHTML = '<p class="text-center text-stone-500 col-span-full">Could not load purchase options at this time.</p>';
+                    const container = document.getElementById('purchase-options-container');
+                    if (container) container.innerHTML = `<p class="text-center text-red-600 col-span-full text-xs p-4 bg-red-50 rounded-lg">${error.message}</p>`;
                 });
         });
 
