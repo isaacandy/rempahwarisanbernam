@@ -267,10 +267,12 @@
                             <p class="text-stone-600 text-sm">Black Pepper</p>
                         </div>
 
-                        <a id="whatsapp-buy-button" href="#" target="_blank" rel="noopener noreferrer"
-                            class="inline-flex items-center justify-center px-8 py-4 bg-brand-crimson text-white font-bold uppercase tracking-widest text-[10px] rounded-full hover:bg-brand-gold transition shadow-lg">
-                            <i data-lucide="message-circle" class="w-4 h-4 mr-2"></i> Purchase Now
-                        </a>
+                        <!-- DYNAMIC PURCHASE OPTIONS CONTAINER -->
+                        <div id="purchase-options-container" class="space-y-4">
+                            <p class="text-sm text-stone-500">Select a size to purchase:</p>
+                            <!-- Purchase option buttons will be injected here by JavaScript -->
+                            <div class="text-stone-500 text-sm">Loading purchase options...</div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -379,60 +381,96 @@
         function closeMenu() { menu.classList.add('hidden'); }
 
         // JAVASCRIPT CONFIGURATION & LOGIC
-        const CURRENT_PRODUCT_NAME = "Black Pepper Powder"; // Used for Google Sheet lookup and Blogger filtering
+        const CURRENT_PRODUCT_NAME = "Serbuk Lada Hitam"; // Used for Google Sheet lookup and Blogger filtering
         const PRODUCT_SKU = "RWB-BPP-01"; // Used for Google Sheet lookup
 
         // --- Google Sheet Integration for Purchase Link ---
         const sheetId = '1vKPPiD963CK5QLqZ3gwk__xGgnQ1wRgU6agEYMyiqvQ';
-        const sheetName = 'RWB%20Products'; // URL-encoded sheet name
-        const sheetUrl = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:json&sheet=${sheetName}`;
+        const sheetName = 'catalog_products.csv'; // CORRECTED sheet name from your screenshot
+        const sheetUrl = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:json&sheet=${sheetName}&headers=1`;
 
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             fetch(sheetUrl)
                 .then(response => response.text())
                 .then(text => {
-                    const jsonString = text.match(/google\\.visualization\\.Query\\.setResponse\\((.*)\\);/)[1];
+                    const match = text.match(/google\.visualization\.Query\.setResponse\((.*)\);/);
+                    if (!match || !match[1]) {
+                        const errorContainer = document.getElementById('purchase-options-container');
+                        if (errorContainer) errorContainer.innerHTML = '<p class="text-center text-red-600 col-span-full">Error: Could not load purchase options. Please check sheet permissions.</p>';
+                        throw new Error("Invalid JSONP response. Check if the Google Sheet is set to 'Anyone with the link can view'.");
+                    }
+                    const jsonString = match[1];
                     const data = JSON.parse(jsonString);
 
                     const rows = data.table.rows;
-                    const headers = data.table.cols.map(col => col.label);
-                    const nameIndex = headers.indexOf('product_name');
-                    const skuIndex = headers.indexOf('sku');
-                    const whatsappLinkIndex = headers.indexOf('whatsapp_product_link');
+                    const headers = data.table.cols.map(col => col.label.toLowerCase().trim());
 
-                    if (nameIndex === -1 || skuIndex === -1 || whatsappLinkIndex === -1) {
-                        console.error('Missing required columns in Google Sheet: product_name, sku, or whatsapp_product_link.');
-                        return;
-                    }
+                    // Flexible column mapping
+                    const columnMap = {
+                        id: ['id'],
+                        name: ['title'],
+                        price: ['price'],
+                        link: ['link']
+                    };
 
-                    let foundLink = null;
-                    for (const row of rows) {
-                        const productName = row.c[nameIndex] ? row.c[nameIndex].v : null;
-                        const productSku = row.c[skuIndex] ? row.c[skuIndex].v : null;
-                        const whatsappLink = row.c[whatsappLinkIndex] ? row.c[whatsappLinkIndex].v : null;
-
-                        // Match by SKU first for precision, then by name
-                        if (productSku === PRODUCT_SKU && whatsappLink) {
-                            foundLink = whatsappLink;
-                            break;
-                        } else if (productName === CURRENT_PRODUCT_NAME && whatsappLink) {
-                            foundLink = whatsappLink;
-                            // Continue searching in case a SKU match is found later (less likely if SKU is unique)
+                    function findIndex(possibleNames) {
+                        for (const name of possibleNames) {
+                            const index = headers.indexOf(name);
+                            if (index !== -1) return index;
                         }
+                        return -1;
                     }
 
-                    const buyButton = document.getElementById('whatsapp-buy-button');
-                    if (buyButton) {
-                        if (foundLink) {
-                            buyButton.href = foundLink;
+                    const idIndex = findIndex(columnMap.id);
+                    const nameIndex = findIndex(columnMap.name);
+                    const priceIndex = findIndex(columnMap.price);
+                    const purchaseLinkIndex = findIndex(columnMap.link);
+
+                    if ([idIndex, nameIndex, priceIndex, purchaseLinkIndex].some(index => index === -1)) {
+                        const missing = Object.keys(columnMap).filter(key => findIndex(columnMap[key]) === -1);
+                        throw new Error(`Missing required columns. Found: [${headers.join(', ')}]. Missing mappings for: [${missing.join(', ')}]. Please check your Google Sheet for columns like 'id', 'title', 'price', and 'link'.`);
+                    }
+
+                    const variants = rows.map(row => ({
+                        id: row.c[idIndex] ? row.c[idIndex].v : null,
+                        name: row.c[nameIndex] ? row.c[nameIndex].v : null,
+                        price: row.c[priceIndex] ? row.c[priceIndex].f || row.c[priceIndex].v : null,
+                        link: row.c[purchaseLinkIndex] ? row.c[purchaseLinkIndex].v : null,
+                    })).filter(variant => variant.name === CURRENT_PRODUCT_NAME && variant.link)
+                       .map(variant => {
+                            // Extract size from ID, e.g., "RWB-001-1KG" -> "1KG"
+                            const idParts = variant.id.split('-');
+                            const size = idParts.length > 2 ? idParts.slice(2).join('-') : 'Standard';
+                            return { ...variant, size: size };
+                       });
+
+                    const container = document.getElementById('purchase-options-container');
+                    if (container) {
+                        if (variants.length > 0) {
+                            container.innerHTML = '<p class="text-sm text-stone-500 mb-2">Select a size to purchase:</p>';
+                            const buttonWrapper = document.createElement('div');
+                            buttonWrapper.className = 'flex flex-wrap gap-4';
+                            variants.forEach(variant => {
+                                const button = document.createElement('a');
+                                button.href = variant.link;
+                                button.target = '_blank';
+                                button.rel = 'noopener noreferrer';
+                                button.className = 'flex-grow text-center px-6 py-3 bg-brand-crimson text-white font-bold uppercase tracking-widest text-[10px] rounded-full hover:bg-brand-gold transition shadow-lg';
+                                button.innerHTML = `${variant.size} - RM ${variant.price}`;
+                                buttonWrapper.appendChild(button);
+                            });
+                            container.appendChild(buttonWrapper);
                         } else {
-                            // Fallback or disable button if no link found
-                            buyButton.href = `https://wa.me/601154554438?text=I%27m%20interested%20in%20${encodeURIComponent(CURRENT_PRODUCT_NAME)}`;
-                            console.warn(`No specific WhatsApp link found for ${CURRENT_PRODUCT_NAME} (SKU: ${PRODUCT_SKU}). Using generic inquiry link.`);
+                            container.innerHTML = '<p class="text-center text-stone-500 col-span-full">This product is currently unavailable for online purchase.</p>';
                         }
                     }
                 })
-                .catch(error => console.error('Error fetching or processing Google Sheet data:', error));
+                .catch(error => {
+                    console.error('Error fetching or processing Google Sheet data:', error);
+                    const container = document.getElementById('purchase-options-container');
+                    // Display a more informative error on the page
+                    if (container) container.innerHTML = `<p class="text-center text-red-600 col-span-full text-xs p-4 bg-red-50 rounded-lg">${error.message}</p>`;
+                });
         });
 
         // --- Blogger Integration Script for Related Recipes ---

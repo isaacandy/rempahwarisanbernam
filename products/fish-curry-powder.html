@@ -138,14 +138,11 @@
                         </div>
 
                         <!-- Purchase Button -->
-                        <div class="mt-10">
-                            <a id="buy-now-button" href="#"
-                                class="w-full text-center block bg-brand-crimson text-white font-bold uppercase tracking-widest py-4 rounded-xl hover:bg-stone-900 transition shadow-lg shadow-red-900/20">
-                                Purchase Now
-                            </a>
-                            <p id="buy-now-loading" class="text-center text-stone-500 mt-4" style="display: none;">
-                                <i data-lucide="loader-2" class="inline-block animate-spin mr-2" aria-hidden="true"></i>Loading purchase options...
-                            </p>
+                        <!-- DYNAMIC PURCHASE OPTIONS CONTAINER -->
+                        <div id="purchase-options-container" class="mt-10 space-y-4">
+                            <p class="text-sm text-stone-500">Select a size to purchase:</p>
+                            <!-- Purchase option buttons will be injected here by JavaScript -->
+                            <div class="text-stone-500 text-sm">Loading purchase options...</div>
                         </div>
                     </div>
                 </div>
@@ -212,45 +209,65 @@
     lucide.createIcons();
 
     // --- Fetch Purchase Link ---
-    (function fetchPurchaseLink() {
+    (function fetchPurchaseOptions() {
         const sheetId = '1vKPPiD963CK5QLqZ3gwk__xGgnQ1wRgU6agEYMyiqvQ';
         const sheetName = 'RWB%20Products';
         const sheetUrl = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:json&sheet=${sheetName}`;
 
-        const buyButton = document.getElementById('buy-now-button');
-        const buyLoading = document.getElementById('buy-now-loading');
-        if (buyButton && buyLoading) buyLoading.style.display = 'block';
-
         fetch(sheetUrl)
             .then(response => response.text())
             .then(text => {
-                const jsonString = text.match(/google\.visualization\.Query\.setResponse\((.*)\);/)[1];
+                const match = text.match(/google\.visualization\.Query\.setResponse\((.*)\);/);
+                if (!match || !match[1]) {
+                    const errorContainer = document.getElementById('purchase-options-container');
+                    if (errorContainer) errorContainer.innerHTML = '<p class="text-center text-red-600 col-span-full">Error: Could not load purchase options. Please check sheet permissions.</p>';
+                    throw new Error("Invalid JSONP response. Check if the Google Sheet is set to 'Anyone with the link can view'.");
+                }
+                const jsonString = match[1];
                 const data = JSON.parse(jsonString);
                 const rows = data.table.rows;
-                const headers = data.table.cols.map(col => col.label);
-                const skuIndex = headers.indexOf('sku');
-                const linkIndex = headers.indexOf('whatsapp_product_link');
+                const headers = data.table.cols.map(col => col.label.toLowerCase().trim());
+                const nameIndex = headers.indexOf('product_name'.toLowerCase());
+                const sizeIndex = headers.indexOf('size'.toLowerCase());
+                const priceIndex = headers.indexOf('price'.toLowerCase());
+                const purchaseLinkIndex = headers.indexOf('purchase_link'.toLowerCase());
 
-                const productRow = rows.find(row => row.c[skuIndex] && row.c[skuIndex].v.trim() === PRODUCT_SKU);
+                if ([nameIndex, sizeIndex, priceIndex, purchaseLinkIndex].some(index => index === -1)) {
+                    throw new Error('Missing required columns in Google Sheet. Ensure "product_name", "size", "price", and "purchase_link" exist.');
+                }
 
-                if (buyButton) {
-                    if (productRow && productRow.c[linkIndex] && productRow.c[linkIndex].v) {
-                        buyButton.href = productRow.c[linkIndex].v;
+                const variants = rows.map(row => ({
+                    name: row.c[nameIndex] ? row.c[nameIndex].v : null,
+                    size: row.c[sizeIndex] ? row.c[sizeIndex].v : null,
+                    price: row.c[priceIndex] ? row.c[priceIndex].f || row.c[priceIndex].v : null,
+                    link: row.c[purchaseLinkIndex] ? row.c[purchaseLinkIndex].v : null,
+                })).filter(variant => variant.name === CURRENT_PRODUCT_NAME && variant.link);
+
+                const container = document.getElementById('purchase-options-container');
+                if (container) {
+                    if (variants.length > 0) {
+                        container.innerHTML = '<p class="text-sm text-stone-500 mb-2">Select a size to purchase:</p>';
+                        const buttonWrapper = document.createElement('div');
+                        buttonWrapper.className = 'flex flex-wrap gap-4';
+                        variants.forEach(variant => {
+                            const button = document.createElement('a');
+                            button.href = variant.link;
+                            button.target = '_blank';
+                            button.rel = 'noopener noreferrer';
+                            button.className = 'flex-grow text-center px-6 py-3 bg-brand-crimson text-white font-bold uppercase tracking-widest text-[10px] rounded-full hover:bg-brand-gold transition shadow-lg';
+                            button.innerHTML = `${variant.size} - RM ${variant.price}`;
+                            buttonWrapper.appendChild(button);
+                        });
+                        container.appendChild(buttonWrapper);
                     } else {
-                        buyButton.href = "https://wa.me/601154554438";
-                        console.warn(`Purchase link for SKU "${PRODUCT_SKU}" not found.`);
+                        container.innerHTML = '<p class="text-center text-stone-500 col-span-full">This product is currently unavailable for online purchase.</p>';
                     }
                 }
             })
             .catch(error => {
-                console.error('Error fetching purchase link:', error);
-                if (buyButton) buyButton.href = "https://wa.me/601154554438";
-            })
-            .finally(() => {
-                if (buyButton && buyLoading) {
-                    buyLoading.style.display = 'none';
-                    buyButton.style.display = 'block';
-                }
+                console.error('Error fetching or processing Google Sheet data:', error);
+                const errorContainer = document.getElementById('purchase-options-container');
+                if (errorContainer) errorContainer.innerHTML = `<p class="text-center text-red-600 col-span-full">Error: ${error.message}</p>`;
             });
     })();
 
