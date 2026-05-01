@@ -4,7 +4,7 @@
   "description": "Static corporate website for Rempah Warisan Bernam",
   "main": "index.js",
   "scripts": {
-    "build:tailwind": "tailwindcss -i ./src/input.css -o ./dist/output.css --minify",
+    "build:tailwind": "tailwindcss -i ./input.css -o ./dist/output.css --minify",
     "build": "npm run build:tailwind"
   },
   "keywords": [],
