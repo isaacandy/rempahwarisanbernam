@@ -1,17 +1,12 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
-    "./*.{html,js}", // Scans all .html and .js files in the root
+    "./*.html", // Scan all HTML files in the root directory
+    "./products/*.html", // Scan HTML files in the products directory
+    // Add any other directories containing HTML files that use Tailwind classes
   ],
   theme: {
-    extend: {
-      colors: {
-        'brand-obsidian': '#121212',
-        'brand-crimson': '#8b1a1a',
-        'brand-gold': '#b39359',
-        'brand-cream': '#fdfcf9',
-      }
-    },
+    extend: {},
   },
   plugins: [],
-}
+};
