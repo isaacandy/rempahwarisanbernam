@@ -1,90 +1,94 @@
-# Product Page Creation Guide
+# Product Page Creation & Management Guide
 
-This guide outlines the process for creating a new product page within the Rempah Warisan Bernam website. All product pages should be located in the `/products` directory.
+This comprehensive guide outlines the process for creating, updating, and maintaining product pages for **Rempah Warisan Bernam**. All product pages reside in the [`products/`](file:///c:/Users/DrIsaacAndyPhD/workspace/rempahwarisanbernam/products/) directory.
 
-## Instructions
+---
 
-To create a new product page, follow these steps:
+## 1. Quick Automated Generation (Recommended)
 
-1.  **Duplicate the Template:**
-    In the `/products` directory, make a copy of an existing product page (e.g., `chilli-powder.html`) and rename it for the new product (e.g., `new-spice-powder.html`). Use lowercase and hyphens for the filename.
+When new products are added to the Google Sheet ([catalog_products.csv](https://docs.google.com/spreadsheets/d/1vKPPiD963CK5QLqZ3gwk__xGgnQ1wRgU6agEYMyiqvQ)), you can run the automated generator script to create all missing pages:
 
-2.  **Update Product-Specific Metadata:**
-    In the `<head>` of the new file, locate and update these tags:
-    *   `<title>`: The page title.
-    *   `<meta name="description">`: A detailed description for SEO.
-    *   `<meta property="og:title">`: Title for social media sharing.
-    *   `<meta property="og:description">`: Description for social media.
-    *   `<meta property="og:image">`: The **absolute URL** to the product's packaging image (e.g., `https://www.rempahwarisanbernam.net/images/Packaging/new-spice.png`).
-    *   `<meta property="og:url">`: The **absolute URL** to the new product page (e.g., `https://www.rempahwarisanbernam.net/products/new-spice-powder.html`).
+```bash
+# 1. Inspect missing pages
+python scratch/parse_products.py
 
-3.  **Configure Dynamic Content (JavaScript):**
-    Still in the `<head>`, find the `JAVASCRIPT CONFIGURATION & LOGIC` section.
-    *   **Update `CURRENT_PRODUCT_NAME`:** Change the value of this constant to match the product's full name **exactly** as it appears in the Google Sheet and as a tag in Blogger.
-        *   **Example:** `const CURRENT_PRODUCT_NAME = "Meat & Chicken Curry Powder";`
-    *   This constant is critical for two functions:
-        1.  Fetching all its purchase variants (sizes, prices, links) from the Google Sheet.
-        2.  Fetching related recipes from the Blogger site.
-    *   **Update `PRODUCT_SKU`:** Change this to the SKU of the *primary* or *default* variant for schema purposes.
-        *   **Example:** `const PRODUCT_SKU = "RWB-SKDA-250G";`
+# 2. Generate pages automatically
+python scratch/generate_all_product_pages.py
 
-4.  **Update Product Schema (JSON-LD for the default variant):**
-    Find the `PRODUCT-SPECIFIC SCHEMA` script tag (also in the `<head>`) and edit the JSON content:
-    *   `name`: Full product name.
-    *   `image`: Absolute URL to the product image.
-    *   `description`: The same detailed description from the meta tag.
-    *   `sku`: The product's unique SKU (if available).
-    *   `offers.url`: The absolute URL to the new product page.
-    *   `offers.price`: The retail price.
+# 3. Update sitemap.xml
+python scratch/update_sitemap.py
 
-5.  **Include Google Customer Reviews Badge:**
-    Add the following script block just before the closing `</body>` tag (or within the `<footer>` like `index.html`):
-    ```html
-    <!-- Google Customer Reviews Merchant Widget -->
-    <script id='merchantWidgetScript' src="https://www.gstatic.com/shopping/merchant/merchantwidget.js" defer></script>
-    <script>
-      merchantWidgetScript.addEventListener('load', function () {
-        merchantwidget.start({
-             // REQUIRED FIELDS
-             merchant_id: 5724505526,
-             // OPTIONAL FIELDS
-             position: 'BOTTOM_RIGHT', // You can choose other positions like 'LEFT_BOTTOM', 'TOP_LEFT', etc.
-             // region: 'REGION_CODE', // Optional: uncomment and replace with your region code if needed (e.g., 'US', 'MY')
-        });
-      });
-    </script>
-    ```
+# 4. Rebuild Tailwind CSS
+npm run build
+```
 
-5.  **Update Page Content (in the `<body>`):**
-    *   **Product Details Section:**
-        *   **Product Image:** Update the `src` and `alt` text for the main product image. The ShareThis buttons are positioned directly below this image and will update automatically.
-        *   **Product Information:**
-            *   Update the category `<p>` tag (e.g., "Spice Blend").
-            *   Update the `<h1>` title.
-            *   Update the main description paragraph.
-        *   **Purchase Options:** The purchase buttons are now generated dynamically. You don't need to edit the "Purchase Now" button anymore. Just ensure the `<div id="purchase-options-container">...</div>` exists.
-        *   **Common Uses:** Update the `<ul>` list with common applications for the product.
-        *   **Key Ingredients:** Update the paragraph with the product's ingredients.
-    *   **Heritage & Nutritional Section:**
-        *   Update the `<h4>` title and the descriptive paragraph to tell the story of the product.
-        *   Fill in the nutritional facts table with the correct values per 100g serving.
-    *   **Related Recipes Section:**
-        *   Update the `<h2>` title to reflect the product name (e.g., "Recipes with Coriander Powder").
+---
 
-6.  **Update Centralized Data Sources:**
-    *   **Google Sheet ("RWB Products"):**
-        *   Add a new row for **each size/variant** of the product.
-        *   The `title` column must be an **exact match** to `CURRENT_PRODUCT_NAME` for all variants of that product.
-        *   Each variant must have a **unique `id`** that includes the size (e.g., `RWB-001-1KG`, `RWB-001-3KG`).
-        *   Fill in the `price` for each variant.
-        *   Add the correct `link` for each variant, pointing to the specific cart URL on `order.rempahwarisanbernam`.
-        *   (Optional) To feature a variant, add a column named `is_best_seller` and set its value to `TRUE` for that specific row.
+## 2. Manual Step-by-Step Instructions
 
-    *   **AI Recipe Generator & Blogger:**
-        *   Recipes are generated by an external AI system at izndgroup.com and published to the Blogger site.
-        *   To ensure recipes appear on the correct product pages, the AI system must be configured to add a **label/tag** to the blog post that is an **exact match** to the product's `CURRENT_PRODUCT_NAME`.
-        *   The post must also be tagged with "Recipe" to be correctly categorized.
+If creating or customizing a product page manually, follow these detailed steps:
 
-By following these steps, you will maintain a consistent structure and ensure all dynamic features (purchase links and related recipes) function correctly for new products.
+### Step 1: Duplicate Reference Template
+Copy an existing clean page (e.g. `products/cinnamon-powder.html` or `products/black-pepper-powder.html`) and rename it with lower-case letters and hyphens:
+- Format: `products/<slug>.html` (e.g., `products/cinnamon-powder.html`)
 
-**Note:** The JavaScript for fetching purchase links and related recipes is now self-contained at the bottom of each product page. There is no need to edit a separate `.js` file.
+### Step 2: Update Metadata in `<head>`
+Update the following tags:
+- `<title>`: `[Product Name] | Rempah Warisan Bernam`
+- `<meta name="description">`: Concise, SEO-rich product summary (120-160 chars)
+- `<link rel="canonical" href="https://www.rempahwarisanbernam.net/products/[slug].html">`
+- Open Graph tags: `og:title`, `og:description`, `og:image`, `og:url`
+- Twitter tags: `twitter:image:alt`
+
+### Step 3: Update JSON-LD Product Schema
+In the `<script type="application/ld+json">` block:
+- `name`: Exact product name
+- `image`: Absolute URL to image (e.g., `https://www.rempahwarisanbernam.net/images/Packaging/...`)
+- `sku`: Base product SKU (e.g., `RWB-019`)
+- `offers.price`: Numerical price (e.g., `"7.00"`)
+- `offers.url`: Canonical product page URL
+
+### Step 4: Configure JavaScript Constants
+Near the bottom of the page, update:
+```javascript
+// MUST match the 'title' column in the Google Sheet exactly:
+const CURRENT_PRODUCT_NAME = "Cinnamon Powder";
+const PRODUCT_SKU = "RWB-019";
+```
+> [!IMPORTANT]
+> The dynamic purchase buttons fetch data from Google Sheets based on:
+> `variant.name === CURRENT_PRODUCT_NAME`
+> If these strings do not match character-for-character, the purchase buttons will not appear.
+
+### Step 5: Update Page Body Content
+1. **Category**: Small gold tag above the main title (e.g., `Ground Spice`, `Spice Blend`, `Whole Spice`, `Nuts & Seeds`, `Grains & Pulses`, `Flours`, `Dried Fruits`).
+2. **Main Title `<h1>`**: Full commercial product name.
+3. **Hero Image**: Ensure `src` points to the packaging PNG in `images/Packaging/` with fallback `onerror`.
+4. **ShareThis Container**: Ensure `data-url` and `data-title` match the product.
+5. **Common Uses `<ul>`**: 4–5 realistic culinary bullet points.
+6. **Key Ingredients `<p>`**: Full botanical or ingredient list.
+7. **Heritage Section**: 2–3 sentences highlighting the 1972 recipe origin, processing purity, or natural spice sourcing.
+8. **Nutritional Facts Table**: 4–5 realistic values per 100g serving (Energy, Protein, Fat, Carbohydrates, Dietary Fiber).
+9. **Related Recipes `<h2>`**: `Recipes with [Product Name]`.
+
+### Step 6: Post-Creation Checklist
+- [ ] Add URL entry to [`sitemap.xml`](file:///c:/Users/DrIsaacAndyPhD/workspace/rempahwarisanbernam/sitemap.xml)
+- [ ] Ensure packaging image exists in `images/Packaging/`
+- [ ] Run `npm run build` to compile Tailwind styles for the new page
+- [ ] Test the page in browser at `http://localhost:<port>/products/<slug>.html`
+- [ ] Verify purchase option buttons load from the Google Sheet
+- [ ] Verify related recipe feed loads or displays graceful fallback
+
+---
+
+## 3. Data Integration Reference
+
+### Google Sheet ("RWB Products" / `catalog_products.csv`)
+- **Sheet ID**: `1vKPPiD963CK5QLqZ3gwk__xGgnQ1wRgU6agEYMyiqvQ`
+- **Sheet Name**: `catalog_products.csv`
+- **Dynamic Lookup**: `https://docs.google.com/spreadsheets/d/1vKPPiD963CK5QLqZ3gwk__xGgnQ1wRgU6agEYMyiqvQ/gviz/tq?tqx=out:json&sheet=catalog_products.csv&headers=1`
+- **Variant Matching**: Each size row in the sheet (`250g`, `1kg`, `3kg`) shares the identical `title`. The script automatically parses the size suffix from the ID (e.g., `RWB-019-1KG` -> `1KG`).
+
+### Blogger Recipe Feed
+- **Feed URL**: `https://blog.rempahwarisanbernam.net/feeds/posts/default?alt=json-in-script`
+- **Matching Tag**: Blogger post must have a label matching `CURRENT_PRODUCT_NAME` and `Recipe`.
