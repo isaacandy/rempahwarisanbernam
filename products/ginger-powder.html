@@ -392,87 +392,369 @@
         const CURRENT_PRODUCT_NAME = "Ginger Powder";
         const PRODUCT_SKU = "RWB-038-1KG";
 
-        // --- Google Sheet Integration for Purchase Link ---
-        const sheetId = '1vKPPiD963CK5QLqZ3gwk__xGgnQ1wRgU6agEYMyiqvQ';
-        const sheetName = 'catalog_products.csv';
-        const sheetUrl = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:json&sheet=${sheetName}&headers=1`;
+        // Complete Quick WhatsApp Order and Dynamic Purchase Logic
+// Supports:
+// 1. External checkout links if configured in Google Sheet
+// 2. Automated WhatsApp Quick Order Modal with customer delivery & shipping estimation details as fallback
 
-        document.addEventListener('DOMContentLoaded', function () {
-            fetch(sheetUrl)
-                .then(response => response.text())
-                .then(text => {
-                    const match = text.match(/google\.visualization\.Query\.setResponse\(([\s\S]*?)\);/);
-                    if (!match || !match[1]) {
-                        const errorContainer = document.getElementById('purchase-options-container');
-                        if (errorContainer) errorContainer.innerHTML = '<p class="text-center text-red-600 col-span-full">Error: Could not load purchase options.</p>';
-                        throw new Error("Invalid JSONP response.");
-                    }
-                    const data = JSON.parse(match[1]);
-                    const rows = data.table.rows;
-                    const headers = data.table.cols.map(col => col.label.toLowerCase().trim());
+const WHATSAPP_PHONE_NUMBER = "601154322254"; // Rempah Warisan Bernam Official WhatsApp
 
-                    const columnMap = {
-                        id: ['id'],
-                        name: ['title'],
-                        price: ['price'],
-                        link: ['link'],
-                        is_best_seller: ['is_best_seller', 'bestseller']
-                    };
+function initQuickOrderModal() {
+    const modal = document.getElementById('quick-order-modal');
+    const modalProductTitle = document.getElementById('modal-product-title');
+    const modalSelectedSize = document.getElementById('modal-selected-size');
+    const modalSubtotal = document.getElementById('modal-subtotal');
+    const qtyInput = document.getElementById('order-qty');
+    const qtyMinus = document.getElementById('qty-minus');
+    const qtyPlus = document.getElementById('qty-plus');
+    const orderForm = document.getElementById('quick-order-form');
+    const closeBtn = document.getElementById('close-order-modal');
 
-                    function findIndex(possibleNames) {
-                        for (const name of possibleNames) {
-                            const index = headers.indexOf(name);
-                            if (index !== -1) return index;
-                        }
-                        return -1;
-                    }
+    let currentUnitCost = 0;
 
-                    const idIndex = findIndex(columnMap.id);
-                    const nameIndex = findIndex(columnMap.name);
-                    const priceIndex = findIndex(columnMap.price);
-                    const purchaseLinkIndex = findIndex(columnMap.link);
-                    const bestSellerIndex = findIndex(columnMap.is_best_seller);
+    window.openQuickOrderModal = function(productName, size, price) {
+        if (!modal) return;
+        document.getElementById('order-product-name').value = productName;
+        document.getElementById('order-product-size').value = size;
+        document.getElementById('order-product-price').value = price;
 
-                    const variants = rows.map(row => ({
-                        id: row.c[idIndex] ? row.c[idIndex].v : null,
-                        name: row.c[nameIndex] ? row.c[nameIndex].v : null,
-                        price: row.c[priceIndex] ? row.c[priceIndex].f || row.c[priceIndex].v : null,
-                        link: row.c[purchaseLinkIndex] ? row.c[purchaseLinkIndex].v : null,
-                        isBestSeller: bestSellerIndex !== -1 && row.c[bestSellerIndex] && String(row.c[bestSellerIndex].v).toLowerCase() === 'true'
-                    })).filter(variant => variant.name === CURRENT_PRODUCT_NAME && variant.link && !variant.link.includes('[link removed]'))
-                       .map(variant => {
-                            const idParts = (variant.id || '').split('-');
-                            const size = idParts.length > 2 ? idParts.slice(2).join('-') : 'Standard';
-                            return { ...variant, size: size };
-                       });
+        modalProductTitle.textContent = productName;
+        modalSelectedSize.textContent = `Selected size: ${size} • RM ${price} per pack`;
 
-                    const container = document.getElementById('purchase-options-container');
-                    if (container) {
-                        if (variants.length > 0) {
-                            container.innerHTML = '<p class="text-sm text-stone-500 mb-2">Select a size to purchase:</p>';
-                            variants.forEach(variant => {
-                                const button = document.createElement('a');
-                                button.href = variant.link;
-                                button.className = 'relative w-full text-center block bg-brand-crimson text-white font-bold uppercase tracking-widest py-4 rounded-xl hover:bg-stone-900 transition shadow-lg shadow-red-900/20';
-                                let buttonHTML = `<span>${variant.size} - RM ${variant.price}</span>`;
-                                if (variant.isBestSeller) {
-                                    button.classList.add('pt-6');
-                                    buttonHTML += `<span class="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 px-3 py-0.5 bg-amber-400 text-stone-900 text-[9px] font-black rounded-full shadow-md uppercase tracking-wider">Best Seller</span>`;
-                                }
-                                button.innerHTML = buttonHTML;
-                                container.appendChild(button);
-                            });
-                        } else {
-                            container.innerHTML = '<p class="text-center text-stone-500 col-span-full">This product is available via direct inquiry.</p><a href="/index.html#contact" class="w-full text-center block bg-stone-900 text-white font-bold uppercase tracking-widest py-4 rounded-xl hover:bg-brand-crimson transition shadow-lg text-xs mt-2">Inquire Now</a>';
-                        }
-                    }
-                })
-                .catch(error => {
-                    console.error('Error fetching purchase options:', error);
-                    const container = document.getElementById('purchase-options-container');
-                    if (container) container.innerHTML = '<p class="text-center text-stone-500 col-span-full">This product is available via direct inquiry.</p><a href="/index.html#contact" class="w-full text-center block bg-stone-900 text-white font-bold uppercase tracking-widest py-4 rounded-xl hover:bg-brand-crimson transition shadow-lg text-xs mt-2">Inquire Now</a>';
-                });
+        // Parse numerical price
+        const numeric = parseFloat(String(price).replace(/[^0-9.]/g, '')) || 0;
+        currentUnitCost = numeric;
+        qtyInput.value = 1;
+        updateSubtotal();
+
+        modal.classList.remove('hidden');
+        setTimeout(() => {
+            modal.classList.remove('opacity-0');
+            modal.querySelector('#quick-order-card')?.classList.remove('scale-95');
+        }, 10);
+    };
+
+    function closeModal() {
+        if (!modal) return;
+        modal.classList.add('opacity-0');
+        modal.querySelector('#quick-order-card')?.classList.add('scale-95');
+        setTimeout(() => modal.classList.add('hidden'), 300);
+    }
+
+    if (closeBtn) closeBtn.addEventListener('click', closeModal);
+    if (modal) {
+        modal.addEventListener('click', function(e) {
+            if (e.target === modal) closeModal();
         });
+    }
+
+    function updateSubtotal() {
+        const qty = parseInt(qtyInput.value) || 1;
+        const total = (qty * currentUnitCost).toFixed(2);
+        if (modalSubtotal) modalSubtotal.textContent = `RM ${total}`;
+    }
+
+    if (qtyMinus) {
+        qtyMinus.addEventListener('click', function() {
+            let v = parseInt(qtyInput.value) || 1;
+            if (v > 1) { qtyInput.value = v - 1; updateSubtotal(); }
+        });
+    }
+
+    if (qtyPlus) {
+        qtyPlus.addEventListener('click', function() {
+            let v = parseInt(qtyInput.value) || 1;
+            qtyInput.value = v + 1;
+            updateSubtotal();
+        });
+    }
+
+    if (qtyInput) qtyInput.addEventListener('input', updateSubtotal);
+
+    if (orderForm) {
+        orderForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const pName = document.getElementById('order-product-name').value;
+            const pSize = document.getElementById('order-product-size').value;
+            const pPrice = document.getElementById('order-product-price').value;
+            const pQty = document.getElementById('order-qty').value;
+            const cName = document.getElementById('order-name').value.trim();
+            const cAddress = document.getElementById('order-address').value.trim();
+            const cPostcode = document.getElementById('order-postcode').value.trim();
+            const cNotes = document.getElementById('order-notes').value.trim();
+
+            const unitNum = parseFloat(String(pPrice).replace(/[^0-9.]/g, '')) || 0;
+            const estTotal = (parseInt(pQty) * unitNum).toFixed(2);
+
+            // Construct standard WhatsApp catalog formatted message
+            let msg = `🛍️ *NEW ORDER - REMPAH WARISAN BERNAM*\n`;
+            msg += `────────────────────────\n`;
+            msg += `📦 *Product:* ${pName}\n`;
+            msg += `⚖️ *Size:* ${pSize}\n`;
+            msg += `💰 *Unit Price:* RM ${pPrice}\n`;
+            msg += `🔢 *Quantity:* ${pQty} pack(s)\n`;
+            msg += `💵 *Est. Subtotal:* RM ${estTotal} (Excl. Shipping)\n\n`;
+            msg += `👤 *CUSTOMER DELIVERY DETAILS*\n`;
+            msg += `────────────────────────\n`;
+            msg += `🏷️ *Name:* ${cName}\n`;
+            msg += `📍 *Delivery Address:* ${cAddress}\n`;
+            msg += `📮 *Postcode:* ${cPostcode}\n`;
+            if (cNotes) msg += `💬 *Notes:* ${cNotes}\n`;
+            msg += `────────────────────────\n`;
+            msg += `_Please advise on postage cost to my postcode and confirm total._\n`;
+            msg += `_Sent from rempahwarisanbernam.net_`;
+
+            const encoded = encodeURIComponent(msg);
+            const waUrl = `https://wa.me/${WHATSAPP_PHONE_NUMBER}?text=${encoded}`;
+
+            window.open(waUrl, '_blank');
+            closeModal();
+        });
+    }
+}
+
+
+    // Complete Quick WhatsApp Order and Dynamic Purchase Logic
+// Supports:
+// 1. External checkout links if configured in Google Sheet
+// 2. Automated WhatsApp Quick Order Modal with customer delivery & shipping estimation details as fallback
+
+const WHATSAPP_PHONE_NUMBER = "601154322254"; // Rempah Warisan Bernam Official WhatsApp
+
+function initQuickOrderModal() {
+    const modal = document.getElementById('quick-order-modal');
+    const modalProductTitle = document.getElementById('modal-product-title');
+    const modalSelectedSize = document.getElementById('modal-selected-size');
+    const modalSubtotal = document.getElementById('modal-subtotal');
+    const qtyInput = document.getElementById('order-qty');
+    const qtyMinus = document.getElementById('qty-minus');
+    const qtyPlus = document.getElementById('qty-plus');
+    const orderForm = document.getElementById('quick-order-form');
+    const closeBtn = document.getElementById('close-order-modal');
+
+    let currentUnitCost = 0;
+
+    window.openQuickOrderModal = function(productName, size, price) {
+        if (!modal) return;
+        document.getElementById('order-product-name').value = productName;
+        document.getElementById('order-product-size').value = size;
+        document.getElementById('order-product-price').value = price;
+
+        modalProductTitle.textContent = productName;
+        modalSelectedSize.textContent = `Selected size: ${size} • RM ${price} per pack`;
+
+        // Parse numerical price
+        const numeric = parseFloat(String(price).replace(/[^0-9.]/g, '')) || 0;
+        currentUnitCost = numeric;
+        qtyInput.value = 1;
+        updateSubtotal();
+
+        modal.classList.remove('hidden');
+        setTimeout(() => {
+            modal.classList.remove('opacity-0');
+            modal.querySelector('#quick-order-card')?.classList.remove('scale-95');
+        }, 10);
+    };
+
+    function closeModal() {
+        if (!modal) return;
+        modal.classList.add('opacity-0');
+        modal.querySelector('#quick-order-card')?.classList.add('scale-95');
+        setTimeout(() => modal.classList.add('hidden'), 300);
+    }
+
+    if (closeBtn) closeBtn.addEventListener('click', closeModal);
+    if (modal) {
+        modal.addEventListener('click', function(e) {
+            if (e.target === modal) closeModal();
+        });
+    }
+
+    function updateSubtotal() {
+        const qty = parseInt(qtyInput.value) || 1;
+        const total = (qty * currentUnitCost).toFixed(2);
+        if (modalSubtotal) modalSubtotal.textContent = `RM ${total}`;
+    }
+
+    if (qtyMinus) {
+        qtyMinus.addEventListener('click', function() {
+            let v = parseInt(qtyInput.value) || 1;
+            if (v > 1) { qtyInput.value = v - 1; updateSubtotal(); }
+        });
+    }
+
+    if (qtyPlus) {
+        qtyPlus.addEventListener('click', function() {
+            let v = parseInt(qtyInput.value) || 1;
+            qtyInput.value = v + 1;
+            updateSubtotal();
+        });
+    }
+
+    if (qtyInput) qtyInput.addEventListener('input', updateSubtotal);
+
+    if (orderForm) {
+        orderForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const pName = document.getElementById('order-product-name').value;
+            const pSize = document.getElementById('order-product-size').value;
+            const pPrice = document.getElementById('order-product-price').value;
+            const pQty = document.getElementById('order-qty').value;
+            const cName = document.getElementById('order-name').value.trim();
+            const cAddress = document.getElementById('order-address').value.trim();
+            const cPostcode = document.getElementById('order-postcode').value.trim();
+            const cNotes = document.getElementById('order-notes').value.trim();
+
+            const unitNum = parseFloat(String(pPrice).replace(/[^0-9.]/g, '')) || 0;
+            const estTotal = (parseInt(pQty) * unitNum).toFixed(2);
+
+            // Construct standard WhatsApp catalog formatted message
+            let msg = `🛍️ *NEW ORDER - REMPAH WARISAN BERNAM*\n`;
+            msg += `────────────────────────\n`;
+            msg += `📦 *Product:* ${pName}\n`;
+            msg += `⚖️ *Size:* ${pSize}\n`;
+            msg += `💰 *Unit Price:* RM ${pPrice}\n`;
+            msg += `🔢 *Quantity:* ${pQty} pack(s)\n`;
+            msg += `💵 *Est. Subtotal:* RM ${estTotal} (Excl. Shipping)\n\n`;
+            msg += `👤 *CUSTOMER DELIVERY DETAILS*\n`;
+            msg += `────────────────────────\n`;
+            msg += `🏷️ *Name:* ${cName}\n`;
+            msg += `📍 *Delivery Address:* ${cAddress}\n`;
+            msg += `📮 *Postcode:* ${cPostcode}\n`;
+            if (cNotes) msg += `💬 *Notes:* ${cNotes}\n`;
+            msg += `────────────────────────\n`;
+            msg += `_Please advise on postage cost to my postcode and confirm total._\n`;
+            msg += `_Sent from rempahwarisanbernam.net_`;
+
+            const encoded = encodeURIComponent(msg);
+            const waUrl = `https://wa.me/${WHATSAPP_PHONE_NUMBER}?text=${encoded}`;
+
+            window.open(waUrl, '_blank');
+            closeModal();
+        });
+    }
+}
+
+
+    // --- Google Sheet Integration for Purchase & Quick Order ---
+    const sheetId = '1vKPPiD963CK5QLqZ3gwk__xGgnQ1wRgU6agEYMyiqvQ';
+    const sheetName = 'catalog_products.csv';
+    const sheetUrl = 'https://docs.google.com/spreadsheets/d/' + sheetId + '/gviz/tq?tqx=out:json&sheet=' + sheetName + '&headers=1';
+
+    document.addEventListener('DOMContentLoaded', function () {
+        initQuickOrderModal();
+
+        fetch(sheetUrl)
+            .then(response => response.text())
+            .then(text => {
+                const match = text.match(/google\.visualization\.Query\.setResponse\(([\s\S]*?)\);/);
+                if (!match || !match[1]) throw new Error("Invalid JSONP response.");
+                const data = JSON.parse(match[1]);
+                const rows = data.table.rows;
+                const headers = data.table.cols.map(col => col.label.toLowerCase().trim());
+
+                const columnMap = {
+                    id: ['id'],
+                    name: ['title'],
+                    price: ['price'],
+                    link: ['link'],
+                    is_best_seller: ['is_best_seller', 'bestseller']
+                };
+
+                function findIndex(possibleNames) {
+                    for (const name of possibleNames) {
+                        const index = headers.indexOf(name);
+                        if (index !== -1) return index;
+                    }
+                    return -1;
+                }
+
+                const idIndex = findIndex(columnMap.id);
+                const nameIndex = findIndex(columnMap.name);
+                const priceIndex = findIndex(columnMap.price);
+                const purchaseLinkIndex = findIndex(columnMap.link);
+                const bestSellerIndex = findIndex(columnMap.is_best_seller);
+
+                const variants = rows.map(row => ({
+                    id: row.c[idIndex] ? row.c[idIndex].v : null,
+                    name: row.c[nameIndex] ? row.c[nameIndex].v : null,
+                    price: row.c[priceIndex] ? (row.c[priceIndex].f || row.c[priceIndex].v) : null,
+                    link: row.c[purchaseLinkIndex] ? row.c[purchaseLinkIndex].v : null,
+                    isBestSeller: bestSellerIndex !== -1 && row.c[bestSellerIndex] && String(row.c[bestSellerIndex].v).toLowerCase() === 'true'
+                })).filter(variant => {
+                    if (!variant.name) return false;
+                    const vName = variant.name.trim().toLowerCase();
+                    const cName = CURRENT_PRODUCT_NAME.trim().toLowerCase();
+                    return vName === cName || vName.includes(cName) || cName.includes(vName);
+                })
+                   .map(variant => {
+                        const idParts = (variant.id || '').split('-');
+                        const size = idParts.length > 2 ? idParts.slice(2).join('-') : (variant.id ? variant.id.replace('RWB-', '') : 'Standard');
+                        return { ...variant, size: size };
+                   });
+
+                const container = document.getElementById('purchase-options-container');
+                if (container) {
+                    if (variants.length > 0) {
+                        container.innerHTML = '<p class="text-xs font-bold uppercase tracking-wider text-stone-500 mb-2">Select a size to order:</p>';
+                        variants.forEach(variant => {
+                            const btn = document.createElement('button');
+                            btn.type = 'button';
+                            btn.className = 'relative w-full text-center block bg-brand-crimson hover:bg-stone-900 text-white font-bold uppercase tracking-widest py-4 px-6 rounded-xl transition shadow-lg shadow-red-900/20 group';
+
+                            let priceClean = String(variant.price || '0.00').replace('MYR', '').trim();
+                            let btnHTML = '<div class="flex items-center justify-between pointer-events-none">' +
+                                '<span class="text-xs tracking-wider flex items-center gap-2">' +
+                                    '<span>📦</span> <span>Size: <strong>' + variant.size + '</strong></span>' +
+                                '</span>' +
+                                '<span class="text-sm font-serif italic font-bold">RM ' + priceClean + '</span>' +
+                            '</div>';
+
+                            if (variant.isBestSeller) {
+                                btn.classList.add('pt-6');
+                                btnHTML += '<span class="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 px-3 py-0.5 bg-amber-400 text-stone-900 text-[9px] font-black rounded-full shadow-md uppercase tracking-wider">Best Seller</span>';
+                            }
+
+                            btn.innerHTML = btnHTML;
+
+                            // Click Handler: Check if custom checkout link is configured vs WhatsApp modal fallback
+                            btn.addEventListener('click', function() {
+                                const rawLink = (variant.link || '').trim();
+                                const isCustomCheckout = rawLink && 
+                                                         !rawLink.includes('[link removed]') && 
+                                                         !rawLink.includes('rempahwarisanbernam.net/products/');
+
+                                if (isCustomCheckout) {
+                                    window.open(rawLink, '_blank');
+                                } else {
+                                    openQuickOrderModal(CURRENT_PRODUCT_NAME, variant.size, priceClean);
+                                }
+                            });
+
+                            container.appendChild(btn);
+                        });
+
+                        // Trust note
+                        const trustNote = document.createElement('p');
+                        trustNote.className = 'text-[10px] text-stone-400 text-center mt-2 flex items-center justify-center gap-1.5';
+                        trustNote.innerHTML = '<span>⚡ Instant WhatsApp order confirmation with real-time postage estimate</span>';
+                        container.appendChild(trustNote);
+
+                    } else {
+                        container.innerHTML = '<p class="text-center text-stone-500 col-span-full">This product is available via direct inquiry.</p><a href="/index.html#contact" class="w-full text-center block bg-stone-900 text-white font-bold uppercase tracking-widest py-4 rounded-xl hover:bg-brand-crimson transition shadow-lg text-xs mt-2">Inquire Now</a>';
+                    }
+                }
+            })
+            .catch(error => {
+                console.error('Error loading purchase options:', error);
+                const container = document.getElementById('purchase-options-container');
+                if (container) {
+                    container.innerHTML = '<button type="button" onclick="openQuickOrderModal(\'' + CURRENT_PRODUCT_NAME + '\', \'Standard\', \'Inquiry\')" class="w-full text-center block bg-emerald-600 text-white font-bold uppercase tracking-widest py-4 rounded-xl hover:bg-emerald-700 transition shadow-lg text-xs">💬 Order via WhatsApp</button>';
+                }
+            });
+    });
 
         // --- Blogger Integration for Related Recipes ---
         const bloggerUrl = "https://blog.rempahwarisanbernam.net";
@@ -555,6 +837,74 @@
             document.body.appendChild(script);
         });
     </script>
+<!-- Quick WhatsApp Order Modal -->
+<div id="quick-order-modal" class="fixed inset-0 bg-stone-950/70 backdrop-blur-sm z-[100] flex items-center justify-center p-4 hidden opacity-0 transition-opacity duration-300">
+    <div class="bg-white w-full max-w-lg rounded-3xl shadow-2xl border border-stone-100 overflow-hidden transform scale-95 transition-transform duration-300" id="quick-order-card">
+        <!-- Modal Header -->
+        <div class="bg-stone-900 text-white p-6 relative">
+            <button type="button" id="close-order-modal" class="absolute top-5 right-5 text-stone-400 hover:text-white transition text-lg w-8 h-8 flex items-center justify-center rounded-full bg-stone-800" aria-label="Close modal">✕</button>
+            <div class="flex items-center gap-2 mb-1">
+                <span class="inline-block w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                <span class="text-[10px] font-bold uppercase tracking-widest text-emerald-400">Direct WhatsApp Order</span>
+            </div>
+            <h3 class="font-serif text-2xl italic text-white" id="modal-product-title">Order Product</h3>
+            <p class="text-xs text-stone-300 mt-1" id="modal-selected-size">Fill in your delivery details for an accurate shipping quote.</p>
+        </div>
+
+        <!-- Modal Form -->
+        <form id="quick-order-form" class="p-6 space-y-4">
+            <input type="hidden" id="order-product-name" value="">
+            <input type="hidden" id="order-product-size" value="">
+            <input type="hidden" id="order-product-price" value="">
+
+            <!-- Quantity & Unit Price -->
+            <div class="grid grid-cols-2 gap-4 bg-stone-50 p-4 rounded-2xl border border-stone-200/60">
+                <div>
+                    <label class="block text-[10px] font-bold uppercase tracking-wider text-stone-500 mb-1">Quantity (Units)</label>
+                    <div class="flex items-center gap-2">
+                        <button type="button" id="qty-minus" class="w-8 h-8 rounded-lg bg-white border border-stone-200 text-stone-700 font-bold hover:bg-stone-100">-</button>
+                        <input type="number" id="order-qty" value="1" min="1" max="999" class="w-14 text-center py-1 bg-white border border-stone-200 rounded-lg text-sm font-bold text-stone-900">
+                        <button type="button" id="qty-plus" class="w-8 h-8 rounded-lg bg-white border border-stone-200 text-stone-700 font-bold hover:bg-stone-100">+</button>
+                    </div>
+                </div>
+                <div class="text-right flex flex-col justify-center">
+                    <span class="text-[10px] font-bold uppercase tracking-wider text-stone-400">Est. Subtotal</span>
+                    <span class="text-lg font-serif italic font-bold text-brand-crimson" id="modal-subtotal">RM 0.00</span>
+                    <span class="text-[9px] text-stone-400">(Excl. shipping)</span>
+                </div>
+            </div>
+
+            <!-- Customer Details -->
+            <div>
+                <label for="order-name" class="block text-xs font-bold text-stone-700 mb-1">Full Name <span class="text-red-500">*</span></label>
+                <input type="text" id="order-name" required placeholder="e.g. Ahmad Zaki" class="w-full text-xs p-3 rounded-xl border border-stone-200 bg-stone-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand-gold">
+            </div>
+
+            <div class="grid grid-cols-3 gap-3">
+                <div class="col-span-2">
+                    <label for="order-address" class="block text-xs font-bold text-stone-700 mb-1">Delivery Address <span class="text-red-500">*</span></label>
+                    <input type="text" id="order-address" required placeholder="Street / House No., Area, State" class="w-full text-xs p-3 rounded-xl border border-stone-200 bg-stone-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand-gold">
+                </div>
+                <div>
+                    <label for="order-postcode" class="block text-xs font-bold text-stone-700 mb-1">Postcode <span class="text-red-500">*</span></label>
+                    <input type="text" id="order-postcode" required placeholder="e.g. 48300" class="w-full text-xs p-3 rounded-xl border border-stone-200 bg-stone-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand-gold">
+                </div>
+            </div>
+
+            <div>
+                <label for="order-notes" class="block text-xs font-bold text-stone-700 mb-1">Special Notes / Inquiries <span class="text-stone-400 font-normal">(Optional)</span></label>
+                <input type="text" id="order-notes" placeholder="e.g. Please confirm delivery date" class="w-full text-xs p-3 rounded-xl border border-stone-200 bg-stone-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand-gold">
+            </div>
+
+            <button type="submit" class="w-full py-4 bg-emerald-600 hover:bg-emerald-700 text-white font-bold uppercase tracking-widest text-xs rounded-xl shadow-lg shadow-emerald-900/20 flex items-center justify-center gap-2 transition">
+                <span>💬</span>
+                <span>Send Order to WhatsApp</span>
+            </button>
+            <p class="text-[10px] text-center text-stone-400">Opens WhatsApp directly with your pre-filled order and delivery information.</p>
+        </form>
+    </div>
+</div>
+
 </body>
 
 </html>
