@@ -109,6 +109,9 @@
 
   <link rel="stylesheet" href="../output.css">
   <link rel="icon" href="../images/logo.png" type="image/png">
+  <!-- Leaflet Map CSS & JS (Free OpenStreetMap API) -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
 </head>
 
 <body class="bg-stone-50 text-stone-800">
@@ -251,6 +254,235 @@
     const PRODUCT_SKU = "RWB-SKI-01";
     const WHATSAPP_PHONE_NUMBER = "601154322254"; // Rempah Warisan Bernam Official WhatsApp
 
+    // --- Free Map API & Address Autocomplete (OpenStreetMap Nominatim + Leaflet) ---
+    function initMapAddressSearch() {
+        const searchInput = document.getElementById('map-address-search');
+        const suggestionsBox = document.getElementById('map-search-suggestions');
+        const clearBtn = document.getElementById('clear-map-search');
+        const gpsBtn = document.getElementById('btn-use-gps');
+        const addressInput = document.getElementById('order-address');
+        const postcodeInput = document.getElementById('order-postcode');
+        const mapContainer = document.getElementById('order-map-container');
+        const latInput = document.getElementById('order-lat');
+        const lonInput = document.getElementById('order-lon');
+
+        if (!searchInput) return;
+
+        let searchTimeout = null;
+        let leafletMap = null;
+        let mapMarker = null;
+
+        function formatAddressString(addr, displayName) {
+            if (!addr) return displayName || '';
+            const parts = [];
+            const street = addr.road || addr.street || addr.building || addr.amenity || addr.railway;
+            if (street) parts.push(street);
+            const sub = addr.suburb || addr.neighbourhood || addr.quarter || addr.village || addr.retail || addr.hamlet;
+            if (sub && !parts.includes(sub)) parts.push(sub);
+            const city = addr.city || addr.town || addr.municipality || addr.district;
+            if (city && !parts.includes(city)) parts.push(city);
+            const state = addr.state;
+            if (state && !parts.includes(state)) parts.push(state);
+            return parts.length > 0 ? parts.join(', ') : displayName;
+        }
+
+        function initOrUpdateMap(lat, lon, label) {
+            lat = parseFloat(lat);
+            lon = parseFloat(lon);
+            if (isNaN(lat) || isNaN(lon)) return;
+
+            if (latInput) latInput.value = lat;
+            if (lonInput) lonInput.value = lon;
+
+            if (typeof L === 'undefined') {
+                return; // Leaflet not yet loaded
+            }
+
+            if (mapContainer) mapContainer.classList.remove('hidden');
+
+            const mapEl = document.getElementById('order-map');
+            if (!mapEl) return;
+
+            if (!leafletMap) {
+                leafletMap = L.map('order-map', {
+                    zoomControl: false,
+                    attributionControl: false
+                }).setView([lat, lon], 16);
+
+                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                    maxZoom: 19
+                }).addTo(leafletMap);
+
+                mapMarker = L.marker([lat, lon], { draggable: true }).addTo(leafletMap);
+
+                mapMarker.on('dragend', function (e) {
+                    const pos = e.target.getLatLng();
+                    reverseGeocode(pos.lat, pos.lng);
+                });
+
+                leafletMap.on('click', function(e) {
+                    if (mapMarker) {
+                        mapMarker.setLatLng(e.latlng);
+                        reverseGeocode(e.latlng.lat, e.latlng.lng);
+                    }
+                });
+            } else {
+                leafletMap.setView([lat, lon], 16);
+                if (mapMarker) mapMarker.setLatLng([lat, lon]);
+                setTimeout(() => {
+                    leafletMap.invalidateSize();
+                }, 200);
+            }
+
+            if (mapMarker && label) {
+                mapMarker.bindPopup(label).openPopup();
+            }
+        }
+
+        window.refreshOrderMapSize = function() {
+            if (leafletMap) {
+                setTimeout(() => {
+                    leafletMap.invalidateSize();
+                }, 300);
+            }
+        };
+
+        function reverseGeocode(lat, lon) {
+            if (latInput) latInput.value = lat;
+            if (lonInput) lonInput.value = lon;
+
+            const url = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}&addressdetails=1`;
+            fetch(url, { headers: { 'Accept': 'application/json' } })
+                .then(res => res.json())
+                .then(data => {
+                    if (!data || !data.address) return;
+                    const formatted = formatAddressString(data.address, data.display_name);
+                    if (addressInput && formatted) addressInput.value = formatted;
+                    if (postcodeInput && data.address.postcode) postcodeInput.value = data.address.postcode;
+                    if (searchInput) searchInput.value = formatted;
+                })
+                .catch(err => console.warn('Reverse geocode error:', err));
+        }
+
+        function searchLocations(query) {
+            if (!query || query.trim().length < 2) {
+                if (suggestionsBox) suggestionsBox.classList.add('hidden');
+                return;
+            }
+
+            const encoded = encodeURIComponent(query.trim());
+            const url = `https://nominatim.openstreetmap.org/search?q=${encoded}&format=json&addressdetails=1&countrycodes=my&limit=5`;
+
+            fetch(url, { headers: { 'Accept': 'application/json' } })
+                .then(res => res.json())
+                .then(results => {
+                    if (!suggestionsBox) return;
+                    if (!results || results.length === 0) {
+                        suggestionsBox.innerHTML = '<div class="p-3 text-xs text-stone-400 text-center">No locations found. Try entering street or area name.</div>';
+                        suggestionsBox.classList.remove('hidden');
+                        return;
+                    }
+
+                    let html = '<ul class="divide-y divide-stone-100 text-left">';
+                    results.forEach((item, idx) => {
+                        const addr = item.address || {};
+                        const primary = item.name || addr.road || addr.suburb || addr.city || query;
+                        const secondary = item.display_name;
+                        const postcode = addr.postcode || '';
+                        html += `<li class="p-2.5 hover:bg-stone-50 cursor-pointer transition flex items-start gap-2.5 text-xs text-stone-800" data-idx="${idx}">
+                            <span class="text-base leading-none">📍</span>
+                            <div class="flex-1 overflow-hidden">
+                                <p class="font-bold text-stone-900 truncate">${primary}</p>
+                                <p class="text-[10px] text-stone-500 truncate">${secondary}</p>
+                            </div>
+                            ${postcode ? `<span class="text-[10px] bg-stone-100 px-1.5 py-0.5 rounded font-mono text-stone-600">${postcode}</span>` : ''}
+                        </li>`;
+                    });
+                    html += '</ul>';
+
+                    suggestionsBox.innerHTML = html;
+                    suggestionsBox.classList.remove('hidden');
+
+                    const items = suggestionsBox.querySelectorAll('li');
+                    items.forEach((el, idx) => {
+                        el.addEventListener('click', () => {
+                            const sel = results[idx];
+                            const formatted = formatAddressString(sel.address, sel.display_name);
+                            if (addressInput) addressInput.value = formatted;
+                            if (postcodeInput && sel.address && sel.address.postcode) {
+                                postcodeInput.value = sel.address.postcode;
+                            }
+                            if (searchInput) searchInput.value = formatted;
+                            if (clearBtn) clearBtn.classList.remove('hidden');
+                            suggestionsBox.classList.add('hidden');
+
+                            initOrUpdateMap(sel.lat, sel.lon, formatted);
+                        });
+                    });
+                })
+                .catch(err => {
+                    console.warn('Geocoding search error:', err);
+                });
+        }
+
+        if (searchInput) {
+            searchInput.addEventListener('input', function() {
+                const val = searchInput.value;
+                if (clearBtn) {
+                    if (val) clearBtn.classList.remove('hidden');
+                    else clearBtn.classList.add('hidden');
+                }
+                if (searchTimeout) clearTimeout(searchTimeout);
+                searchTimeout = setTimeout(() => {
+                    searchLocations(val);
+                }, 400);
+            });
+        }
+
+        if (clearBtn) {
+            clearBtn.addEventListener('click', function() {
+                if (searchInput) searchInput.value = '';
+                clearBtn.classList.add('hidden');
+                if (suggestionsBox) suggestionsBox.classList.add('hidden');
+            });
+        }
+
+        document.addEventListener('click', function(e) {
+            if (!searchInput?.contains(e.target) && !suggestionsBox?.contains(e.target)) {
+                if (suggestionsBox) suggestionsBox.classList.add('hidden');
+            }
+        });
+
+        if (gpsBtn) {
+            gpsBtn.addEventListener('click', function() {
+                if (!navigator.geolocation) {
+                    alert('Geolocation is not supported by your browser.');
+                    return;
+                }
+
+                gpsBtn.disabled = true;
+                gpsBtn.innerHTML = '<span>⏳</span> <span class="hidden sm:inline">Locating...</span>';
+
+                navigator.geolocation.getCurrentPosition(
+                    function(pos) {
+                        gpsBtn.disabled = false;
+                        gpsBtn.innerHTML = '<span>📍</span> <span class="hidden sm:inline">Use GPS</span>';
+                        const lat = pos.coords.latitude;
+                        const lon = pos.coords.longitude;
+                        initOrUpdateMap(lat, lon, 'Your Current Location');
+                        reverseGeocode(lat, lon);
+                    },
+                    function(err) {
+                        gpsBtn.disabled = false;
+                        gpsBtn.innerHTML = '<span>📍</span> <span class="hidden sm:inline">Use GPS</span>';
+                        alert('Unable to retrieve location. Please check location permissions or search by typing your address.');
+                    },
+                    { enableHighAccuracy: true, timeout: 10000, maximumAge: 60000 }
+                );
+            });
+        }
+    }
+
     function initQuickOrderModal() {
         const modal = document.getElementById('quick-order-modal');
         const modalProductTitle = document.getElementById('modal-product-title');
@@ -286,6 +518,7 @@
                 modal.classList.remove('opacity-0');
                 const card = modal.querySelector('#quick-order-card');
                 if (card) card.classList.remove('scale-95');
+                if (window.refreshOrderMapSize) window.refreshOrderMapSize();
             }, 10);
         };
 
@@ -342,6 +575,8 @@
                 const cAddress = document.getElementById('order-address')?.value?.trim() || '';
                 const cPostcode = document.getElementById('order-postcode')?.value?.trim() || '';
                 const cNotes = document.getElementById('order-notes')?.value?.trim() || '';
+                const cLat = document.getElementById('order-lat')?.value?.trim() || '';
+                const cLon = document.getElementById('order-lon')?.value?.trim() || '';
 
                 const unitNum = parseFloat(String(pPrice).replace(/[^0-9.]/g, '')) || 0;
                 const estTotal = (parseInt(pQty) * unitNum).toFixed(2);
@@ -359,6 +594,9 @@
                 msg += `🏷️ *Name:* ${cName}\n`;
                 msg += `📍 *Delivery Address:* ${cAddress}\n`;
                 msg += `📮 *Postcode:* ${cPostcode}\n`;
+                if (cLat && cLon) {
+                    msg += `🗺️ *Map Location:* https://www.google.com/maps?q=${cLat},${cLon}\n`;
+                }
                 if (cNotes) msg += `💬 *Notes:* ${cNotes}\n`;
                 msg += `────────────────────────\n`;
                 msg += `_Please advise on postage cost to my postcode and confirm total._\n`;
@@ -371,6 +609,8 @@
                 closeModal();
             });
         }
+
+        initMapAddressSearch();
     }
 
     // --- Purchase Options Logic (Google Sheets) ---
@@ -646,21 +886,53 @@
                 </div>
             </div>
 
-            <!-- Customer Details -->
+                        <!-- Customer Details -->
             <div>
                 <label for="order-name" class="block text-xs font-bold text-stone-700 mb-1">Full Name <span class="text-red-500">*</span></label>
                 <input type="text" id="order-name" required placeholder="e.g. Ahmad Zaki" class="w-full text-xs p-3 rounded-xl border border-stone-200 bg-stone-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand-gold">
             </div>
 
-            <div class="grid grid-cols-3 gap-3">
-                <div class="col-span-2">
-                    <label for="order-address" class="block text-xs font-bold text-stone-700 mb-1">Delivery Address <span class="text-red-500">*</span></label>
-                    <input type="text" id="order-address" required placeholder="Street / House No., Area, State" class="w-full text-xs p-3 rounded-xl border border-stone-200 bg-stone-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand-gold">
+            <!-- Delivery Address with Free Map API Search -->
+            <div>
+                <div class="flex justify-between items-center mb-1">
+                    <label class="block text-xs font-bold text-stone-700">Delivery Location <span class="text-red-500">*</span></label>
+                    <span class="text-[10px] text-stone-400">Search address or use GPS</span>
                 </div>
-                <div>
-                    <label for="order-postcode" class="block text-xs font-bold text-stone-700 mb-1">Postcode <span class="text-red-500">*</span></label>
-                    <input type="text" id="order-postcode" required placeholder="e.g. 48300" class="w-full text-xs p-3 rounded-xl border border-stone-200 bg-stone-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand-gold">
+                <div class="relative">
+                    <div class="flex gap-2">
+                        <div class="relative flex-1">
+                            <input type="text" id="map-address-search" placeholder="🔍 Search street, building, or area in Malaysia..." autocomplete="off" class="w-full text-xs p-3 pr-8 rounded-xl border border-stone-200 bg-stone-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand-gold">
+                            <button type="button" id="clear-map-search" class="absolute right-2.5 top-1/2 -translate-y-1/2 text-stone-400 hover:text-stone-700 text-xs hidden" aria-label="Clear search">✕</button>
+                        </div>
+                        <button type="button" id="btn-use-gps" title="Locate via GPS" class="px-3 py-2 bg-stone-100 hover:bg-stone-200 border border-stone-200 text-stone-700 rounded-xl text-xs font-semibold flex items-center gap-1.5 whitespace-nowrap transition cursor-pointer">
+                            <span>📍</span> <span class="hidden sm:inline">Use GPS</span>
+                        </button>
+                    </div>
+                    <!-- Live Suggestions Dropdown -->
+                    <div id="map-search-suggestions" class="absolute left-0 right-0 top-full mt-1 bg-white border border-stone-200 rounded-xl shadow-2xl z-[150] max-h-52 overflow-y-auto hidden"></div>
                 </div>
+
+                <!-- Interactive Map Pin Preview -->
+                <div id="order-map-container" class="w-full h-40 rounded-xl border border-stone-200 mt-2 overflow-hidden relative hidden">
+                    <div id="order-map" class="w-full h-full"></div>
+                    <div class="absolute bottom-1 right-2 bg-white/90 backdrop-blur-sm px-2 py-0.5 rounded text-[9px] text-stone-600 font-medium z-[400] pointer-events-none shadow-sm">
+                        📍 Drag pin to fine-tune exact drop-off
+                    </div>
+                </div>
+
+                <!-- Confirmed Address & Postcode (Auto-populated from map, manually editable) -->
+                <div class="grid grid-cols-3 gap-3 mt-2">
+                    <div class="col-span-2">
+                        <label for="order-address" class="block text-[10px] font-bold uppercase tracking-wider text-stone-500 mb-1">Confirmed Address <span class="text-red-500">*</span></label>
+                        <input type="text" id="order-address" required placeholder="Unit / House No., Street, Area" class="w-full text-xs p-3 rounded-xl border border-stone-200 bg-stone-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand-gold">
+                    </div>
+                    <div>
+                        <label for="order-postcode" class="block text-[10px] font-bold uppercase tracking-wider text-stone-500 mb-1">Postcode <span class="text-red-500">*</span></label>
+                        <input type="text" id="order-postcode" required placeholder="e.g. 48000" class="w-full text-xs p-3 rounded-xl border border-stone-200 bg-stone-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand-gold">
+                    </div>
+                </div>
+                <input type="hidden" id="order-lat" value="">
+                <input type="hidden" id="order-lon" value="">
             </div>
 
             <div>
