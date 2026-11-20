@@ -1,5 +1,12 @@
 @import "tailwindcss";
 
+@theme {
+  --color-brand-crimson: #8b1a1a;
+  --color-brand-gold: #b39359;
+  --color-brand-obsidian: #121212;
+  --color-brand-cream: #fdfcf9;
+}
+
 /* Tell Tailwind v4 where to scan for class names */
 @source "./*.html";
 @source "./products/*.html";
