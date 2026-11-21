@@ -1,0 +1,2164 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Corporate Profile — Rempah Warisan Bernam Sdn. Bhd.</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      --espresso: #231409;
+      --espresso-mid: #382110;
+      --gold: #C59138;
+      --gold-bright: #DFA630;
+      --gold-light: #E6C37E;
+      --gold-pale: #F7EEDB;
+      --cream: #FCF9F2;
+      --paper: #FFFFFF;
+      --terracotta: #A83E14;
+      --halal-green: #146C43;
+      --text-dark: #261B12;
+      --text-muted: #635245;
+      --border-gold: rgba(197, 145, 56, 0.35);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: #E8E1D5;
+      color: var(--text-dark);
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Floating Presentation Toolbar */
+    .toolbar {
+      position: fixed;
+      top: 18px;
+      right: 22px;
+      z-index: 1000;
+      display: flex;
+      gap: 10px;
+      background: rgba(35, 20, 9, 0.94);
+      backdrop-filter: blur(10px);
+      padding: 10px 16px;
+      border-radius: 50px;
+      border: 1px solid var(--gold);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.28);
+    }
+
+    .toolbar button {
+      background: linear-gradient(135deg, #E5B454, #B57F26);
+      color: #1D1006;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 30px;
+      font-weight: 700;
+      font-size: 13px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    .toolbar button:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 14px rgba(217, 167, 74, 0.45);
+    }
+
+    .toolbar button.btn-secondary {
+      background: rgba(255, 255, 255, 0.12);
+      color: var(--gold-light);
+      border: 1px solid rgba(230, 195, 126, 0.55);
+    }
+
+    .toolbar button.btn-secondary:hover {
+      background: rgba(230, 195, 126, 0.22);
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+    }
+
+    .toolbar span {
+      color: var(--gold-light);
+      font-size: 12px;
+      font-weight: 600;
+      align-self: center;
+      padding-right: 6px;
+      letter-spacing: 0.4px;
+    }
+
+    /* Page Container (A4 Proportions) */
+    .document-wrapper {
+      max-width: 960px;
+      margin: 36px auto;
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+      padding: 0 16px;
+    }
+
+    .page {
+      background: var(--paper);
+      border-radius: 6px;
+      box-shadow: 0 20px 50px rgba(35, 20, 9, 0.14);
+      overflow: hidden;
+      position: relative;
+      border: 1px solid rgba(197, 145, 56, 0.25);
+    }
+
+    .serif {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+    }
+
+    /* ================= PAGE 1: COVER ================= */
+    .cover-page {
+      background: radial-gradient(circle at 78% 28%, #422612 0%, #231409 65%, #160C04 100%);
+      color: #FFFDF8;
+      min-height: 1120px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 52px 58px;
+      position: relative;
+    }
+
+    .cover-frame {
+      position: absolute;
+      inset: 22px;
+      border: 1px solid rgba(230, 195, 126, 0.35);
+      pointer-events: none;
+    }
+
+    .cover-frame::after {
+      content: "";
+      position: absolute;
+      inset: 5px;
+      border: 1px solid rgba(230, 195, 126, 0.15);
+    }
+
+    .cover-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 2;
+      border-bottom: 1px solid rgba(230, 195, 126, 0.25);
+      padding-bottom: 20px;
+    }
+
+    .cover-brand-lockup {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .logo-seal-wrap {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      overflow: hidden;
+      flex-shrink: 0;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.45);
+      background: #DFA630;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .logo-seal-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .brand-tag {
+      font-size: 11.5px;
+      letter-spacing: 2.8px;
+      text-transform: uppercase;
+      color: var(--gold-light);
+      font-weight: 700;
+    }
+
+    .halal-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(230, 195, 126, 0.45);
+      padding: 7px 15px;
+      border-radius: 40px;
+      font-size: 11.5px;
+      color: var(--gold-light);
+      font-weight: 600;
+    }
+
+    .cover-hero {
+      z-index: 2;
+      display: grid;
+      grid-template-columns: 1.08fr 0.92fr;
+      gap: 32px;
+      align-items: center;
+      margin: 24px 0;
+    }
+
+    .cover-title {
+      font-size: 50px;
+      line-height: 1.06;
+      font-weight: 700;
+      color: #FFFFFF;
+      margin: 12px 0 18px;
+      letter-spacing: -0.5px;
+    }
+
+    .cover-title span {
+      color: var(--gold-light);
+      font-style: italic;
+    }
+
+    .cover-subtitle {
+      font-size: 15.5px;
+      color: #E2D5C3;
+      margin-bottom: 26px;
+      max-width: 470px;
+      line-height: 1.65;
+    }
+
+    .cover-highlights {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 13px;
+      margin-top: 8px;
+    }
+
+    .cover-stat {
+      background: rgba(255, 255, 255, 0.05);
+      border-left: 3px solid var(--gold);
+      padding: 11px 14px;
+    }
+
+    .cover-stat strong {
+      display: block;
+      font-size: 17.5px;
+      color: var(--gold-light);
+      font-family: 'Cormorant Garamond', serif;
+      letter-spacing: 0.3px;
+    }
+
+    .cover-stat span {
+      font-size: 11.5px;
+      color: #D2C3B0;
+    }
+
+    /* Cover Product & Logo Studio Stage */
+    .cover-visual-box {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: radial-gradient(circle, rgba(223, 166, 48, 0.18) 0%, transparent 72%);
+      padding: 14px 10px;
+      border-radius: 16px;
+      position: relative;
+    }
+
+    .cover-crest-hero {
+      width: 118px;
+      height: 118px;
+      border-radius: 50%;
+      margin-bottom: -18px;
+      z-index: 4;
+      box-shadow: 0 10px 28px rgba(0, 0, 0, 0.55);
+      border: 2px solid var(--gold-light);
+      background: #DFA630;
+      overflow: hidden;
+    }
+
+    .cover-crest-hero img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .cover-pouch-lineup {
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      gap: 6px;
+      padding-top: 24px;
+      z-index: 2;
+    }
+
+    .cover-pouch-item {
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      filter: drop-shadow(0 12px 18px rgba(0, 0, 0, 0.55));
+    }
+
+    .cover-pouch-item.side {
+      width: 108px;
+      height: 168px;
+      transform: translateY(-4px);
+    }
+
+    .cover-pouch-item.center {
+      width: 132px;
+      height: 204px;
+      z-index: 3;
+      margin: 0 -8px;
+    }
+
+    .cover-pouch-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
+    }
+
+    .cover-plinth {
+      width: 92%;
+      height: 14px;
+      background: linear-gradient(90deg, #8C5B12, #E6C37E, #8C5B12);
+      border-radius: 3px;
+      margin-top: -2px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
+    }
+
+    .cover-bottom {
+      z-index: 2;
+      border-top: 1px solid rgba(230, 195, 126, 0.25);
+      padding-top: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      font-size: 12.5px;
+      color: #D5C5B2;
+    }
+
+    /* ================= INNER PAGES LAYOUT ================= */
+    .inner-page {
+      padding: 44px 52px;
+      background: var(--paper);
+    }
+
+    .page-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      border-bottom: 2px solid var(--espresso);
+      padding-bottom: 13px;
+      margin-bottom: 24px;
+    }
+
+    .page-header-left {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .mini-header-logo {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      overflow: hidden;
+      flex-shrink: 0;
+      border: 1.5px solid var(--gold);
+      background: #DFA630;
+    }
+
+    .mini-header-logo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .page-kicker {
+      font-size: 10.5px;
+      text-transform: uppercase;
+      letter-spacing: 2.4px;
+      color: var(--gold);
+      font-weight: 700;
+      margin-bottom: 3px;
+    }
+
+    .page-heading {
+      font-size: 30px;
+      color: var(--espresso);
+      line-height: 1.15;
+    }
+
+    .page-number {
+      font-size: 11.5px;
+      font-weight: 700;
+      color: var(--text-muted);
+      letter-spacing: 1px;
+      white-space: nowrap;
+    }
+
+    .section-title {
+      font-size: 20px;
+      color: var(--espresso);
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .section-title::before {
+      content: "";
+      display: inline-block;
+      width: 22px;
+      height: 2px;
+      background: var(--gold);
+    }
+
+    p {
+      margin-bottom: 12px;
+      font-size: 13.5px;
+      color: var(--text-dark);
+    }
+
+    /* CEO Message Card */
+    .ceo-box {
+      background: var(--cream);
+      border: 1px solid var(--border-gold);
+      border-left: 5px solid var(--gold);
+      padding: 20px 24px;
+      border-radius: 6px;
+      margin-bottom: 22px;
+    }
+
+    .ceo-quote {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 20px;
+      font-style: italic;
+      color: var(--espresso);
+      margin-bottom: 10px;
+      line-height: 1.32;
+    }
+
+    .ceo-sig {
+      margin-top: 12px;
+      padding-top: 10px;
+      border-top: 1px dashed var(--border-gold);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    /* Leadership Team Grid */
+    .team-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 13px;
+      margin-bottom: 22px;
+    }
+
+    .team-card {
+      background: linear-gradient(180deg, #2A180B 0%, #1C0F06 100%);
+      color: #FFF;
+      border: 1px solid var(--gold);
+      border-radius: 7px;
+      padding: 15px 14px;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .team-role-badge {
+      display: inline-block;
+      background: rgba(230, 195, 126, 0.16);
+      border: 1px solid rgba(230, 195, 126, 0.45);
+      color: var(--gold-light);
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.9px;
+      padding: 3px 8px;
+      border-radius: 20px;
+      margin-bottom: 8px;
+      align-self: flex-start;
+    }
+
+    .team-card h4 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 19px;
+      color: #FFFFFF;
+      line-height: 1.18;
+      margin-bottom: 5px;
+    }
+
+    .team-card p {
+      font-size: 11.4px;
+      color: #D7C8B5;
+      line-height: 1.42;
+      margin-bottom: 0;
+    }
+
+    /* Grids & Cards */
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+      margin-bottom: 20px;
+    }
+
+    .grid-4 {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 13px;
+      margin-bottom: 20px;
+    }
+
+    .info-card {
+      background: var(--cream);
+      border: 1px solid var(--border-gold);
+      border-radius: 6px;
+      padding: 15px 17px;
+    }
+
+    .info-card h4 {
+      color: var(--espresso);
+      font-size: 14px;
+      margin-bottom: 5px;
+      font-weight: 700;
+    }
+
+    .info-card p {
+      font-size: 12.4px;
+      color: var(--text-muted);
+      margin-bottom: 0;
+    }
+
+    .kpi-card {
+      background: var(--espresso);
+      color: #FFF;
+      padding: 17px 14px;
+      border-radius: 6px;
+      text-align: center;
+      border-bottom: 3px solid var(--gold);
+    }
+
+    .kpi-card .num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 31px;
+      font-weight: 700;
+      color: var(--gold-light);
+      line-height: 1.1;
+    }
+
+    .kpi-card .lbl {
+      font-size: 11px;
+      color: #DFD2C2;
+      margin-top: 4px;
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+    }
+
+    /* Halal Official Banner */
+    .halal-banner {
+      background: linear-gradient(135deg, #F3F9F5 0%, #E7F3EC 100%);
+      border: 1.5px solid #2D8A57;
+      border-radius: 8px;
+      padding: 18px 22px;
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 18px;
+      align-items: center;
+      margin-bottom: 22px;
+    }
+
+    .halal-meta-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-top: 10px;
+      background: #FFFFFF;
+      padding: 10px 14px;
+      border-radius: 6px;
+      border: 1px solid rgba(45, 138, 87, 0.25);
+    }
+
+    .halal-meta-item span {
+      display: block;
+      font-size: 10px;
+      text-transform: uppercase;
+      color: #4A6B58;
+      font-weight: 700;
+    }
+
+    .halal-meta-item strong {
+      font-size: 12.2px;
+      color: #0F4226;
+    }
+
+    /* Process Timeline */
+    .process-steps {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 11px;
+      margin-bottom: 22px;
+    }
+
+    .step-box {
+      background: var(--cream);
+      border: 1px solid var(--border-gold);
+      border-top: 3px solid var(--espresso);
+      padding: 13px 11px;
+      border-radius: 5px;
+    }
+
+    .step-num {
+      display: inline-block;
+      background: var(--gold);
+      color: var(--espresso);
+      font-weight: 800;
+      font-size: 10.5px;
+      padding: 2px 8px;
+      border-radius: 12px;
+      margin-bottom: 7px;
+    }
+
+    .step-box h5 {
+      font-size: 12.8px;
+      color: var(--espresso);
+      margin-bottom: 5px;
+    }
+
+    .step-box p {
+      font-size: 11.3px;
+      color: var(--text-muted);
+      line-height: 1.44;
+      margin-bottom: 0;
+    }
+
+    /* Product Visual Cards (Authentic Packaging) */
+    .product-showcase-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 15px;
+      margin-bottom: 22px;
+    }
+
+    .prod-card {
+      background: linear-gradient(180deg, #FDF9F1 0%, #F3E6CE 100%);
+      border: 1px solid var(--border-gold);
+      border-radius: 8px;
+      padding: 14px 10px 13px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .pouch-frame {
+      width: 132px;
+      height: 184px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto;
+    }
+
+    .pouch-frame img {
+      max-width: 100%;
+      max-height: 100%;
+      width: auto;
+      height: auto;
+      object-fit: contain;
+      filter: drop-shadow(0 8px 14px rgba(35, 20, 9, 0.22));
+      display: block;
+    }
+
+    .prod-card h5 {
+      font-size: 13px;
+      color: var(--espresso);
+      margin-top: 9px;
+      font-weight: 700;
+      line-height: 1.25;
+    }
+
+    .prod-card .en-name {
+      font-size: 10.5px;
+      color: var(--terracotta);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.35px;
+      margin-top: 2px;
+    }
+
+    .prod-card .badge-cert {
+      margin-top: 7px;
+      font-size: 10px;
+      background: #E6F4EC;
+      color: #146C43;
+      border: 1px solid #9CD2B3;
+      padding: 2px 8px;
+      border-radius: 20px;
+      font-weight: 700;
+      display: inline-block;
+    }
+
+    /* Tables */
+    table.corp-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 18px;
+      font-size: 12.4px;
+    }
+
+    table.corp-table thead th {
+      background: var(--espresso);
+      color: var(--gold-light);
+      text-align: left;
+      padding: 9px 11px;
+      font-weight: 600;
+      letter-spacing: 0.3px;
+      font-size: 11.8px;
+    }
+
+    table.corp-table tbody td {
+      padding: 8px 11px;
+      border-bottom: 1px solid #EADFCB;
+      vertical-align: top;
+    }
+
+    table.corp-table tbody tr:nth-child(even) {
+      background: #FCF9F3;
+    }
+
+    .halal-tick {
+      display: inline-block;
+      background: #E7F5ED;
+      color: #146C43;
+      font-weight: 700;
+      font-size: 10.2px;
+      padding: 2px 7px;
+      border-radius: 4px;
+      white-space: nowrap;
+    }
+
+    /* B2B Channel Cards */
+    .channel-card {
+      border: 1px solid var(--border-gold);
+      border-radius: 8px;
+      overflow: hidden;
+      background: #FFF;
+    }
+
+    .channel-head {
+      background: var(--espresso);
+      color: #FFF;
+      padding: 11px 15px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .channel-head h4 {
+      font-size: 14px;
+      color: var(--gold-light);
+    }
+
+    .channel-head span {
+      font-size: 10.5px;
+      background: rgba(230, 195, 126, 0.2);
+      padding: 2px 8px;
+      border-radius: 12px;
+      color: #FFF;
+      white-space: nowrap;
+    }
+
+    .channel-body {
+      padding: 13px 15px;
+      font-size: 12.4px;
+    }
+
+    .channel-body ul {
+      padding-left: 16px;
+      margin-top: 6px;
+      color: var(--text-muted);
+    }
+
+    .channel-body li {
+      margin-bottom: 4px;
+    }
+
+    /* Executive Contact Card */
+    .exec-card {
+      background: linear-gradient(135deg, #2A180B 0%, #1B0E05 100%);
+      color: #FFF;
+      border-radius: 10px;
+      padding: 22px 26px;
+      border: 1.5px solid var(--gold);
+      display: grid;
+      grid-template-columns: 1.35fr 0.65fr;
+      gap: 20px;
+      align-items: center;
+      margin-top: 14px;
+    }
+
+    .exec-card h3 {
+      font-size: 27px;
+      color: var(--gold-light);
+      margin-bottom: 2px;
+    }
+
+    .exec-card .role {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: #E5D7C4;
+      margin-bottom: 10px;
+      font-weight: 600;
+    }
+
+    .exec-details {
+      font-size: 12.5px;
+      line-height: 1.65;
+      color: #F4ECE0;
+    }
+
+    .team-contact-strip {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-top: 12px;
+      padding-top: 12px;
+      border-top: 1px solid rgba(230, 195, 126, 0.28);
+    }
+
+    .team-contact-item strong {
+      display: block;
+      font-size: 13px;
+      color: var(--gold-light);
+    }
+
+    .team-contact-item span {
+      font-size: 11px;
+      color: #D8C9B6;
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+    }
+
+    .exec-logo-seal {
+      width: 122px;
+      height: 122px;
+      border-radius: 50%;
+      margin: 0 auto;
+      overflow: hidden;
+      border: 2px solid var(--gold-light);
+      box-shadow: 0 8px 22px rgba(0, 0, 0, 0.45);
+      background: #DFA630;
+    }
+
+    .exec-logo-seal img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .page-footer {
+      margin-top: 20px;
+      padding-top: 11px;
+      border-top: 1px solid #E6DAC6;
+      display: flex;
+      justify-content: space-between;
+      font-size: 10.8px;
+      color: var(--text-muted);
+    }
+
+    /* Print / PDF Styles */
+    @media print {
+      body {
+        background: #FFF;
+      }
+
+      .toolbar {
+        display: none !important;
+      }
+
+      .document-wrapper {
+        margin: 0;
+        padding: 0;
+        max-width: 100%;
+        gap: 0;
+      }
+
+      .page {
+        box-shadow: none;
+        border: none;
+        border-radius: 0;
+        page-break-after: always;
+        break-after: page;
+      }
+
+      .page:last-child {
+        page-break-after: auto;
+        break-after: auto;
+      }
+
+      .cover-page {
+        min-height: 100vh;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+
+      * {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Hidden SVG Sprite Library for Instant Fallback Rendering -->
+  <svg width="0" height="0" style="position:absolute; visibility:hidden;" aria-hidden="true">
+    <defs>
+      <!-- Official RWB Circular Crest Fallback -->
+      <symbol id="rwb-crest-svg" viewBox="0 0 200 200">
+        <circle cx="100" cy="100" r="96" fill="#DFA630" stroke="#361909" stroke-width="6" />
+        <circle cx="100" cy="100" r="88" fill="none" stroke="#361909" stroke-width="2" />
+        <circle cx="100" cy="100" r="64" fill="none" stroke="#361909" stroke-width="3.5" />
+        <circle cx="100" cy="100" r="58" fill="none" stroke="#361909" stroke-width="1.5" />
+        <path id="topArc" d="M 26,100 A 74,74 0 1,1 174,100" fill="none" />
+        <path id="botArc" d="M 24,104 A 76,76 0 0,0 176,104" fill="none" />
+        <text font-family="Arial Narrow, sans-serif" font-size="14.5" font-weight="900" fill="#361909"
+          letter-spacing="1.2">
+          <textPath href="#topArc" startOffset="50%" text-anchor="middle">REMPAH WARISAN BERNAM</textPath>
+        </text>
+        <text font-family="Arial Narrow, sans-serif" font-size="13.5" font-weight="900" fill="#361909"
+          letter-spacing="1">
+          <textPath href="#botArc" startOffset="50%" text-anchor="middle">• LEGACY • SINCE 1972 • SPICES</textPath>
+        </text>
+        <text x="100" y="57" text-anchor="middle" font-family="sans-serif" font-size="9.5" font-weight="800"
+          fill="#361909">SYARIKAT BERNAM</text>
+        <!-- Jambu Fruits Illustration -->
+        <path d="M68 74 Q100 66 132 74" stroke="#361909" stroke-width="3" fill="none" />
+        <path d="M84 82 C75 82, 70 106, 78 116 C85 122, 95 118, 98 112 C96 98, 92 82, 84 82 Z" fill="#C9731E"
+          stroke="#361909" stroke-width="2.5" />
+        <path d="M114 80 C104 80, 97 104, 102 116 C109 123, 125 121, 129 112 C131 100, 123 80, 114 80 Z" fill="#C9731E"
+          stroke="#361909" stroke-width="2.5" />
+        <rect x="78" y="96" width="46" height="14" rx="2" fill="#DFA630" stroke="#361909" stroke-width="1.5" />
+        <text x="101" y="106.5" text-anchor="middle" font-family="serif" font-size="10.5" font-weight="900"
+          fill="#361909">JAMBU</text>
+        <text x="100" y="143" text-anchor="middle" font-family="sans-serif" font-size="9.5" font-weight="800"
+          fill="#361909">LEGACY FACTORY</text>
+      </symbol>
+
+      <!-- Pouch Fallbacks Matching Exact Original Designs -->
+      <symbol id="pouch-fish" viewBox="0 0 180 250">
+        <rect x="8" y="6" width="164" height="238" rx="14" fill="#D59D36" stroke="#8C5B12" stroke-width="2" />
+        <rect x="54" y="6" width="72" height="92" fill="#0B224B" />
+        <text x="90" y="23" text-anchor="middle" font-family="sans-serif" font-size="10" font-weight="700"
+          fill="#FFF">250g</text>
+        <text x="90" y="34" text-anchor="middle" font-family="sans-serif" font-size="7.5" font-weight="700"
+          fill="#FFF">SERBUK KARI IKAN</text>
+        <circle cx="90" cy="82" r="38" fill="#DFA630" stroke="#0B224B" stroke-width="3" />
+        <text x="90" y="86" text-anchor="middle" font-family="serif" font-size="13" font-weight="900"
+          fill="#0B224B">RWB</text>
+        <path d="M8 165 Q90 198 172 165 L172 230 Q172 244 158 244 L22 244 Q8 244 8 230 Z" fill="#0B224B" />
+        <ellipse cx="90" cy="148" rx="52" ry="30" fill="#B53B14" stroke="#E6C37E" stroke-width="2" />
+        <text x="90" y="198" text-anchor="middle" font-family="sans-serif" font-size="11.5" font-weight="800"
+          fill="#FFF">SERBUK KARI IKAN ASLI</text>
+        <text x="90" y="213" text-anchor="middle" font-family="sans-serif" font-size="8.5" font-weight="700"
+          fill="#E6C37E">AUTHENTIC FISH CURRY</text>
+        <text x="90" y="233" text-anchor="middle" font-family="sans-serif" font-size="8" fill="#FFF">NET WT. 250g</text>
+      </symbol>
+
+      <symbol id="pouch-chicken" viewBox="0 0 180 250">
+        <rect x="8" y="6" width="164" height="238" rx="14" fill="#D59D36" stroke="#8C5B12" stroke-width="2" />
+        <rect x="54" y="6" width="72" height="92" fill="#0E6B26" />
+        <text x="90" y="23" text-anchor="middle" font-family="sans-serif" font-size="10" font-weight="700"
+          fill="#F7E043">250g</text>
+        <text x="90" y="34" text-anchor="middle" font-family="sans-serif" font-size="7.5" font-weight="700"
+          fill="#F7E043">SERBUK KARI AYAM</text>
+        <circle cx="90" cy="82" r="38" fill="#DFA630" stroke="#361909" stroke-width="3" />
+        <text x="90" y="86" text-anchor="middle" font-family="serif" font-size="13" font-weight="900"
+          fill="#361909">RWB</text>
+        <path d="M8 165 Q90 198 172 165 L172 230 Q172 244 158 244 L22 244 Q8 244 8 230 Z" fill="#0E6B26" />
+        <ellipse cx="90" cy="148" rx="52" ry="30" fill="#C44112" stroke="#E6C37E" stroke-width="2" />
+        <text x="90" y="198" text-anchor="middle" font-family="sans-serif" font-size="11" font-weight="800"
+          fill="#F7E043">SERBUK KARI AYAM ASLI</text>
+        <text x="90" y="213" text-anchor="middle" font-family="sans-serif" font-size="8" font-weight="700"
+          fill="#F7E043">AUTHENTIC CHICKEN CURRY</text>
+        <text x="90" y="233" text-anchor="middle" font-family="sans-serif" font-size="8" fill="#FFF">NET WT. 250g</text>
+      </symbol>
+
+      <symbol id="pouch-kurma" viewBox="0 0 180 250">
+        <rect x="8" y="6" width="164" height="238" rx="14" fill="#D59D36" stroke="#8C5B12" stroke-width="2" />
+        <rect x="54" y="6" width="72" height="92" fill="#0A3B18" />
+        <circle cx="90" cy="76" r="38" fill="#DFA630" stroke="#361909" stroke-width="3" />
+        <text x="90" y="80" text-anchor="middle" font-family="serif" font-size="13" font-weight="900"
+          fill="#361909">RWB</text>
+        <path d="M8 165 Q90 198 172 165 L172 230 Q172 244 158 244 L22 244 Q8 244 8 230 Z" fill="#0A3B18" />
+        <ellipse cx="90" cy="145" rx="50" ry="28" fill="#C9A86A" stroke="#E6C37E" stroke-width="2" />
+        <text x="90" y="197" text-anchor="middle" font-family="sans-serif" font-size="9.5" font-weight="800"
+          fill="#E6C37E">SERBUK KURMA AYAM &amp; DAGING</text>
+        <text x="90" y="212" text-anchor="middle" font-family="sans-serif" font-size="8" font-weight="700"
+          fill="#E6C37E">KURMA CHICKEN &amp; MEAT</text>
+        <text x="90" y="232" text-anchor="middle" font-family="sans-serif" font-size="8" fill="#FFF">NET WT. 250g</text>
+      </symbol>
+
+      <symbol id="pouch-garam" viewBox="0 0 180 250">
+        <rect x="8" y="6" width="164" height="238" rx="14" fill="#C9A45C" stroke="#8C5B12" stroke-width="2" />
+        <line x1="16" y1="36" x2="164" y2="36" stroke="#8C5B12" stroke-width="1.5" />
+        <circle cx="90" cy="74" r="28" fill="none" stroke="#4A250A" stroke-width="2.5" />
+        <text x="90" y="79" text-anchor="middle" font-family="serif" font-size="14" font-weight="900"
+          fill="#4A250A">RWB</text>
+        <text x="90" y="124" text-anchor="middle" font-family="serif" font-size="18" font-weight="700"
+          fill="#3D1C06">GARAM</text>
+        <text x="90" y="143" text-anchor="middle" font-family="serif" font-size="18" font-weight="700"
+          fill="#3D1C06">MASALA</text>
+        <path d="M36 218 Q90 165 144 218 Z" fill="#B84B14" />
+      </symbol>
+
+      <symbol id="pouch-chilli" viewBox="0 0 180 250">
+        <rect x="8" y="6" width="164" height="238" rx="14" fill="#D59D36" stroke="#8C5B12" stroke-width="2" />
+        <rect x="54" y="6" width="72" height="92" fill="#7A0C08" />
+        <circle cx="90" cy="76" r="38" fill="#DFA630" stroke="#361909" stroke-width="3" />
+        <text x="90" y="80" text-anchor="middle" font-family="serif" font-size="13" font-weight="900"
+          fill="#361909">RWB</text>
+        <path d="M8 165 Q90 198 172 165 L172 230 Q172 244 158 244 L22 244 Q8 244 8 230 Z" fill="#7A0C08" />
+        <path d="M38 172 Q90 120 142 172 Z" fill="#C92212" />
+        <text x="90" y="200" text-anchor="middle" font-family="sans-serif" font-size="12" font-weight="800"
+          fill="#F7E043">SERBUK CILI ASLI</text>
+        <text x="90" y="215" text-anchor="middle" font-family="sans-serif" font-size="8.5" font-weight="700"
+          fill="#F7E043">AUTHENTIC CHILLI POWDER</text>
+        <text x="90" y="233" text-anchor="middle" font-family="sans-serif" font-size="8" fill="#FFF">NET WT. 250g</text>
+      </symbol>
+
+      <symbol id="pouch-turmeric" viewBox="0 0 180 250">
+        <rect x="8" y="6" width="164" height="238" rx="14" fill="#D59D36" stroke="#8C5B12" stroke-width="2" />
+        <rect x="54" y="6" width="72" height="92" fill="#E5C100" />
+        <circle cx="90" cy="76" r="38" fill="#DFA630" stroke="#361909" stroke-width="3" />
+        <text x="90" y="80" text-anchor="middle" font-family="serif" font-size="13" font-weight="900"
+          fill="#361909">RWB</text>
+        <path d="M8 165 Q90 198 172 165 L172 230 Q172 244 158 244 L22 244 Q8 244 8 230 Z" fill="#E5C100" />
+        <path d="M38 172 Q90 120 142 172 Z" fill="#E39B0E" />
+        <text x="90" y="200" text-anchor="middle" font-family="sans-serif" font-size="11.5" font-weight="800"
+          fill="#361909">SERBUK KUNYIT ASLI</text>
+        <text x="90" y="215" text-anchor="middle" font-family="sans-serif" font-size="8" font-weight="700"
+          fill="#361909">AUTHENTIC TURMERIC POWDER</text>
+        <text x="90" y="233" text-anchor="middle" font-family="sans-serif" font-size="8" fill="#361909">NET WT.
+          250g</text>
+      </symbol>
+
+      <symbol id="pouch-pepper" viewBox="0 0 180 250">
+        <rect x="8" y="6" width="164" height="238" rx="14" fill="#D59D36" stroke="#8C5B12" stroke-width="2" />
+        <circle cx="90" cy="74" r="38" fill="#DFA630" stroke="#361909" stroke-width="3" />
+        <text x="90" y="78" text-anchor="middle" font-family="serif" font-size="13" font-weight="900"
+          fill="#361909">RWB</text>
+        <path d="M38 175 Q90 124 142 175 Z" fill="#595046" />
+        <text x="90" y="200" text-anchor="middle" font-family="sans-serif" font-size="10.5" font-weight="800"
+          fill="#361909">SERBUK LADA HITAM TULEN</text>
+        <text x="90" y="215" text-anchor="middle" font-family="sans-serif" font-size="8" font-weight="700"
+          fill="#361909">PURE BLACK PEPPER POWDER</text>
+        <text x="90" y="233" text-anchor="middle" font-family="sans-serif" font-size="8" fill="#361909">NET WT.
+          250g</text>
+      </symbol>
+
+      <symbol id="pouch-cloves" viewBox="0 0 180 250">
+        <rect x="8" y="6" width="164" height="238" rx="14" fill="#D59D36" stroke="#8C5B12" stroke-width="2" />
+        <circle cx="90" cy="74" r="38" fill="#DFA630" stroke="#361909" stroke-width="3" />
+        <text x="90" y="78" text-anchor="middle" font-family="serif" font-size="13" font-weight="900"
+          fill="#361909">RWB</text>
+        <path d="M38 175 Q90 124 142 175 Z" fill="#733918" />
+        <text x="90" y="200" text-anchor="middle" font-family="sans-serif" font-size="11" font-weight="800"
+          fill="#361909">SERBUK CENGKIH ASLI</text>
+        <text x="90" y="215" text-anchor="middle" font-family="sans-serif" font-size="8.5" font-weight="700"
+          fill="#361909">CLOVES POWDER</text>
+        <text x="90" y="233" text-anchor="middle" font-family="sans-serif" font-size="8" fill="#361909">NET WT.
+          250g</text>
+      </symbol>
+    </defs>
+  </svg>
+
+  <!-- Floating Toolbar for Client Meetings & PDF Export -->
+  <div class="toolbar">
+    <span id="assetStatus">RWB Corporate Profile</span>
+    <input type="file" id="assetLoader" accept="image/*" multiple style="display:none"
+      onchange="handleAssetUpload(event)" />
+    <button type="button" class="btn-secondary" onclick="document.getElementById('assetLoader').click()">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+        stroke-linecap="round" stroke-linejoin="round">
+        <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+        <circle cx="8.5" cy="8.5" r="1.5"></circle>
+        <polyline points="21 15 16 10 5 21"></polyline>
+      </svg>
+      Load Original Images
+    </button>
+    <button type="button" onclick="window.print()">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"
+        stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="6 9 6 2 18 2 18 9"></polyline>
+        <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path>
+        <rect x="6" y="14" width="12" height="8"></rect>
+      </svg>
+      Export / Print PDF
+    </button>
+  </div>
+
+  <div class="document-wrapper">
+
+    <!-- ==================== PAGE 1: EXECUTIVE COVER ==================== -->
+    <section class="page cover-page">
+      <div class="cover-frame"></div>
+
+      <div class="cover-top">
+        <div class="cover-brand-lockup">
+          <div class="logo-seal-wrap">
+            <img src="RWB_Logo.png" alt="Rempah Warisan Bernam Original Logo"
+              onerror="this.style.display='none'; this.nextElementSibling.style.display='block';" />
+            <svg width="64" height="64" style="display:none;">
+              <use href="#rwb-crest-svg" />
+            </svg>
+          </div>
+          <div>
+            <div class="brand-tag">Syarikat Bernam • Jambu Legacy Factory</div>
+            <div style="font-size: 14px; color: #FFFDF8; font-weight: 700; margin-top: 2px;">REMPAH WARISAN BERNAM SDN.
+              BHD.</div>
+          </div>
+        </div>
+        <div class="halal-pill">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#E6C37E" stroke-width="2.2">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+            <path d="m9 12 2 2 4-4" />
+          </svg>
+          JAKIM HALAL CERTIFIED • MS 1500:2019
+        </div>
+      </div>
+
+      <div class="cover-hero">
+        <div>
+          <div class="brand-tag" style="letter-spacing: 3.5px;">Corporate Profile &amp; B2B Catalogue</div>
+          <h1 class="cover-title serif">
+            Authentic Malaysian <span>Heritage Spices</span> Since 1972.
+          </h1>
+          <p class="cover-subtitle">
+            From our legacy spice-milling roots in Syarikat Bernam to modern, JAKIM Halal-certified precision processing
+            in Rawang, Selangor—delivering 100% pure, aromatic curry blends and single-origin spices to leading
+            kitchens, food manufacturers, and retail partners.
+          </p>
+
+          <div class="cover-highlights">
+            <div class="cover-stat">
+              <strong>Legacy Since 1972</strong>
+              <span>Over 50 Years of Spice Mastery</span>
+            </div>
+            <div class="cover-stat">
+              <strong>MS 1500:2019 &amp; OIC</strong>
+              <span>JAKIM.700-2/3/1 123-08/2026</span>
+            </div>
+            <div class="cover-stat">
+              <strong>100% Pure Spices</strong>
+              <span>Zero Fillers, Dyes or Preservatives</span>
+            </div>
+            <div class="cover-stat">
+              <strong>80–320 Mesh Milling</strong>
+              <span>Cold-Ground &lt;35°C for Peak Aroma</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Original Logo & Authentic Packaging Lineup Showcase -->
+        <div class="cover-visual-box">
+          <div class="cover-crest-hero">
+            <img src="RWB_Logo.png" alt="Rempah Warisan Bernam Official Crest"
+              onerror="this.style.display='none'; this.nextElementSibling.style.display='block';" />
+            <svg width="118" height="118" style="display:none;">
+              <use href="#rwb-crest-svg" />
+            </svg>
+          </div>
+
+          <div class="cover-pouch-lineup">
+            <div class="cover-pouch-item side">
+              <img src="images\Packaging\Fish-Curry-Powder.png" alt="Serbuk Kari Ikan Asli"
+                onerror="this.style.display='none'; this.nextElementSibling.style.display='block';" />
+              <svg width="108" height="168" style="display:none;">
+                <use href="#pouch-fish" />
+              </svg>
+            </div>
+            <div class="cover-pouch-item center">
+              <img src="images/Packaging/Garam-Masala.png" alt="Serbuk Garam Masala"
+                onerror="this.style.display='none'; this.nextElementSibling.style.display='block';" />
+              <svg width="132" height="204" style="display:none;">
+                <use href="#pouch-garam" />
+              </svg>
+            </div>
+            <div class="cover-pouch-item side">
+              <img src="images/Packaging/Meat-Curry-Powder.png" alt="Serbuk Kari Ayam Asli"
+                onerror="this.style.display='none'; this.nextElementSibling.style.display='block';" />
+              <svg width="108" height="168" style="display:none;">
+                <use href="#pouch-chicken" />
+              </svg>
+            </div>
+          </div>
+          <div class="cover-plinth"></div>
+          <div
+            style="font-size: 10.5px; color: var(--gold-light); letter-spacing: 1.5px; text-transform: uppercase; margin-top: 10px; font-weight: 700;">
+            Official Heritage Packaging Line • 250g to 25kg
+          </div>
+        </div>
+      </div>
+
+      <div class="cover-bottom">
+        <div>
+          <strong style="color: #FFF; display: block; font-size: 13.5px;">Manufacturing Facility &amp; Registered
+            Office</strong>
+          No. 73, Jalan Kantan 21, Seksyen BB8, Bukit Beruntung, 48300 Rawang, Selangor, Malaysia
+        </div>
+        <div style="text-align: right;">
+          <strong style="color: var(--gold-light); display: block;">www.rempahwarisanbernam.net</strong>
+          B2B Wholesale • HORECA • Industrial • OEM
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== PAGE 2: CEO MESSAGE, LEADERSHIP & HERITAGE ==================== -->
+    <section class="page inner-page">
+      <div class="page-header">
+        <div class="page-header-left">
+          <div class="mini-header-logo">
+            <img src="RWB_Logo.png" alt="RWB Logo"
+              onerror="this.style.display='none'; this.nextElementSibling.style.display='block';" />
+            <svg width="44" height="44" style="display:none;">
+              <use href="#rwb-crest-svg" />
+            </svg>
+          </div>
+          <div>
+            <div class="page-kicker">01 • Who We Are</div>
+            <h2 class="page-heading serif">Heritage, Leadership &amp; Corporate Philosophy</h2>
+          </div>
+        </div>
+        <div class="page-number">PAGE 02 / 07</div>
+      </div>
+
+      <!-- CEO Message -->
+      <div class="ceo-box">
+        <div class="ceo-quote">
+          “Great cuisine never begins with shortcuts. Since 1972, our family’s promise has remained unchanged: 100%
+          pure, sun-cured spices milled with precision—so every chef, manufacturer, and household experiences the true
+          soul of Malaysian flavour.”
+        </div>
+        <p style="margin-bottom: 0; color: var(--text-dark);">
+          At <strong>Rempah Warisan Bernam Sdn. Bhd.</strong>, we honour over five decades of heritage spice
+          craftsmanship under our founding <em>Syarikat Bernam / Jambu Legacy Factory</em> heritage while investing in
+          modern, JAKIM Halal-certified manufacturing in Rawang, Selangor. Whether you operate a high-volume central
+          kitchen, a food processing plant, or a retail distribution network, our leadership and technical team stand
+          ready as your direct-from-factory spice partner.
+        </p>
+        <div class="ceo-sig">
+          <div>
+            <strong style="font-size: 15.5px; color: var(--espresso);">Dr. Isaac Andy</strong>
+            <div style="font-size: 12px; color: var(--text-muted);">Chief Executive Officer • Rempah Warisan Bernam Sdn.
+              Bhd.</div>
+          </div>
+          <div
+            style="font-size: 11px; color: var(--gold); font-weight: 700; text-transform: uppercase; letter-spacing: 1px;">
+            Legacy Factory • Since 1972
+          </div>
+        </div>
+      </div>
+
+      <!-- Leadership & Management Team -->
+      <h3 class="section-title serif">Leadership &amp; Key Management Team</h3>
+      <div class="team-grid">
+        <div class="team-card">
+          <div>
+            <span class="team-role-badge">Chief Executive Officer</span>
+            <h4>Dr. Isaac Andy</h4>
+          </div>
+          <p>Corporate leadership, strategic B2B partnerships, quality governance, and regional market expansion.</p>
+        </div>
+        <div class="team-card">
+          <div>
+            <span class="team-role-badge">Production Advisor</span>
+            <h4>Bala Kuppusamy</h4>
+          </div>
+          <p>Heritage spice formulation, roasting curves, mesh calibration, and manufacturing process advisory.</p>
+        </div>
+        <div class="team-card">
+          <div>
+            <span class="team-role-badge">Operations</span>
+            <h4>Affifi Ariffin</h4>
+          </div>
+          <p>Rawang factory operations, batch execution, inventory control, Halal SOP compliance, and fulfillment.</p>
+        </div>
+        <div class="team-card">
+          <div>
+            <span class="team-role-badge">Marketing</span>
+            <h4>Selvam</h4>
+          </div>
+          <p>Brand positioning, HORECA &amp; distributor account development, trade sampling, and client relations.</p>
+        </div>
+      </div>
+
+      <!-- Corporate Story & Vision/Mission -->
+      <div class="grid-2">
+        <div>
+          <h3 class="section-title serif">Five Decades of Spice Craftsmanship</h3>
+          <p>
+            Established in <strong>1972</strong> in the agricultural heartland of Bernam, our enterprise grew from a
+            dedicated traditional spice mill into <strong>Rempah Warisan Bernam Sdn. Bhd.</strong>—a full-fledged Halal
+            spice manufacturer headquartered in <strong>Bukit Beruntung, Rawang, Selangor</strong>.
+          </p>
+          <p style="margin-bottom: 0;">
+            While mass-market spice producers often dilute blends with starch fillers or artificial colourants, we
+            remain uncompromising—sourcing select whole spices and milling them at low temperatures to protect natural
+            essential oils.
+          </p>
+        </div>
+        <div>
+          <h3 class="section-title serif">Strategic Vision &amp; Mission</h3>
+          <div class="info-card" style="margin-bottom: 10px;">
+            <h4>Our Vision</h4>
+            <p>To be Malaysia’s most trusted heritage Halal spice manufacturer, celebrated across Southeast Asia and
+              global markets for uncompromising purity and authentic culinary heritage.</p>
+          </div>
+          <div class="info-card">
+            <h4>Our Mission</h4>
+            <p>To empower F&amp;B operators, food manufacturers, and retailers with 100% pure, JAKIM Halal-certified
+              spice blends that elevate taste, reduce kitchen wastage, and guarantee food safety.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4 Core Pillars -->
+      <div class="grid-4" style="margin-bottom: 0;">
+        <div class="info-card">
+          <h4>1. 100% Pure Authenticity</h4>
+          <p>Zero starch fillers, zero artificial dyes, zero MSG, and zero preservatives—pure spice potency in every
+            gram.</p>
+        </div>
+        <div class="info-card">
+          <h4>2. Halalan Toyyiban</h4>
+          <p>Fully certified under JAKIM MS 1500:2019 &amp; OIC/SMIIC 1:2019 standards across sourcing, milling, and
+            packing.</p>
+        </div>
+        <div class="info-card">
+          <h4>3. Batch Consistency</h4>
+          <p>Standardized mesh grading (80–320 mesh) and ERP-tracked batch formulation guarantee identical taste every
+            order.</p>
+        </div>
+        <div class="info-card">
+          <h4>4. Direct Factory Value</h4>
+          <p>Direct manufacturing from Rawang eliminates middleman markups, ensuring fresher stock and strong B2B
+            margins.</p>
+        </div>
+      </div>
+
+      <div class="page-footer">
+        <span>Rempah Warisan Bernam Sdn. Bhd. • Corporate Profile</span>
+        <span>Legacy Since 1972 • Bukit Beruntung, Rawang, Selangor</span>
+      </div>
+    </section>
+
+    <!-- ==================== PAGE 3: HALAL CREDENTIALS & QUALITY ASSURANCE ==================== -->
+    <section class="page inner-page">
+      <div class="page-header">
+        <div class="page-header-left">
+          <div class="mini-header-logo">
+            <img src="RWB_Logo.png" alt="RWB Logo"
+              onerror="this.style.display='none'; this.nextElementSibling.style.display='block';" />
+            <svg width="44" height="44" style="display:none;">
+              <use href="#rwb-crest-svg" />
+            </svg>
+          </div>
+          <div>
+            <div class="page-kicker">02 • Food Safety &amp; Compliance</div>
+            <h2 class="page-heading serif">JAKIM Halal Certification &amp; Manufacturing Precision</h2>
+          </div>
+        </div>
+        <div class="page-number">PAGE 03 / 07</div>
+      </div>
+
+      <!-- Verified JAKIM Halal Banner -->
+      <div class="halal-banner">
+        <svg width="84" height="84" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="50" cy="50" r="46" fill="#FFFFFF" stroke="#146C43" stroke-width="3.5" />
+          <circle cx="50" cy="50" r="39" fill="none" stroke="#146C43" stroke-width="1.2" />
+          <polygon
+            points="50,13 59,28 76,24 72,41 87,50 72,59 76,76 59,72 50,87 41,72 24,76 28,59 13,50 28,41 24,24 41,28"
+            fill="none" stroke="#146C43" stroke-width="1.8" />
+          <text x="50" y="49" text-anchor="middle" font-family="serif" font-size="18" font-weight="bold"
+            fill="#146C43">حلال</text>
+          <text x="50" y="63" text-anchor="middle" font-family="sans-serif" font-size="8.5" font-weight="800"
+            letter-spacing="1" fill="#146C43">HALAL</text>
+          <text x="50" y="73" text-anchor="middle" font-family="sans-serif" font-size="5.5" font-weight="700"
+            fill="#146C43">MALAYSIA</text>
+        </svg>
+
+        <div>
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <strong style="font-size: 16px; color: #0F4226;">Sijil Pengesahan Halal Malaysia (JAKIM / JAIS)</strong>
+            <span
+              style="background: #146C43; color: #FFF; font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 20px;">ACTIVE
+              &amp; VERIFIED</span>
+          </div>
+          <p style="font-size: 12.5px; color: #1E4631; margin: 4px 0 0;">
+            Certified by <strong>Jabatan Kemajuan Islam Malaysia (JAKIM)</strong> &amp; <strong>Jabatan Agama Islam
+              Selangor (JAIS)</strong> under MPPHM (Domestik) 2020 for 16 core spice powders, curry blends, and
+            specialty flours.
+          </p>
+          <div class="halal-meta-grid">
+            <div class="halal-meta-item">
+              <span>Halal Reference No.</span>
+              <strong>JAKIM.700-2/3/1 123-08/2026</strong>
+            </div>
+            <div class="halal-meta-item">
+              <span>Compliance Standards</span>
+              <strong>MS 1500:2019 &amp; OIC/SMIIC 1:2019</strong>
+            </div>
+            <div class="halal-meta-item">
+              <span>Certificate Serials &amp; Validity</span>
+              <strong>E53673 / E53674 (Valid to 31 Oct 2028)</strong>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- KPI Strip -->
+      <div class="grid-4">
+        <div class="kpi-card">
+          <div class="num">16+</div>
+          <div class="lbl">JAKIM Halal SKUs</div>
+        </div>
+        <div class="kpi-card">
+          <div class="num">80–320</div>
+          <div class="lbl">Mesh Fineness Range</div>
+        </div>
+        <div class="kpi-card">
+          <div class="num">&lt; 35°C</div>
+          <div class="lbl">Cold-Mill Discharge</div>
+        </div>
+        <div class="kpi-card">
+          <div class="num">2,000+ kg</div>
+          <div class="lbl">Weekly Output Capacity</div>
+        </div>
+      </div>
+
+      <!-- 5-Stage Production Process -->
+      <h3 class="section-title serif">5-Stage Precision Production &amp; Quality Protocol</h3>
+      <div class="process-steps">
+        <div class="step-box">
+          <span class="step-num">STAGE 01</span>
+          <h5>Raw Spice Grading</h5>
+          <p>Incoming whole spices undergo strict inspection for low moisture, cleanliness, aroma potency, and aflatoxin
+            safety.</p>
+        </div>
+        <div class="step-box">
+          <span class="step-num">STAGE 02</span>
+          <h5>Cleaning &amp; Pre-Crush</h5>
+          <p>Removal of foreign matter followed by coarse mechanical pre-breaking to ensure uniform feed density.</p>
+        </div>
+        <div class="step-box">
+          <span class="step-num">STAGE 03</span>
+          <h5>Air-Classified Milling</h5>
+          <p>Precision stainless-steel pulverizing (80–320 mesh) monitored below 35°C to retain volatile essential oils.
+          </p>
+        </div>
+        <div class="step-box">
+          <span class="step-num">STAGE 04</span>
+          <h5>Vibrating Sieve &amp; Mix</h5>
+          <p>Automated multi-deck sifting and timed homogeneous blending, with full dry-purge sanitation between SKUs.
+          </p>
+        </div>
+        <div class="step-box">
+          <span class="step-num">STAGE 05</span>
+          <h5>Barrier Pack &amp; Trace</h5>
+          <p>Thermal-sealed moisture-barrier packaging stamped with ERP Work Order batch codes and expiry dates.</p>
+        </div>
+      </div>
+
+      <!-- QA & IP Security Box -->
+      <div class="grid-2" style="margin-bottom: 0;">
+        <div class="info-card">
+          <h4>Batch-Level QC &amp; Certificate of Analysis (COA)</h4>
+          <p>Every production run undergoes mandatory post-mix texture, colour, moisture, and thermal-seal integrity
+            verification. We provide full product specifications and COA documentation to support corporate QA audits
+            and food manufacturing vendor onboarding.</p>
+        </div>
+        <div class="info-card">
+          <h4>Proprietary Recipe Protection &amp; Traceability</h4>
+          <p>Our Rawang facility utilizes digitized ERP Work Order routing and segmented kit-batching
+            protocols—protecting our 1972 heritage formulations as well as our OEM clients’ confidential proprietary
+            spice recipes.</p>
+        </div>
+      </div>
+
+      <div class="page-footer">
+        <span>Rempah Warisan Bernam Sdn. Bhd. • Halal Ref: JAKIM.700-2/3/1 123-08/2026</span>
+        <span>MS 1500:2019 • OIC/SMIIC 1:2019</span>
+      </div>
+    </section>
+
+    <!-- ==================== PAGE 4: SIGNATURE BLENDS SHOWCASE ==================== -->
+    <section class="page inner-page">
+      <div class="page-header">
+        <div class="page-header-left">
+          <div class="mini-header-logo">
+            <img src="RWB_Logo.png" alt="RWB Logo"
+              onerror="this.style.display='none'; this.nextElementSibling.style.display='block';" />
+            <svg width="44" height="44" style="display:none;">
+              <use href="#rwb-crest-svg" />
+            </svg>
+          </div>
+          <div>
+            <div class="page-kicker">03 • Product Portfolio (Part I)</div>
+            <h2 class="page-heading serif">Signature Heritage Curry &amp; Masala Blends</h2>
+          </div>
+        </div>
+        <div class="page-number">PAGE 04 / 07</div>
+      </div>
+
+      <p>
+        Crafted from guarded family formulations perfected since <strong>1972</strong>, our signature curry and spice
+        blends deliver deep roasted aroma, vibrant natural colour, and superior kitchen yield—allowing chefs to achieve
+        rich gravies using less powder per pot.
+      </p>
+
+      <!-- Original Product Packaging Showcase (Signature Blends) -->
+      <div class="product-showcase-grid">
+        <!-- Pouch 1: Fish Curry Powder -->
+        <div class="prod-card">
+          <div class="pouch-frame">
+            <img src="Fish-Curry-Powder.png" alt="Serbuk Kari Ikan Asli"
+              onerror="this.style.display='none'; this.nextElementSibling.style.display='block';" />
+            <svg width="132" height="184" style="display:none;">
+              <use href="#pouch-fish" />
+            </svg>
+          </div>
+          <div>
+            <h5>Serbuk Kari Ikan Asli</h5>
+            <div class="en-name">Authentic Fish Curry Powder</div>
+            <div class="badge-cert">JAKIM Halal E53673</div>
+          </div>
+        </div>
+
+        <!-- Pouch 2: Chicken / Meat Curry Powder -->
+        <div class="prod-card">
+          <div class="pouch-frame">
+            <img src="images/Packaging/Meat-Curry-Powder.png" alt="Serbuk Kari Ayam Asli"
+              onerror="this.style.display='none'; this.nextElementSibling.style.display='block';" />
+            <svg width="132" height="184" style="display:none;">
+              <use href="#pouch-chicken" />
+            </svg>
+          </div>
+          <div>
+            <h5>Serbuk Kari Ayam Asli</h5>
+            <div class="en-name">Authentic Chicken Curry</div>
+            <div class="badge-cert">JAKIM Halal E53673</div>
+          </div>
+        </div>
+
+        <!-- Pouch 3: Kurma Chicken & Meat Powder -->
+        <div class="prod-card">
+          <div class="pouch-frame">
+            <img src="images/Packaging/Kurma-Chicken-Meat-Powder.png" alt="Serbuk Kurma Ayam & Daging"
+              onerror="this.style.display='none'; this.nextElementSibling.style.display='block';" />
+            <svg width="132" height="184" style="display:none;">
+              <use href="#pouch-kurma" />
+            </svg>
+          </div>
+          <div>
+            <h5>Serbuk Kurma Ayam &amp; Daging</h5>
+            <div class="en-name">Kurma Chicken &amp; Meat</div>
+            <div class="badge-cert">JAKIM Halal E53674</div>
+          </div>
+        </div>
+
+        <!-- Pouch 4: Garam Masala -->
+        <div class="prod-card">
+          <div class="pouch-frame">
+            <img src="images/Packaging/Garam-Masala.png" alt="Serbuk Garam Masala"
+              onerror="this.style.display='none'; this.nextElementSibling.style.display='block';" />
+            <svg width="132" height="184" style="display:none;">
+              <use href="#pouch-garam" />
+            </svg>
+          </div>
+          <div>
+            <h5>Serbuk Garam Masala</h5>
+            <div class="en-name">Garam Masala Powder</div>
+            <div class="badge-cert">JAKIM Halal E53673</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Detailed Blends Table -->
+      <table class="corp-table" style="margin-bottom: 0;">
+        <thead>
+          <tr>
+            <th style="width: 24%;">Product Name</th>
+            <th style="width: 14%;">Halal Status</th>
+            <th style="width: 32%;">Flavour Profile &amp; Formulation</th>
+            <th style="width: 30%;">Ideal Commercial Applications</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Serbuk Kari Ikan Asli</strong><br><span
+                style="color:var(--text-muted); font-size:11.5px;">Authentic Fish Curry Powder</span></td>
+            <td><span class="halal-tick">E53673</span></td>
+            <td>Zesty, vibrant coastal spice profile with fenugreek, cumin, and select chillies for bright colour and
+              clean finish.</td>
+            <td>Fish head curry, <em>kari ikan mamak</em>, prawn &amp; squid curries, seafood gravies, and ready-to-cook
+              pastes.</td>
+          </tr>
+          <tr>
+            <td><strong>Serbuk Kari Ayam Asli</strong><br><span
+                style="color:var(--text-muted); font-size:11.5px;">Authentic Chicken Curry Powder</span></td>
+            <td><span class="halal-tick">E53673</span></td>
+            <td>Balanced, golden-amber aromatic blend formulated to enhance poultry without masking natural meat
+              sweetness.</td>
+            <td>Chicken curry, <em>kari kapitan</em>, <em>ayam goreng berempah</em> marinades, and central kitchen
+              gravies.</td>
+          </tr>
+          <tr>
+            <td><strong>Serbuk Kari Daging</strong><br><span style="color:var(--text-muted); font-size:11.5px;">Meat
+                Curry Powder</span></td>
+            <td><span class="halal-tick">E53673</span></td>
+            <td>Deeply roasted, bold aromatic profile with warm cardamom, cinnamon, and clove notes; rich reddish-brown
+              gravy body.</td>
+            <td>Beef &amp; mutton curries, <em>nasi kandar</em> gravies, <em>rendang</em> bases, murtabak &amp; curry
+              puff fillings.</td>
+          </tr>
+          <tr>
+            <td><strong>Serbuk Kurma Ayam &amp; Daging</strong><br><span
+                style="color:var(--text-muted); font-size:11.5px;">Kurma Chicken &amp; Meat Powder</span></td>
+            <td><span class="halal-tick">E53674</span></td>
+            <td>Mild, creamy-aromatic spice blend featuring coriander, fennel, white pepper, and warm sweet spices;
+              non-chilli heat.</td>
+            <td><em>Ayam &amp; daging masak kurma</em>, banquet/catering dishes, family-friendly menus, and mild creamy
+              sauces.</td>
+          </tr>
+          <tr>
+            <td><strong>Serbuk Garam Masala</strong><br><span style="color:var(--text-muted); font-size:11.5px;">Garam
+                Masala Powder</span></td>
+            <td><span class="halal-tick">E53673</span></td>
+            <td>Fragrant finishing spice blend of roasted warm whole aromatics; high essential-oil retention for maximum
+              aroma lift.</td>
+            <td><em>Briyani</em>, North Indian &amp; Mamak specialties, grilled meat rubs, tandoori marinades, and
+              premium sauces.</td>
+          </tr>
+          <tr>
+            <td><strong>Serbuk Kuah Dal</strong><br><span style="color:var(--text-muted); font-size:11.5px;">Sambar Mix
+                Powder</span></td>
+            <td><span class="halal-tick">E53673</span></td>
+            <td>Authentic roasted lentil-and-spice seasoning blend engineered for rich viscosity, nutty depth, and
+              balanced tang.</td>
+            <td><em>Kuah dal roti canai</em>, vegetable sambar, dhal curries, and breakfast catering operations.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="page-footer">
+        <span>Rempah Warisan Bernam Sdn. Bhd. • Product Portfolio</span>
+        <span>Available in 50g, 100g, 250g, 500g, 1kg, 5kg, 10kg &amp; 25kg</span>
+      </div>
+    </section>
+
+    <!-- ==================== PAGE 5: PURE SINGLE-ORIGIN SPICES & FLOURS ==================== -->
+    <section class="page inner-page">
+      <div class="page-header">
+        <div class="page-header-left">
+          <div class="mini-header-logo">
+            <img src="RWB_Logo.png" alt="RWB Logo"
+              onerror="this.style.display='none'; this.nextElementSibling.style.display='block';" />
+            <svg width="44" height="44" style="display:none;">
+              <use href="#rwb-crest-svg" />
+            </svg>
+          </div>
+          <div>
+            <div class="page-kicker">04 • Product Portfolio (Part II)</div>
+            <h2 class="page-heading serif">100% Pure Single-Origin Spices &amp; Specialty Flours</h2>
+          </div>
+        </div>
+        <div class="page-number">PAGE 05 / 07</div>
+      </div>
+
+      <!-- Original Product Packaging Showcase (Single-Origin Spices) -->
+      <div class="product-showcase-grid">
+        <!-- Pouch 1: Chilli Powder -->
+        <div class="prod-card">
+          <div class="pouch-frame">
+            <img src="images/Packaging/Chilli-Powder.png" alt="Serbuk Cili Asli"
+              onerror="this.style.display='none'; this.nextElementSibling.style.display='block';" />
+            <svg width="132" height="184" style="display:none;">
+              <use href="#pouch-chilli" />
+            </svg>
+          </div>
+          <div>
+            <h5>Serbuk Cili Asli</h5>
+            <div class="en-name">Authentic Chilli Powder</div>
+            <div class="badge-cert">JAKIM Halal E53673</div>
+          </div>
+        </div>
+
+        <!-- Pouch 2: Turmeric Powder -->
+        <div class="prod-card">
+          <div class="pouch-frame">
+            <img src="images/Packaging/Tumeric-Powder.png" alt="Serbuk Kunyit Asli"
+              onerror="this.style.display='none'; this.nextElementSibling.style.display='block';" />
+            <svg width="132" height="184" style="display:none;">
+              <use href="#pouch-turmeric" />
+            </svg>
+          </div>
+          <div>
+            <h5>Serbuk Kunyit Asli</h5>
+            <div class="en-name">Authentic Turmeric Powder</div>
+            <div class="badge-cert">JAKIM Halal E53674</div>
+          </div>
+        </div>
+
+        <!-- Pouch 3: Pure Black Pepper Powder -->
+        <div class="prod-card">
+          <div class="pouch-frame">
+            <img src="images/Packaging/Pure_Black_Pepper_Powder.png" alt="Serbuk Lada Hitam Tulen"
+              onerror="this.style.display='none'; this.nextElementSibling.style.display='block';" />
+            <svg width="132" height="184" style="display:none;">
+              <use href="#pouch-pepper" />
+            </svg>
+          </div>
+          <div>
+            <h5>Serbuk Lada Hitam Tulen</h5>
+            <div class="en-name">Pure Black Pepper Powder</div>
+            <div class="badge-cert">JAKIM Halal E53674</div>
+          </div>
+        </div>
+
+        <!-- Pouch 4: Cloves Powder -->
+        <div class="prod-card">
+          <div class="pouch-frame">
+            <img src="images/Packaging/Cloves-Powder.png" alt="Serbuk Cengkih Asli"
+              onerror="this.style.display='none'; this.nextElementSibling.style.display='block';" />
+            <svg width="132" height="184" style="display:none;">
+              <use href="#pouch-cloves" />
+            </svg>
+          </div>
+          <div>
+            <h5>Serbuk Cengkih Asli</h5>
+            <div class="en-name">Cloves Powder</div>
+            <div class="badge-cert">100% Pure Single-Origin</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Complete Single-Origin & Flours Catalogue -->
+      <table class="corp-table" style="margin-bottom: 14px;">
+        <thead>
+          <tr>
+            <th style="width: 26%;">Product Name</th>
+            <th style="width: 14%;">Halal Ref</th>
+            <th style="width: 30%;">Purity &amp; Milling Spec</th>
+            <th style="width: 30%;">Culinary &amp; Industrial Use</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Serbuk Cili Asli</strong> (Chilli Powder)</td>
+            <td><span class="halal-tick">E53673</span></td>
+            <td>100% sun-dried red chillies; natural deep red colour with zero synthetic dyes.</td>
+            <td><em>Sambal</em>, <em>rendang</em>, chilli pastes, sauces, and snack seasonings.</td>
+          </tr>
+          <tr>
+            <td><strong>Serbuk Kunyit Asli</strong> (Turmeric Powder)</td>
+            <td><span class="halal-tick">E53674</span></td>
+            <td>100% pure turmeric rhizome; high natural curcumin and vibrant golden hue.</td>
+            <td><em>Masak lemak</em>, <em>goreng kunyit</em>, marinades, rice dishes &amp; natural colour.</td>
+          </tr>
+          <tr>
+            <td><strong>Serbuk Lada Hitam Tulen</strong> (Black Pepper)</td>
+            <td><span class="halal-tick">E53674</span></td>
+            <td>Bold, high-piperine peppercorns milled in fine or coarse cracked grades.</td>
+            <td>Black pepper sauces, Western &amp; Asian marinades, soups, and table packs.</td>
+          </tr>
+          <tr>
+            <td><strong>Serbuk Cengkih Asli</strong> (Cloves Powder)</td>
+            <td><span class="halal-tick">Pure Spice</span></td>
+            <td>100% pure aromatic clove buds; high eugenol potency, zero fillers.</td>
+            <td><em>Sup berempah</em>, <em>briyani</em>, bakery/confectionery, and meat curing.</td>
+          </tr>
+          <tr>
+            <td><strong>Serbuk Ketumbar</strong> (Coriander Powder)</td>
+            <td><span class="halal-tick">E53673</span></td>
+            <td>Ultra-fine cold-milled coriander seeds preserving citrusy essential oils.</td>
+            <td><em>Rendang</em>, <em>satay</em>, <em>soto</em>, <em>berempah</em> coatings, and spice rubs.</td>
+          </tr>
+          <tr>
+            <td><strong>Serbuk Jintan Putih</strong> (Cumin Powder)</td>
+            <td><span class="halal-tick">E53673</span></td>
+            <td>100% pure ground cumin seeds; warm, earthy, robust Nusantara aroma.</td>
+            <td><em>Satay</em> pastes, <em>briyani</em>, <em>sup tulang</em>, and meat marinades.</td>
+          </tr>
+          <tr>
+            <td><strong>Serbuk Jintan Manis</strong> (Fennel Powder)</td>
+            <td><span class="halal-tick">E53673</span></td>
+            <td>Sweet, aromatic finely milled fennel seeds; smooth dispersion in gravies.</td>
+            <td><em>Rendang</em>, curry pastes, bakery items, and seafood seasonings.</td>
+          </tr>
+          <tr>
+            <td><strong>Serbuk Lada Putih</strong> (White Pepper)</td>
+            <td><span class="halal-tick">E53674</span></td>
+            <td>Clean, sharp aromatic white pepper milled for light-coloured gravies and soups.</td>
+            <td>Clear soups (<em>sup ayam/mamak</em>), porridge, dim sum, and white sauces.</td>
+          </tr>
+          <tr>
+            <td><strong>Serbuk Kas Kas</strong> (Poppy Seed Powder)</td>
+            <td><span class="halal-tick">E53673</span></td>
+            <td>Finely ground select seeds for natural gravy thickening and nutty richness.</td>
+            <td>Traditional <em>nasi kandar</em> gravies, rich kurma, and Mughlai curries.</td>
+          </tr>
+          <tr>
+            <td><strong>Tepung Beras &amp; Tepung Kacang Kuda</strong></td>
+            <td><span class="halal-tick">E53674</span></td>
+            <td>Halal-certified Rice Flour &amp; Gram Dhall (Chickpea) Flour milled to fine mesh.</td>
+            <td>Crispy batter coatings, <em>murukku</em>, <em>vadai</em>, traditional <em>kuih</em>, and gravy
+              thickeners.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="info-card" style="padding: 11px 15px; margin-bottom: 0; background: #FBF6EC;">
+        <strong style="color: var(--espresso); font-size: 12.2px;">Bulk Raw Agricultural Commodities &amp; Whole
+          Spices:</strong>
+        <span style="font-size: 12px; color: var(--text-muted);"> We also supply graded bulk raw materials—including
+          low-moisture, aflatoxin-screened groundnuts (<em>kacang tanah</em>) for <em>kuah kacang</em> manufacturers,
+          alongside whole cinnamon, star anise, cardamom, and cloves.</span>
+      </div>
+
+      <div class="page-footer">
+        <span>Rempah Warisan Bernam Sdn. Bhd. • 100% Pure Single-Origin Spices</span>
+        <span>Certified Under JAKIM.700-2/3/1 123-08/2026</span>
+      </div>
+    </section>
+
+    <!-- ==================== PAGE 6: B2B SOLUTIONS & PACKAGING FORMATS ==================== -->
+    <section class="page inner-page">
+      <div class="page-header">
+        <div class="page-header-left">
+          <div class="mini-header-logo">
+            <img src="RWB_Logo.png" alt="RWB Logo"
+              onerror="this.style.display='none'; this.nextElementSibling.style.display='block';" />
+            <svg width="44" height="44" style="display:none;">
+              <use href="#rwb-crest-svg" />
+            </svg>
+          </div>
+          <div>
+            <div class="page-kicker">05 • Commercial Partnerships</div>
+            <h2 class="page-heading serif">B2B Supply Solutions &amp; Packaging Tiers</h2>
+          </div>
+        </div>
+        <div class="page-number">PAGE 06 / 07</div>
+      </div>
+
+      <p>
+        We structure our pack sizes, mesh specifications, and delivery schedules around the operational realities of
+        four core commercial segments across Malaysia and export markets.
+      </p>
+
+      <div class="grid-2">
+        <!-- Channel 1 -->
+        <div class="channel-card">
+          <div class="channel-head">
+            <h4>1. HORECA &amp; Central Kitchens</h4>
+            <span>1kg • 5kg • 10kg</span>
+          </div>
+          <div class="channel-body">
+            <strong>Ideal for:</strong> Restaurants, <em>nasi kandar</em> &amp; <em>mamak</em> chains, hotels, event
+            caterers, and cloud kitchens.
+            <ul>
+              <li>High-potency pure blends deliver stronger flavour using less spice per pot.</li>
+              <li>Guarantees identical signature taste across multiple restaurant branches.</li>
+              <li>Heavy-duty foodservice barrier packs keep spices fresh in humid kitchens.</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Channel 2 -->
+        <div class="channel-card">
+          <div class="channel-head">
+            <h4>2. Food Manufacturers &amp; Processors</h4>
+            <span>25kg Industrial Sacks</span>
+          </div>
+          <div class="channel-body">
+            <strong>Ideal for:</strong> Ready-to-eat (RTE) meal factories, paste &amp; sauce makers, frozen food &amp;
+            snack producers.
+            <ul>
+              <li>Custom particle size calibration from <strong>80 to 320 mesh</strong>.</li>
+              <li>Supplied in 25kg multi-wall bags with food-grade moisture inner liners.</li>
+              <li>Full batch traceability, MS 1500:2019 Halal certs, and COA support.</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Channel 3 -->
+        <div class="channel-card">
+          <div class="channel-head">
+            <h4>3. Supermarkets &amp; Retail Distributors</h4>
+            <span>50g • 100g • 250g • 500g • 1kg</span>
+          </div>
+          <div class="channel-body">
+            <strong>Ideal for:</strong> Retail chains, halal marts, mini-markets, grocery wholesalers, and e-commerce
+            stockists.
+            <ul>
+              <li>Eye-catching gold-barrier resealable pouches with bold shelf presence.</li>
+              <li>Trusted Malaysian heritage brand story (<em>Since 1972</em>) driving repeat purchases.</li>
+              <li>Attractive distributor margins and dependable restocking from Rawang.</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Channel 4 -->
+        <div class="channel-card">
+          <div class="channel-head">
+            <h4>4. OEM / Private Label &amp; Export</h4>
+            <span>Custom Specifications</span>
+          </div>
+          <div class="channel-body">
+            <strong>Ideal for:</strong> F&amp;B franchises seeking proprietary spice mixes, house brands, and regional
+            exporters.
+            <ul>
+              <li>Confidential custom recipe blending and toll-milling under strict IP protection.</li>
+              <li>Export-ready documentation compliant with <strong>OIC/SMIIC 1:2019</strong> Halal standards.</li>
+              <li>Positioned for regional expansion across Singapore, Brunei, Indonesia &amp; Australia.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Comparison Table: Why Partner With RWB -->
+      <h3 class="section-title serif">The Rempah Warisan Bernam Advantage</h3>
+      <table class="corp-table" style="margin-bottom: 0;">
+        <thead>
+          <tr>
+            <th style="width: 26%;">Procurement Criteria</th>
+            <th style="width: 37%;">Rempah Warisan Bernam Sdn. Bhd.</th>
+            <th style="width: 37%;">Conventional Generic Spice Suppliers</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Ingredient Purity</strong></td>
+            <td><strong>100% Pure Spices</strong> — zero starch fillers, husk, MSG, or artificial dyes.</td>
+            <td>Often diluted with rice/corn flour fillers and synthetic colourants to lower cost.</td>
+          </tr>
+          <tr>
+            <td><strong>Milling Temperature</strong></td>
+            <td><strong>Cold-Milled (&lt;35°C)</strong> — locks in volatile essential oils, aroma &amp; shelf life.</td>
+            <td>High-friction grinding burns off essential oils, resulting in flat, dusty flavour.</td>
+          </tr>
+          <tr>
+            <td><strong>Halal Assurance</strong></td>
+            <td><strong>Verified JAKIM &amp; JAIS Halal</strong> (MS 1500:2019 &amp; OIC/SMIIC 1:2019).</td>
+            <td>Inconsistent documentation or uncertified repacking operations.</td>
+          </tr>
+          <tr>
+            <td><strong>Supply Chain &amp; Pricing</strong></td>
+            <td><strong>Direct Rawang Manufacturer</strong> — fresher batches &amp; competitive factory tiers.</td>
+            <td>Multi-tier trader markups and older warehouse inventory.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="page-footer">
+        <span>Rempah Warisan Bernam Sdn. Bhd. • B2B &amp; OEM Solutions</span>
+        <span>Flexible MOQs &amp; Scheduled Standing Orders Available</span>
+      </div>
+    </section>
+
+    <!-- ==================== PAGE 7: CORPORATE DIRECTORY & CONTACT ==================== -->
+    <section class="page inner-page">
+      <div class="page-header">
+        <div class="page-header-left">
+          <div class="mini-header-logo">
+            <img src="RWB_Logo.png" alt="RWB Logo"
+              onerror="this.style.display='none'; this.nextElementSibling.style.display='block';" />
+            <svg width="44" height="44" style="display:none;">
+              <use href="#rwb-crest-svg" />
+            </svg>
+          </div>
+          <div>
+            <div class="page-kicker">06 • Corporate Credentials &amp; Contact</div>
+            <h2 class="page-heading serif">Partner With Us Today</h2>
+          </div>
+        </div>
+        <div class="page-number">PAGE 07 / 07</div>
+      </div>
+
+      <p>
+        We invite your procurement, culinary, and quality assurance teams to evaluate our spices firsthand. Contact our
+        leadership team to request a <strong>complimentary B2B product sample kit</strong>, wholesale quotation, or a
+        scheduled consultation at our Rawang manufacturing facility.
+      </p>
+
+      <table class="corp-table" style="margin-bottom: 14px;">
+        <thead>
+          <tr>
+            <th style="width: 31%;">Corporate Particulars</th>
+            <th style="width: 69%;">Official Registered Details</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Registered Company Name</strong></td>
+            <td><strong>REMPAH WARISAN BERNAM SDN. BHD.</strong></td>
+          </tr>
+          <tr>
+            <td><strong>Heritage Brand &amp; Legacy</strong></td>
+            <td>Syarikat Bernam • Jambu Legacy Factory (<em>Legacy Since 1972</em>)</td>
+          </tr>
+          <tr>
+            <td><strong>Nature of Business</strong></td>
+            <td>Manufacturing, Precision Milling, Blending &amp; Wholesale Distribution of Halal Spices &amp; Specialty
+              Flours</td>
+          </tr>
+          <tr>
+            <td><strong>Factory &amp; Operations Address</strong></td>
+            <td>No. 73, Jalan Kantan 21, Seksyen BB8, Bukit Beruntung, 48300 Rawang, Selangor Darul Ehsan, Malaysia</td>
+          </tr>
+          <tr>
+            <td><strong>Halal Certification Details</strong></td>
+            <td>JAKIM / JAIS Certified • Ref No.: <strong>JAKIM.700-2/3/1 123-08/2026</strong> • Standard: MS 1500:2019
+              &amp; OIC/SMIIC 1:2019 (Serials: E53673 &amp; E53674 • Valid until 31 October 2028)</td>
+          </tr>
+          <tr>
+            <td><strong>Official Website &amp; Email</strong></td>
+            <td><strong>www.rempahwarisanbernam.net</strong> • info@rempahwarisanbernam.net</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- Executive & Key Team Card Showcase -->
+      <div class="exec-card">
+        <div>
+          <div
+            style="font-size: 10.5px; letter-spacing: 2px; text-transform: uppercase; color: var(--gold-light); font-weight: 700; margin-bottom: 3px;">
+            Executive Leadership &amp; B2B Desk
+          </div>
+          <h3 class="serif">Dr. Isaac Andy</h3>
+          <div class="role">Chief Executive Officer • Rempah Warisan Bernam Sdn. Bhd.</div>
+          <div class="exec-details">
+            <div><strong>Factory:</strong> No. 73, Jalan Kantan 21, Seksyen BB8, Bukit Beruntung, 48300 Rawang, Selangor
+            </div>
+            <div><strong>Portal:</strong> www.rempahwarisanbernam.net &nbsp;|&nbsp; <strong>Email:</strong>
+              info@rempahwarisanbernam.net</div>
+          </div>
+
+          <div class="team-contact-strip">
+            <div class="team-contact-item">
+              <strong>Bala Kuppusamy</strong>
+              <span>Production Advisor</span>
+            </div>
+            <div class="team-contact-item">
+              <strong>Affifi Ariffin</strong>
+              <span>Operations</span>
+            </div>
+            <div class="team-contact-item">
+              <strong>Selvam</strong>
+              <span>Marketing</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Original RWB Logo Seal -->
+        <div
+          style="text-align: center; background: rgba(255,255,255,0.04); padding: 14px; border-radius: 8px; border: 1px solid rgba(230, 195, 126, 0.3);">
+          <div class="exec-logo-seal">
+            <img src="RWB_Logo.png" alt="Rempah Warisan Bernam Original Seal"
+              onerror="this.style.display='none'; this.nextElementSibling.style.display='block';" />
+            <svg width="122" height="122" style="display:none;">
+              <use href="#rwb-crest-svg" />
+            </svg>
+          </div>
+          <div
+            style="font-size: 10px; color: var(--gold-light); margin-top: 8px; font-weight: 700; letter-spacing: 0.8px;">
+            100% PURE • HALAL CERTIFIED
+          </div>
+        </div>
+      </div>
+
+      <!-- Call to Action Strip -->
+      <div
+        style="margin-top: 14px; background: var(--gold-pale); border: 1px solid var(--gold); border-radius: 6px; padding: 12px 18px; display: flex; justify-content: space-between; align-items: center;">
+        <div>
+          <strong style="color: var(--espresso); font-size: 13.5px; display: block;">Next Step: Complimentary Sample
+            &amp; QA Evaluation Kit</strong>
+          <span style="font-size: 12px; color: var(--text-muted);">Request sample packs of our signature curry powders
+            &amp; single-origin spices alongside our JAKIM Halal certificate &amp; COA.</span>
+        </div>
+        <div
+          style="background: var(--espresso); color: var(--gold-light); padding: 8px 15px; border-radius: 4px; font-size: 11.5px; font-weight: 700; white-space: nowrap;">
+          RWB B2B Desk
+        </div>
+      </div>
+
+      <div class="page-footer">
+        <span>© Rempah Warisan Bernam Sdn. Bhd. • All Rights Reserved</span>
+        <span>Preserving Authentic Malaysian Heritage Flavours Since 1972</span>
+      </div>
+    </section>
+
+  </div>
+
+  <script>
+    // Maps uploaded original PNG files by filename to every logo and pouch slot in the document
+    function handleAssetUpload(event) {
+      const files = Array.from(event.target.files || []);
+      if (!files.length) return;
+
+      const fileMap = {};
+      files.forEach(file => {
+        const lowerName = file.name.toLowerCase();
+        fileMap[lowerName] = URL.createObjectURL(file);
+        // Support both Cloves-Powder.png and Cloves-Powder_2.png seamlessly
+        if (lowerName === 'cloves-powder.png') {
+          fileMap['cloves-powder_2.png'] = fileMap[lowerName];
+        } else if (lowerName === 'cloves-powder_2.png') {
+          fileMap['cloves-powder.png'] = fileMap[lowerName];
+        }
+      });
+
+      let matchedSlots = 0;
+      const allImages = document.querySelectorAll('img[src]');
+      allImages.forEach(img => {
+        const targetFile = (img.getAttribute('src') || '').split('/').pop().toLowerCase();
+        if (fileMap[targetFile]) {
+          img.src = fileMap[targetFile];
+          img.style.display = 'block';
+          if (img.nextElementSibling && img.nextElementSibling.tagName.toLowerCase() === 'svg') {
+            img.nextElementSibling.style.display = 'none';
+          }
+          matchedSlots++;
+        }
+      });
+
+      const statusEl = document.getElementById('assetStatus');
+      if (statusEl) {
+        statusEl.textContent = matchedSlots > 0
+          ? `Loaded ${files.length} Original File(s) • Ready for PDF`
+          : 'No matching filenames found';
+      }
+    }
+  </script>
+
+</body>
+
+</html>
