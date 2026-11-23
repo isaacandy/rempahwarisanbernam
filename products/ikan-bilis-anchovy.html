@@ -180,7 +180,14 @@
                             <p class="font-semibold">100% Dried Anchovies.</p>
                         </div>
 
-                                                <!-- Halal Certification Trust Card -->
+                        <!-- DYNAMIC PURCHASE OPTIONS CONTAINER -->
+                        <div id="purchase-options-container" class="mt-8 space-y-3 max-w-sm">
+                            <p class="text-sm text-stone-500">Select a size to purchase:</p>
+                            <!-- Purchase option buttons will be injected here by JavaScript -->
+                            <div class="text-stone-500 text-sm">Loading purchase options...</div>
+                        </div>
+
+                        <!-- Halal Certification Trust Card -->
                         <div class="flex items-center justify-between p-3.5 bg-emerald-50/90 border border-emerald-200 rounded-2xl mb-6 shadow-sm">
                             <div class="flex items-center gap-3">
                                 <div class="w-9 h-9 rounded-full bg-emerald-100 text-emerald-800 flex items-center justify-center text-xs font-bold shrink-0 border border-emerald-200">
@@ -200,12 +207,6 @@
                                 <span>Verify</span>
                                 <i data-lucide="external-link" class="w-2.5 h-2.5 group-hover:translate-x-0.5 transition-transform"></i>
                             </a>
-                        </div>
-                        <!-- DYNAMIC PURCHASE OPTIONS CONTAINER -->
-                        <div id="purchase-options-container" class="mt-10 space-y-4">
-                            <p class="text-sm text-stone-500">Select a size to purchase:</p>
-                            <!-- Purchase option buttons will be injected here by JavaScript -->
-                            <div class="text-stone-500 text-sm">Loading purchase options...</div>
                         </div>
                     </div>
                 </div>
@@ -657,7 +658,7 @@
             variants.forEach(variant => {
                 const btn = document.createElement('button');
                 btn.type = 'button';
-                btn.className = 'relative w-full text-center block bg-brand-crimson hover:bg-stone-900 text-white font-bold uppercase tracking-widest py-4 px-6 rounded-xl transition shadow-lg shadow-red-900/20 group my-2 cursor-pointer';
+                btn.className = 'relative text-center block bg-brand-crimson hover:bg-stone-900 text-white font-bold uppercase tracking-widest py-3.5 px-6 rounded-xl transition shadow-md shadow-red-900/20 group my-2 cursor-pointer';
                 btn.style.backgroundColor = '#8b1a1a';
                 btn.style.color = '#ffffff';
                 btn.addEventListener('mouseenter', () => { btn.style.backgroundColor = '#1c1917'; });
