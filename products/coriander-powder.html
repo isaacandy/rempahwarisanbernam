@@ -635,6 +635,7 @@
                 msg += `────────────────────────\n`;
                 msg += `_Please advise on postage cost to my postcode and confirm total._\n`;
                 msg += `_Sent from rempahwarisanbernam.net_`;
+                msg += `\n\n🔗 *Product Page:* ${window.location.href}`;
 
                 const encoded = encodeURIComponent(msg);
                 const waUrl = `https://wa.me/${WHATSAPP_PHONE_NUMBER}?text=${encoded}`;
